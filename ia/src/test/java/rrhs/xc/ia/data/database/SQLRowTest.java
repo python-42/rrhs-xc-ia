@@ -1,11 +1,13 @@
 package rrhs.xc.ia.data.database;
 
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 
 public class SQLRowTest {
     
@@ -16,7 +18,7 @@ public class SQLRowTest {
     /**
      * Assume that putting strings to the map works as expected.
      */
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         athlete = new SQLRow("Athlete", 1);
         athlete.putPair("name", "Jake Herrmann");
