@@ -17,6 +17,15 @@ public class SQLRow {
     }
 
     /**
+     * Get a value from the map. If there is no value which matches the key, return null
+     * @param key The key to the desired value
+     * @return The value or null
+     */
+    public String get(String key) {
+        return row.getOrDefault(key, null);
+    }
+
+    /**
      * Put a new key value pair in to the internal map. Will overwrite an existing key with the same name.
      * @param key Key in the map, represents the name of the SQL column in the row this class represents.
      * @param value Corresponding value in the map, represents the value in the SQL row.
