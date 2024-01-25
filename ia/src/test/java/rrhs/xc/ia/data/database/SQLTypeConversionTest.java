@@ -51,6 +51,8 @@ public class SQLTypeConversionTest {
     @Test
     public void testString() {
         assertEquals("'Jake Herrmann'", SQLTypeConversion.convert("Jake Herrmann"));
+
+        assertEquals("Jake' Herrmann", SQLTypeConversion.getString("'Jake' Herrmann'"));
     }
 
     @Test

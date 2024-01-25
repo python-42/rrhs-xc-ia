@@ -1,3 +1,4 @@
 {
+    "git.autorefresh": true,
     "java.configuration.updateBuildConfiguration": "interactive"
 }

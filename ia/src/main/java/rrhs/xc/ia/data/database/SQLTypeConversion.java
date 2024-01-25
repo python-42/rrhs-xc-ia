@@ -29,6 +29,11 @@ public class SQLTypeConversion {
         return "'"+0+"'";
     }
 
+    public static String getString(String s) {
+        return s.replaceFirst("'", "").substring(0, s.length() - 2);
+
+    }
+
     public static double getDouble(String d) {
         return Double.parseDouble(d.replaceAll("'", "").replaceAll(" ", ""));
     }
