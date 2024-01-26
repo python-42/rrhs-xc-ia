@@ -3,19 +3,19 @@ package rrhs.xc.ia.data.database;
 import java.time.LocalDate;
 
 public class SQLTypeConversion {
-    
+
     private SQLTypeConversion() {}
 
     public static String convert(double x) {
-        return "'"+x+"'";
+        return "'" + x + "'";
     }
 
     public static String convert(int x) {
-        return "'"+x+"'";
+        return "'" + x + "'";
     }
 
     public static String convert(String x) {
-        return "'"+x+"'";
+        return "'" + x + "'";
     }
 
     public static String convert(LocalDate x) {
@@ -23,10 +23,10 @@ public class SQLTypeConversion {
     }
 
     public static String convert(boolean x) {
-        if(x) {
-            return "'"+1+"'";
+        if (x) {
+            return "'" + 1 + "'";
         }
-        return "'"+0+"'";
+        return "'" + 0 + "'";
     }
 
     public static String getString(String s) {
@@ -48,10 +48,37 @@ public class SQLTypeConversion {
     }
 
     public static boolean getBoolean(String b) {
-        if(getInt(b) == 0) {
+        if (getInt(b) == 0) {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Class which contains the names of the rows in the SQL table. This ensures
+     * that the table identifiers match for all implemntations and tests.
+     */
+    public class SQLTableInformation {
+        private SQLTableInformation() {
+        }
+
+        public class Meet {
+
+        }
+
+        public class Race {
+            public static final String ATHLETE_NAME_STR = "athleteName";
+            public static final String MEET_NAME_STR = "meetName";
+            public static final String VARSITY_BOOL = "varsity";
+            public static final String TOTAL_TIME_DBL = "timeSeconds";
+            public static final String MILE_SPLIT_ONE_DBL = "splitOneSeconds";
+            public static final String MILE_SPLIT_TWO_DBL = "splitTwoSeconds";
+            public static final String PLACE_INT = "place";
+        }
+
+        public class Athlete {
+
+        }
     }
 
 }
