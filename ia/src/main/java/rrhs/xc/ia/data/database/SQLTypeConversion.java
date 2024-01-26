@@ -77,7 +77,9 @@ public class SQLTypeConversion {
         }
 
         public class Athlete {
-
+            public static final String NAME_STR = "name";
+            public static final String BOYS_TEAM_BOOL = "isBoysTeam";
+            public static final String GRADUATION_YEAR_INT = "gradYear";
         }
     }
 
