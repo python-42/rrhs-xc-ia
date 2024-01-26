@@ -1,6 +1,5 @@
 package rrhs.xc.ia.data.database;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Map.Entry;
 import java.util.SortedMap;
@@ -31,27 +30,23 @@ public class SQLRow {
      * @param value Corresponding value in the map, represents the value in the SQL row.
      */
     public void putPair(String key, String value) {
-        row.put(key, value);
+        row.put(key, SQLTypeConversion.convert(value));
     }
 
     public void putPair(String key, int value) {
-        this.putPair(key, value + "");
+        row.put(key, SQLTypeConversion.convert(value));
     }
 
     public void putPair(String key, double value) {
-        this.putPair(key, value + "");
+        row.put(key, SQLTypeConversion.convert(value));
     }
 
     public void putPair(String key, boolean value) {
-        if(value) {
-            this.putPair(key, "1");    
-        }else {
-            this.putPair(key, "0");
-        }
+        row.put(key, SQLTypeConversion.convert(value));
     }
 
     public void putPair(String key, LocalDate d) {
-        this.putPair(key, Date.valueOf(d).toString());
+        row.put(key, SQLTypeConversion.convert(d));
     }
 
     public String getSQLInsertString() {
@@ -69,9 +64,8 @@ public class SQLRow {
         rtn.append(") VALUES (");
 
         for (String s : row.values()) {
-            rtn.append('\'');
             rtn.append(s);
-            rtn.append("', ");
+            rtn.append(", ");
         }
         rtn.delete(rtn.length() - 2, rtn.length());
         rtn.append(");");
@@ -87,9 +81,9 @@ public class SQLRow {
 
         for (Entry<String, String> s : row.entrySet()) {
             rtn.append(s.getKey());
-            rtn.append(" = '");
+            rtn.append(" = ");
             rtn.append(s.getValue());
-            rtn.append("', ");
+            rtn.append(", ");
         }
         rtn.delete(rtn.length() -2, rtn.length());
         rtn.append(" WHERE id = ");
