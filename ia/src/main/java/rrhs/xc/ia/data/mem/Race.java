@@ -94,5 +94,39 @@ public class Race implements SQLSerializable{
         row.putPair(SQLTableInformation.Race.PLACE_INT, place);
         return row;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Race other = (Race) obj;
+        if (athleteName == null) {
+            if (other.athleteName != null)
+                return false;
+        } else if (!athleteName.equals(other.athleteName))
+            return false;
+        if (meetName == null) {
+            if (other.meetName != null)
+                return false;
+        } else if (!meetName.equals(other.meetName))
+            return false;
+        if (varsity != other.varsity)
+            return false;
+        if (Double.doubleToLongBits(timeSeconds) != Double.doubleToLongBits(other.timeSeconds))
+            return false;
+        if (Double.doubleToLongBits(splitOneSeconds) != Double.doubleToLongBits(other.splitOneSeconds))
+            return false;
+        if (Double.doubleToLongBits(splitTwoSeconds) != Double.doubleToLongBits(other.splitTwoSeconds))
+            return false;
+        if (place != other.place)
+            return false;
+        return true;
+    }
+
+    
     
 }
