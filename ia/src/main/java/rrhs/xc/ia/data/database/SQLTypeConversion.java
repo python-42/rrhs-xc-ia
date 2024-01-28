@@ -2,6 +2,8 @@ package rrhs.xc.ia.data.database;
 
 import java.time.LocalDate;
 
+import rrhs.xc.ia.data.Season;
+
 public class SQLTypeConversion {
 
     private SQLTypeConversion() {}
@@ -29,6 +31,10 @@ public class SQLTypeConversion {
         return "'" + 0 + "'";
     }
 
+    public static String convert(Season x) {
+        return convert(x.ordinal());
+    } 
+
     public static String getString(String s) {
         return s.replaceFirst("'", "").substring(0, s.length() - 2);
 
@@ -54,6 +60,27 @@ public class SQLTypeConversion {
         return true;
     }
 
+    public static Season getSeason(String s) {
+        int ordinal = getInt(s);
+        if(ordinal == 0) {
+            return Season.FRESHMAN;
+        }
+
+        if(ordinal == 1) {
+            return Season.SOPHOMORE;
+        }
+
+        if(ordinal == 2) {
+            return Season.JUNIOR;
+        }
+
+        if(ordinal == 3) {
+            return Season.SENIOR;
+        }
+
+        return null;
+    }
+
     /**
      * Class which contains the names of the rows in the SQL table. This ensures
      * that the table identifiers match for all implemntations and tests.
@@ -72,6 +99,7 @@ public class SQLTypeConversion {
             public static final String MILE_SPLIT_ONE_DBL = "splitOneSeconds";
             public static final String MILE_SPLIT_TWO_DBL = "splitTwoSeconds";
             public static final String PLACE_INT = "place";
+            public static final String SEASON_ENUM = "season";
         }
 
         public class Athlete {

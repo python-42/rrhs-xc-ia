@@ -8,8 +8,24 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
+import rrhs.xc.ia.data.Season;
+
 public class SQLTypeConversionTest {
     
+    @Test
+    public void testSeason() {
+        assertEquals("'0'", SQLTypeConversion.convert(Season.FRESHMAN));
+        assertEquals("'1'", SQLTypeConversion.convert(Season.SOPHOMORE));
+        assertEquals("'2'", SQLTypeConversion.convert(Season.JUNIOR));
+        assertEquals("'3'", SQLTypeConversion.convert(Season.SENIOR));
+
+        assertEquals(Season.FRESHMAN, SQLTypeConversion.getSeason("'0'"));
+        assertEquals(Season.SOPHOMORE, SQLTypeConversion.getSeason("'1'"));
+        assertEquals(Season.JUNIOR, SQLTypeConversion.getSeason("'2'"));
+        assertEquals(Season.SENIOR, SQLTypeConversion.getSeason("'3'"));
+        assertEquals(null, SQLTypeConversion.getSeason("'8'"));
+    }
+
     @Test
     public void testInt() {
         assertEquals("'123'", SQLTypeConversion.convert(123));
