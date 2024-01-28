@@ -67,8 +67,6 @@ public class SQLTypeConversion {
         }
 
         public class Race {
-            public static final String ATHLETE_NAME_STR = "athleteName";
-            public static final String MEET_NAME_STR = "meetName";
             public static final String VARSITY_BOOL = "varsity";
             public static final String TOTAL_TIME_DBL = "timeSeconds";
             public static final String MILE_SPLIT_ONE_DBL = "splitOneSeconds";

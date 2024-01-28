@@ -36,16 +36,12 @@ public class RaceSQLTest {
     @Test
     public void testSQLWrite() {
         race1.loadFromSQL(row1);
-        assertEquals("Jake Herrmann", race1.getAthleteName());
-        assertEquals("Conference 2023", race1.getMeetName());
         assertEquals(true, race1.isVarsity());
         assertEquals((17 * 60) + 48.5, race1.getTimeSeconds());
         assertEquals((5 * 60) + 31, race1.getMileOneSplitSeconds());
         assertEquals((5 * 60) + 57, race1.getMileTwoSplitSeconds());
 
         race2.loadFromSQL(row2);
-        assertEquals("Otto", race2.getAthleteName());
-        assertEquals("Conference 2023", race2.getMeetName());
         assertEquals(false, race2.isVarsity());
         assertEquals((21*60) + 50.6, race2.getTimeSeconds());
         assertEquals((6 * 60) + 59, race2.getMileOneSplitSeconds());
@@ -53,7 +49,7 @@ public class RaceSQLTest {
 
 
         race1.loadFromSQL(row2);//try and write new data
-        assertEquals("Jake Herrmann", race1.getAthleteName()); //Assert that data has not changed.
+        assertEquals((17 * 60) + 48.5, race1.getTimeSeconds()); //Assert that data has not changed.
     }
 
     
@@ -67,22 +63,16 @@ public class RaceSQLTest {
         race2.loadFromSQL(row2);
 
         SQLRow resultRow1 = race1.writeTOSQL();
-        assertEquals("'Jake Herrmann'", resultRow1.get(SQLTableInformation.Race.ATHLETE_NAME_STR));
-        assertEquals("'Conference 2023'", resultRow1.get(SQLTableInformation.Race.MEET_NAME_STR));
         assertEquals("'1'", resultRow1.get(SQLTableInformation.Race.VARSITY_BOOL));
         assertEquals("'1068.5'", resultRow1.get(SQLTableInformation.Race.TOTAL_TIME_DBL));
         assertEquals("'331.0'", resultRow1.get(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL));
         assertEquals("'357.0'", resultRow1.get(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL));
 
         SQLRow resultRow2 = race2.writeTOSQL();
-        assertEquals("'Otto'", resultRow2.get(SQLTableInformation.Race.ATHLETE_NAME_STR));
-        assertEquals("'Conference 2023'", resultRow2.get(SQLTableInformation.Race.MEET_NAME_STR));
         assertEquals("'0'", resultRow2.get(SQLTableInformation.Race.VARSITY_BOOL));
         assertEquals("'1310.6'", resultRow2.get(SQLTableInformation.Race.TOTAL_TIME_DBL));
         assertEquals("'419.0'", resultRow2.get(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL));
         assertEquals("'417.0'", resultRow2.get(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL));
     }
 
-    
-    
 }

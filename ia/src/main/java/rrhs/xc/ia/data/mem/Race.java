@@ -7,8 +7,6 @@ import rrhs.xc.ia.data.i.SQLSerializable;
 
 public class Race implements SQLSerializable{
 
-    private String athleteName;
-    private String meetName;
     private boolean varsity;
     private double timeSeconds;
     private double splitOneSeconds;
@@ -38,14 +36,6 @@ public class Race implements SQLSerializable{
 
     //=======Basic getters=======
 
-    public String getAthleteName() {
-        return athleteName;
-    }
-
-    public String getMeetName() {
-        return meetName;
-    }
-
     public boolean isVarsity() {
         return varsity;
     }
@@ -69,8 +59,6 @@ public class Race implements SQLSerializable{
     @Override
     public void loadFromSQL(SQLRow result) {
         if(cansqlWrite) {
-            athleteName = SQLTypeConversion.getString(result.get(SQLTableInformation.Race.ATHLETE_NAME_STR));
-            meetName = SQLTypeConversion.getString(result.get(SQLTableInformation.Race.MEET_NAME_STR));
             varsity = SQLTypeConversion.getBoolean(result.get(SQLTableInformation.Race.VARSITY_BOOL));
             timeSeconds = SQLTypeConversion.getDouble(result.get(SQLTableInformation.Race.TOTAL_TIME_DBL));
             splitOneSeconds = SQLTypeConversion.getDouble(result.get(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL));
@@ -85,8 +73,6 @@ public class Race implements SQLSerializable{
     @Override
     public SQLRow writeTOSQL() {
         SQLRow row = new SQLRow("Race", 0); //TODO ID
-        row.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, athleteName);
-        row.putPair(SQLTableInformation.Race.MEET_NAME_STR, meetName);
         row.putPair(SQLTableInformation.Race.VARSITY_BOOL, varsity);
         row.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, timeSeconds);
         row.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, splitOneSeconds);
@@ -103,17 +89,9 @@ public class Race implements SQLSerializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
+
         Race other = (Race) obj;
-        if (athleteName == null) {
-            if (other.athleteName != null)
-                return false;
-        } else if (!athleteName.equals(other.athleteName))
-            return false;
-        if (meetName == null) {
-            if (other.meetName != null)
-                return false;
-        } else if (!meetName.equals(other.meetName))
-            return false;
+
         if (varsity != other.varsity)
             return false;
         if (Double.doubleToLongBits(timeSeconds) != Double.doubleToLongBits(other.timeSeconds))
