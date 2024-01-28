@@ -5,6 +5,8 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import rrhs.xc.ia.data.Season;
+
 public class SQLRow {
     private final SortedMap<String, String> row = new TreeMap<String, String>();
     private final String tableName;
@@ -47,6 +49,10 @@ public class SQLRow {
 
     public void putPair(String key, LocalDate d) {
         row.put(key, SQLTypeConversion.convert(d));
+    }
+
+    public void putPair(String key, Season value) {
+        row.put(key, SQLTypeConversion.convert(value));
     }
 
     public String getSQLInsertString() {

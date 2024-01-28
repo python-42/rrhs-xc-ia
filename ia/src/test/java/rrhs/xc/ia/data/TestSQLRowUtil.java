@@ -26,24 +26,21 @@ public class TestSQLRowUtil {
     }
 
     public static void populateRaceRows() {
-        race1.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, "Jake Herrmann");
-        race1.putPair(SQLTableInformation.Race.MEET_NAME_STR, "Conference 2023");
+        race1.putPair(SQLTableInformation.Race.SEASON_ENUM, Season.SENIOR);
         race1.putPair(SQLTableInformation.Race.VARSITY_BOOL, true);
         race1.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, (17*60) + 48.5);
         race1.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, (5 * 60) + 31);
         race1.putPair(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL, (5 * 60) + 57);
         race1.putPair(SQLTableInformation.Race.PLACE_INT, 1);
  
-        race2.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, "Otto");
-        race2.putPair(SQLTableInformation.Race.MEET_NAME_STR, "Conference 2023");
+        race2.putPair(SQLTableInformation.Race.SEASON_ENUM, Season.FRESHMAN);
         race2.putPair(SQLTableInformation.Race.VARSITY_BOOL, false);
         race2.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, (21*60) + 50.6);
         race2.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, (6 * 60) + 59);
         race2.putPair(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL, (6 * 60) + 57);
         race2.putPair(SQLTableInformation.Race.PLACE_INT, 6);
         
-        race3.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, "Luighse");
-        race3.putPair(SQLTableInformation.Race.MEET_NAME_STR, "Conference 2023");
+        race3.putPair(SQLTableInformation.Race.SEASON_ENUM, Season.SENIOR);
         race3.putPair(SQLTableInformation.Race.VARSITY_BOOL, true);
         race3.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, (26*60) + 48.5);
         race3.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, (8 * 60) + 15);

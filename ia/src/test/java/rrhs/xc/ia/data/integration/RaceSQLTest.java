@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import rrhs.xc.ia.data.Season;
 import rrhs.xc.ia.data.TestSQLRowUtil;
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
@@ -36,12 +37,14 @@ public class RaceSQLTest {
     @Test
     public void testSQLWrite() {
         race1.loadFromSQL(row1);
+        assertEquals(Season.SENIOR, race1.getSeason());
         assertEquals(true, race1.isVarsity());
         assertEquals((17 * 60) + 48.5, race1.getTimeSeconds());
         assertEquals((5 * 60) + 31, race1.getMileOneSplitSeconds());
         assertEquals((5 * 60) + 57, race1.getMileTwoSplitSeconds());
 
         race2.loadFromSQL(row2);
+        assertEquals(Season.FRESHMAN, race2.getSeason());
         assertEquals(false, race2.isVarsity());
         assertEquals((21*60) + 50.6, race2.getTimeSeconds());
         assertEquals((6 * 60) + 59, race2.getMileOneSplitSeconds());
@@ -63,12 +66,14 @@ public class RaceSQLTest {
         race2.loadFromSQL(row2);
 
         SQLRow resultRow1 = race1.writeTOSQL();
+        assertEquals("'3'", resultRow1.get(SQLTableInformation.Race.SEASON_ENUM));
         assertEquals("'1'", resultRow1.get(SQLTableInformation.Race.VARSITY_BOOL));
         assertEquals("'1068.5'", resultRow1.get(SQLTableInformation.Race.TOTAL_TIME_DBL));
         assertEquals("'331.0'", resultRow1.get(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL));
         assertEquals("'357.0'", resultRow1.get(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL));
 
         SQLRow resultRow2 = race2.writeTOSQL();
+        assertEquals("'0'", resultRow2.get(SQLTableInformation.Race.SEASON_ENUM));
         assertEquals("'0'", resultRow2.get(SQLTableInformation.Race.VARSITY_BOOL));
         assertEquals("'1310.6'", resultRow2.get(SQLTableInformation.Race.TOTAL_TIME_DBL));
         assertEquals("'419.0'", resultRow2.get(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL));

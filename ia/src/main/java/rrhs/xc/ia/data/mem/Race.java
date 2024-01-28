@@ -1,5 +1,6 @@
 package rrhs.xc.ia.data.mem;
 
+import rrhs.xc.ia.data.Season;
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
@@ -7,6 +8,7 @@ import rrhs.xc.ia.data.i.SQLSerializable;
 
 public class Race implements SQLSerializable{
 
+    private Season season;
     private boolean varsity;
     private double timeSeconds;
     private double splitOneSeconds;
@@ -36,6 +38,10 @@ public class Race implements SQLSerializable{
 
     //=======Basic getters=======
 
+    public Season getSeason() {
+        return season;
+    }
+
     public boolean isVarsity() {
         return varsity;
     }
@@ -59,6 +65,7 @@ public class Race implements SQLSerializable{
     @Override
     public void loadFromSQL(SQLRow result) {
         if(cansqlWrite) {
+            season = SQLTypeConversion.getSeason(result.get(SQLTableInformation.Race.SEASON_ENUM));
             varsity = SQLTypeConversion.getBoolean(result.get(SQLTableInformation.Race.VARSITY_BOOL));
             timeSeconds = SQLTypeConversion.getDouble(result.get(SQLTableInformation.Race.TOTAL_TIME_DBL));
             splitOneSeconds = SQLTypeConversion.getDouble(result.get(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL));
@@ -73,6 +80,7 @@ public class Race implements SQLSerializable{
     @Override
     public SQLRow writeTOSQL() {
         SQLRow row = new SQLRow("Race", 0); //TODO ID
+        row.putPair(SQLTableInformation.Race.SEASON_ENUM, season);
         row.putPair(SQLTableInformation.Race.VARSITY_BOOL, varsity);
         row.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, timeSeconds);
         row.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, splitOneSeconds);
@@ -89,9 +97,9 @@ public class Race implements SQLSerializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
-
         Race other = (Race) obj;
-
+        if (season != other.season)
+            return false;
         if (varsity != other.varsity)
             return false;
         if (Double.doubleToLongBits(timeSeconds) != Double.doubleToLongBits(other.timeSeconds))
@@ -105,6 +113,4 @@ public class Race implements SQLSerializable{
         return true;
     }
 
-    
-    
 }
