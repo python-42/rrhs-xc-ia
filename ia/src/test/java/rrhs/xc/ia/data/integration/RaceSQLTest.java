@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import rrhs.xc.ia.data.TestSQLRowUtil;
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.mem.Race;
@@ -20,24 +21,10 @@ public class RaceSQLTest {
 
     @BeforeAll
     public static void setup() {
-        row1 = new SQLRow("Race", 0);
-        row2 = new SQLRow("Race", 1);
+        row1 = TestSQLRowUtil.race1;
+        row2 = TestSQLRowUtil.race2;
 
-        row1.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, "Jake Herrmann");
-        row1.putPair(SQLTableInformation.Race.MEET_NAME_STR, "Conference 2023");
-        row1.putPair(SQLTableInformation.Race.VARSITY_BOOL, true);
-        row1.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, (17*60) + 49.5);
-        row1.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, (5 * 60) + 31);
-        row1.putPair(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL, (5 * 60) + 57);
-        row1.putPair(SQLTableInformation.Race.PLACE_INT, 1);
-
-        row2.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, "Otto");
-        row2.putPair(SQLTableInformation.Race.MEET_NAME_STR, "Conference 2023");
-        row2.putPair(SQLTableInformation.Race.VARSITY_BOOL, false);
-        row2.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, (21*60) + 50.6);
-        row2.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, (6 * 60) + 59);
-        row2.putPair(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL, (6 * 60) + 57);
-        row2.putPair(SQLTableInformation.Race.PLACE_INT, 6);
+        TestSQLRowUtil.populateRaceRows();
     }
 
     @BeforeEach
@@ -52,7 +39,7 @@ public class RaceSQLTest {
         assertEquals("Jake Herrmann", race1.getAthleteName());
         assertEquals("Conference 2023", race1.getMeetName());
         assertEquals(true, race1.isVarsity());
-        assertEquals((17 * 60) + 49.5, race1.getTimeSeconds());
+        assertEquals((17 * 60) + 48.5, race1.getTimeSeconds());
         assertEquals((5 * 60) + 31, race1.getMileOneSplitSeconds());
         assertEquals((5 * 60) + 57, race1.getMileTwoSplitSeconds());
 
@@ -83,7 +70,7 @@ public class RaceSQLTest {
         assertEquals("'Jake Herrmann'", resultRow1.get(SQLTableInformation.Race.ATHLETE_NAME_STR));
         assertEquals("'Conference 2023'", resultRow1.get(SQLTableInformation.Race.MEET_NAME_STR));
         assertEquals("'1'", resultRow1.get(SQLTableInformation.Race.VARSITY_BOOL));
-        assertEquals("'1069.5'", resultRow1.get(SQLTableInformation.Race.TOTAL_TIME_DBL));
+        assertEquals("'1068.5'", resultRow1.get(SQLTableInformation.Race.TOTAL_TIME_DBL));
         assertEquals("'331.0'", resultRow1.get(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL));
         assertEquals("'357.0'", resultRow1.get(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL));
 

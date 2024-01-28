@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import rrhs.xc.ia.data.TestSQLRowUtil;
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.mem.Athlete;
@@ -20,16 +21,10 @@ public class AthleteSQLTest {
 
     @BeforeAll
     public static void setup() {
-        row1 = new SQLRow("Athlete", 0);
-        row2 = new SQLRow("Athlete", 1);
+        row1 = TestSQLRowUtil.athlete1;
+        row2 = TestSQLRowUtil.athlete2;
 
-        row1.putPair(SQLTableInformation.Athlete.NAME_STR, "Jake Herrmann");
-        row1.putPair(SQLTableInformation.Athlete.BOYS_TEAM_BOOL, true);
-        row1.putPair(SQLTableInformation.Athlete.GRADUATION_YEAR_INT, 2024);
-
-        row2.putPair(SQLTableInformation.Athlete.NAME_STR, "Will");
-        row2.putPair(SQLTableInformation.Athlete.BOYS_TEAM_BOOL, false);
-        row2.putPair(SQLTableInformation.Athlete.GRADUATION_YEAR_INT, 2027);
+        TestSQLRowUtil.populateAthleteRows();
     }
 
     @BeforeEach

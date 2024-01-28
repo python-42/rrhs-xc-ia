@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import rrhs.xc.ia.data.TestSQLRowUtil;
 import rrhs.xc.ia.data.database.SQLRow;
-import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 
 public class RaceTest {
     
@@ -29,32 +29,10 @@ public class RaceTest {
         race2 = new Race();
         race3 = new Race();
 
-        row1 = new SQLRow("", 0);
-        row1.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, "Jake Herrmann");
-        row1.putPair(SQLTableInformation.Race.MEET_NAME_STR, "Conference 2023");
-        row1.putPair(SQLTableInformation.Race.VARSITY_BOOL, true);
-        row1.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, (17*60) + 48.5);
-        row1.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, (5 * 60) + 31);
-        row1.putPair(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL, (5 * 60) + 57);
-        row1.putPair(SQLTableInformation.Race.PLACE_INT, 1);
-
-        row2 = new SQLRow("", 0);
-        row2.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, "Otto");
-        row2.putPair(SQLTableInformation.Race.MEET_NAME_STR, "Conference 2023");
-        row2.putPair(SQLTableInformation.Race.VARSITY_BOOL, false);
-        row2.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, (21*60) + 50.6);
-        row2.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, (6 * 60) + 59);
-        row2.putPair(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL, (6 * 60) + 57);
-        row2.putPair(SQLTableInformation.Race.PLACE_INT, 6);
-
-        row3 = new SQLRow("", 0);
-        row3.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, "Luighse");
-        row3.putPair(SQLTableInformation.Race.MEET_NAME_STR, "Conference 2023");
-        row3.putPair(SQLTableInformation.Race.VARSITY_BOOL, true);
-        row3.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, (26*60) + 48.5);
-        row3.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, (8 * 60) + 15);
-        row3.putPair(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL, (8 * 60) + 51);
-        row3.putPair(SQLTableInformation.Race.PLACE_INT, 7);
+        row1 = TestSQLRowUtil.race1;
+        row2 = TestSQLRowUtil.race2;
+        row3 = TestSQLRowUtil.race3;
+        TestSQLRowUtil.populateRaceRows();
 
         race1.loadFromSQL(row1);
         race2.loadFromSQL(row2);
