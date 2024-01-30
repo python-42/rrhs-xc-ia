@@ -1,5 +1,7 @@
 package rrhs.xc.ia.data.mem;
 
+import java.time.LocalDate;
+
 import rrhs.xc.ia.data.Season;
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion;
@@ -7,6 +9,10 @@ import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.i.SQLSerializable;
 
 public class Race implements SQLSerializable{
+
+    private String athleteName;
+    private String meetName;
+    private LocalDate meetDate;
 
     private Season season;
     private boolean varsity;
@@ -38,6 +44,18 @@ public class Race implements SQLSerializable{
 
     //=======Basic getters=======
 
+    public String getAthleteName() {
+        return athleteName;
+    }
+
+    public String getMeetName() {
+        return meetName;
+    }
+
+    public LocalDate getMeetDate() {
+        return meetDate;
+    }
+
     public Season getSeason() {
         return season;
     }
@@ -65,6 +83,9 @@ public class Race implements SQLSerializable{
     @Override
     public void loadFromSQL(SQLRow result) {
         if(cansqlWrite) {
+            athleteName = SQLTypeConversion.getString(result.get(SQLTableInformation.Race.ATHLETE_NAME_STR));
+            meetName = SQLTypeConversion.getString(result.get(SQLTableInformation.Race.MEET_NAME_STR));
+            meetDate = SQLTypeConversion.getDate(result.get(SQLTableInformation.Race.MEET_DATE_STR));
             season = SQLTypeConversion.getSeason(result.get(SQLTableInformation.Race.SEASON_ENUM));
             varsity = SQLTypeConversion.getBoolean(result.get(SQLTableInformation.Race.VARSITY_BOOL));
             timeSeconds = SQLTypeConversion.getDouble(result.get(SQLTableInformation.Race.TOTAL_TIME_DBL));
@@ -80,6 +101,9 @@ public class Race implements SQLSerializable{
     @Override
     public SQLRow writeTOSQL() {
         SQLRow row = new SQLRow("Race", 0); //TODO ID
+        row.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, athleteName);
+        row.putPair(SQLTableInformation.Race.MEET_NAME_STR, meetName);
+        row.putPair(SQLTableInformation.Race.MEET_DATE_STR, meetDate);
         row.putPair(SQLTableInformation.Race.SEASON_ENUM, season);
         row.putPair(SQLTableInformation.Race.VARSITY_BOOL, varsity);
         row.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, timeSeconds);
@@ -98,6 +122,21 @@ public class Race implements SQLSerializable{
         if (getClass() != obj.getClass())
             return false;
         Race other = (Race) obj;
+        if (athleteName == null) {
+            if (other.athleteName != null)
+                return false;
+        } else if (!athleteName.equals(other.athleteName))
+            return false;
+        if (meetName == null) {
+            if (other.meetName != null)
+                return false;
+        } else if (!meetName.equals(other.meetName))
+            return false;
+        if (meetDate == null) {
+            if (other.meetDate != null)
+                return false;
+        } else if (!meetDate.equals(other.meetDate))
+            return false;
         if (season != other.season)
             return false;
         if (varsity != other.varsity)
