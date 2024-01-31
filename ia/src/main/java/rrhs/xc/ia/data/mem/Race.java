@@ -8,7 +8,7 @@ import rrhs.xc.ia.data.database.SQLTypeConversion;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.i.SQLSerializable;
 
-public class Race implements SQLSerializable{
+public class Race implements SQLSerializable, Comparable<Race>{
 
     private String athleteName;
     private String meetName;
@@ -150,6 +150,20 @@ public class Race implements SQLSerializable{
         if (place != other.place)
             return false;
         return true;
+    }
+
+    @Override
+    public int compareTo(Race other) {
+        if (this.equals(other)) {
+            return 0;
+        }
+
+        if (this.getMeetDate().equals(other.getMeetDate())) {
+            return (int) ((this.getTimeSeconds() - other.getTimeSeconds()) + 0.5);
+        }else {
+            return this.getMeetDate().compareTo(other.getMeetDate());
+        }
+
     }
 
 }
