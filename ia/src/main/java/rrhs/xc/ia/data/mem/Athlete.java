@@ -3,7 +3,6 @@ package rrhs.xc.ia.data.mem;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -293,9 +292,7 @@ public class Athlete implements PDFExportable, SQLSerializable {
         Document doc = PdfUtils.getDefaultDimensionsDocument();
 
         PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(file));
-        PdfFooter footer = new PdfFooter(PdfUtils.DEFAULT_DOCUMENT_WIDTH / 2, PdfUtils.DEFAULT_DOCUMENT_HEIGHT_MARGIN / 2);
-        footer.setFooterText("Generated on " + LocalDate.now().toString() + " by JCrossCountry Tracker. Go Huskies!");
-        writer.setPageEvent(footer);
+        writer.setPageEvent(new PdfFooter(PdfUtils.DEFAULT_DOCUMENT_WIDTH / 2, PdfUtils.DEFAULT_DOCUMENT_HEIGHT_MARGIN / 2));
 
         doc.addSubject(getName() + " Cross Country Summary");
 
