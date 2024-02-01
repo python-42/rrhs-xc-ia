@@ -1,4 +1,4 @@
-package rrhs.xc.ia.data.mem;
+package rrhs.xc.ia.data.integration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,6 +12,8 @@ import com.itextpdf.text.DocumentException;
 
 import rrhs.xc.ia.data.TestSQLRowUtil;
 import rrhs.xc.ia.data.database.SQLRow;
+import rrhs.xc.ia.data.mem.Athlete;
+import rrhs.xc.ia.data.mem.Race;
 
 public class PDFCreationTest {
     
