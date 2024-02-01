@@ -11,6 +11,9 @@ import rrhs.xc.ia.data.mem.Level;
  */
 public class TestSQLRowUtil {
     
+    public static final SQLRow meet1 = new SQLRow("Meet", 0);
+    public static final SQLRow meet2 = new SQLRow("Meet", 0);
+
     public static final SQLRow athlete1 = new SQLRow("Athlete", 0);
     public static final SQLRow athlete2 = new SQLRow("Athlete", 0);
 
@@ -114,6 +117,18 @@ public class TestSQLRowUtil {
     }
 
     public static void populateMeetRows() {
+        meet1.putPair(SQLTableInformation.Meet.MEET_NAME_STR, "Conference 2023");
+        meet1.putPair(SQLTableInformation.Meet.MEET_DATE_DATE, LocalDate.of(2023, 10, 14));
+        meet1.putPair(SQLTableInformation.Meet.TOTAL_VAR_BOYS_INT, 40);
+        meet1.putPair(SQLTableInformation.Meet.TOTAL_VAR_GIRLS_INT, 38);
+        meet1.putPair(SQLTableInformation.Meet.TOTAL_JV_BOYS_INT, 55);
+        meet1.putPair(SQLTableInformation.Meet.TOTAL_JV_GIRLS_INT, 6);
 
+        meet2.putPair(SQLTableInformation.Meet.MEET_NAME_STR, "Sectionals 2022");
+        meet2.putPair(SQLTableInformation.Meet.MEET_DATE_DATE, LocalDate.of(2022, 10, 22));
+        meet2.putPair(SQLTableInformation.Meet.TOTAL_VAR_BOYS_INT, 56);
+        meet2.putPair(SQLTableInformation.Meet.TOTAL_VAR_GIRLS_INT, 54);
+        meet2.putPair(SQLTableInformation.Meet.TOTAL_JV_BOYS_INT, 0);
+        meet2.putPair(SQLTableInformation.Meet.TOTAL_JV_GIRLS_INT, 0);
     }
 }
