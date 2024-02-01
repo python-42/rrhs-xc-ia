@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
+import rrhs.xc.ia.data.mem.Level;
 
 /**
  * This class holds several SQLRow objects which can be used for testing purposes.
@@ -37,6 +38,7 @@ public class TestSQLRowUtil {
         race1.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, "Jake Herrmann");
         race1.putPair(SQLTableInformation.Race.MEET_NAME_STR, "City Conference");
         race1.putPair(SQLTableInformation.Race.MEET_DATE_STR, LocalDate.of(2023, 10, 14));
+        race1.putPair(SQLTableInformation.Race.LEVEL_ENUM, Level.VARSITY_BOYS);
         race1.putPair(SQLTableInformation.Race.SEASON_ENUM, Season.SENIOR);
         race1.putPair(SQLTableInformation.Race.VARSITY_BOOL, true);
         race1.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, (17*60) + 48.5);
@@ -47,6 +49,7 @@ public class TestSQLRowUtil {
         race2.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, "Otto");
         race2.putPair(SQLTableInformation.Race.MEET_NAME_STR, "City Conference");
         race2.putPair(SQLTableInformation.Race.MEET_DATE_STR, LocalDate.of(2023, 10, 14));
+        race2.putPair(SQLTableInformation.Race.LEVEL_ENUM, Level.JV_BOYS);
         race2.putPair(SQLTableInformation.Race.SEASON_ENUM, Season.FRESHMAN);
         race2.putPair(SQLTableInformation.Race.VARSITY_BOOL, false);
         race2.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, (21*60) + 50.6);
@@ -57,6 +60,7 @@ public class TestSQLRowUtil {
         race3.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, "Luighse");
         race3.putPair(SQLTableInformation.Race.MEET_NAME_STR, "City Conference");
         race3.putPair(SQLTableInformation.Race.MEET_DATE_STR, LocalDate.of(2023, 10, 14));
+        race3.putPair(SQLTableInformation.Race.LEVEL_ENUM, Level.VARSITY_GIRLS);
         race3.putPair(SQLTableInformation.Race.SEASON_ENUM, Season.SENIOR);
         race3.putPair(SQLTableInformation.Race.VARSITY_BOOL, true);
         race3.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, (26*60) + 48.5);
@@ -67,6 +71,7 @@ public class TestSQLRowUtil {
         race4.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR  , "Jake Herrmann");
         race4.putPair(SQLTableInformation.Race.MEET_NAME_STR     , "Nightfall");
         race4.putPair(SQLTableInformation.Race.MEET_DATE_STR     , LocalDate.of(2023, 9, 29));
+        race4.putPair(SQLTableInformation.Race.LEVEL_ENUM        , Level.VARSITY_BOYS);
         race4.putPair(SQLTableInformation.Race.SEASON_ENUM       , Season.SENIOR);
         race4.putPair(SQLTableInformation.Race.VARSITY_BOOL      , true);
         race4.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL    , (18*60) + 10.36);
@@ -77,6 +82,7 @@ public class TestSQLRowUtil {
         race5.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR  , "Jake Herrmann");
         race5.putPair(SQLTableInformation.Race.MEET_NAME_STR     , "Shorewood");
         race5.putPair(SQLTableInformation.Race.MEET_DATE_STR     , LocalDate.of(2023, 10, 6));
+        race5.putPair(SQLTableInformation.Race.LEVEL_ENUM        , Level.VARSITY_BOYS);
         race5.putPair(SQLTableInformation.Race.SEASON_ENUM       , Season.SENIOR);
         race5.putPair(SQLTableInformation.Race.VARSITY_BOOL      , true);
         race5.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL    , (17*60) + 49.7);
@@ -87,6 +93,7 @@ public class TestSQLRowUtil {
         race6.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR  , "Jake Herrmann");
         race6.putPair(SQLTableInformation.Race.MEET_NAME_STR     , "Purgolder Invite");
         race6.putPair(SQLTableInformation.Race.MEET_DATE_STR     , LocalDate.of(2021, 10, 2));
+        race6.putPair(SQLTableInformation.Race.LEVEL_ENUM        , Level.VARSITY_BOYS);
         race6.putPair(SQLTableInformation.Race.SEASON_ENUM       , Season.SOPHOMORE);
         race6.putPair(SQLTableInformation.Race.VARSITY_BOOL      , true);
         race6.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL    , (19*60) + 44.6);
@@ -97,6 +104,7 @@ public class TestSQLRowUtil {
         race7.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR  , "Jake Herrmann");
         race7.putPair(SQLTableInformation.Race.MEET_NAME_STR     , "Sectionals");
         race7.putPair(SQLTableInformation.Race.MEET_DATE_STR     , LocalDate.of(2021, 10, 23));
+        race7.putPair(SQLTableInformation.Race.LEVEL_ENUM        , Level.VARSITY_BOYS);
         race7.putPair(SQLTableInformation.Race.SEASON_ENUM       , Season.SOPHOMORE);
         race7.putPair(SQLTableInformation.Race.VARSITY_BOOL      , true);
         race7.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL    , (18*60) + 54.4);

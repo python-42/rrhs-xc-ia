@@ -6,6 +6,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import rrhs.xc.ia.data.Season;
+import rrhs.xc.ia.data.mem.Level;
 
 public class SQLRow {
     private final SortedMap<String, String> row = new TreeMap<String, String>();
@@ -52,6 +53,10 @@ public class SQLRow {
     }
 
     public void putPair(String key, Season value) {
+        row.put(key, SQLTypeConversion.convert(value));
+    }
+
+    public void putPair(String key, Level value) {
         row.put(key, SQLTypeConversion.convert(value));
     }
 

@@ -14,6 +14,7 @@ public class Race implements SQLSerializable, Comparable<Race>{
     private String meetName;
     private LocalDate meetDate;
 
+    private Level level;
     private Season season;
     private boolean varsity;
     private double timeSeconds;
@@ -56,6 +57,10 @@ public class Race implements SQLSerializable, Comparable<Race>{
         return meetDate;
     }
 
+    public Level getLevel() {
+        return level;
+    }
+
     public Season getSeason() {
         return season;
     }
@@ -86,6 +91,7 @@ public class Race implements SQLSerializable, Comparable<Race>{
             athleteName = SQLTypeConversion.getString(result.get(SQLTableInformation.Race.ATHLETE_NAME_STR));
             meetName = SQLTypeConversion.getString(result.get(SQLTableInformation.Race.MEET_NAME_STR));
             meetDate = SQLTypeConversion.getDate(result.get(SQLTableInformation.Race.MEET_DATE_STR));
+            level = SQLTypeConversion.getLevel(result.get(SQLTableInformation.Race.LEVEL_ENUM));
             season = SQLTypeConversion.getSeason(result.get(SQLTableInformation.Race.SEASON_ENUM));
             varsity = SQLTypeConversion.getBoolean(result.get(SQLTableInformation.Race.VARSITY_BOOL));
             timeSeconds = SQLTypeConversion.getDouble(result.get(SQLTableInformation.Race.TOTAL_TIME_DBL));
@@ -104,6 +110,7 @@ public class Race implements SQLSerializable, Comparable<Race>{
         row.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, athleteName);
         row.putPair(SQLTableInformation.Race.MEET_NAME_STR, meetName);
         row.putPair(SQLTableInformation.Race.MEET_DATE_STR, meetDate);
+        row.putPair(SQLTableInformation.Race.LEVEL_ENUM, level);
         row.putPair(SQLTableInformation.Race.SEASON_ENUM, season);
         row.putPair(SQLTableInformation.Race.VARSITY_BOOL, varsity);
         row.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, timeSeconds);
@@ -138,6 +145,8 @@ public class Race implements SQLSerializable, Comparable<Race>{
         } else if (!meetDate.equals(other.meetDate))
             return false;
         if (season != other.season)
+            return false;
+        if (level != other.level)
             return false;
         if (varsity != other.varsity)
             return false;

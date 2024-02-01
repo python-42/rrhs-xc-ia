@@ -3,6 +3,7 @@ package rrhs.xc.ia.data.database;
 import java.time.LocalDate;
 
 import rrhs.xc.ia.data.Season;
+import rrhs.xc.ia.data.mem.Level;
 
 public class SQLTypeConversion {
 
@@ -33,7 +34,11 @@ public class SQLTypeConversion {
 
     public static String convert(Season x) {
         return convert(x.ordinal());
-    } 
+    }
+
+    public static String convert(Level x) {
+        return convert(x.ordinal());   
+    }
 
     public static String getString(String s) {
         return s.replaceFirst("'", "").substring(0, s.length() - 2);
@@ -81,6 +86,27 @@ public class SQLTypeConversion {
         return null;
     }
 
+    public static Level getLevel(String s) {
+        int ordinal = getInt(s);
+        if(ordinal == 0) {
+            return Level.VARSITY_BOYS;
+        }
+
+        if(ordinal == 1) {
+            return Level.VARSITY_GIRLS;
+        }
+
+        if(ordinal == 2) {
+            return Level.JV_BOYS;
+        }
+
+        if(ordinal == 3) {
+            return Level.JV_GIRLS;
+        }
+
+        return null;
+    }
+
     /**
      * Class which contains the names of the rows in the SQL table. This ensures
      * that the table identifiers match for all implemntations and tests.
@@ -90,7 +116,12 @@ public class SQLTypeConversion {
         }
 
         public class Meet {
-
+            public static final String MEET_NAME_STR = "name";
+            public static final String MEET_DATE_DATE = "date";
+            public static final String TOTAL_VAR_BOYS_INT = "totalVarBoys";
+            public static final String TOTAL_VAR_GIRLS_INT = "totalVarGirls";
+            public static final String TOTAL_JV_BOYS_INT = "totalJVBoys";
+            public static final String TOTAL_JV_GIRLS_INT = "totalJVGirls";
         }
 
         public class Race {
@@ -103,6 +134,7 @@ public class SQLTypeConversion {
             public static final String MILE_SPLIT_TWO_DBL = "splitTwoSeconds";
             public static final String PLACE_INT = "place";
             public static final String SEASON_ENUM = "season";
+            public static final String LEVEL_ENUM = "level";
         }
 
         public class Athlete {
