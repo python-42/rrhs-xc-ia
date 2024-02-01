@@ -1,5 +1,7 @@
 package rrhs.xc.ia.util;
 
+import java.time.LocalDate;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Phrase;
@@ -9,7 +11,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class PdfFooter extends PdfPageEventHelper {
     
-    private String footerText = "";
+    private String footerText = "Generated on " + LocalDate.now().toString() + " by JCrossCountry Tracker. Go Huskies!";
     private int x;
     private int y;
 

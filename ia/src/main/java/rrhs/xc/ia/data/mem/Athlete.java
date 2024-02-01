@@ -1,6 +1,5 @@
 package rrhs.xc.ia.data.mem;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,21 +10,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -36,8 +30,8 @@ import rrhs.xc.ia.data.database.SQLTypeConversion;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.i.PDFExportable;
 import rrhs.xc.ia.data.i.SQLSerializable;
-import rrhs.xc.ia.util.GraphFactory;
 import rrhs.xc.ia.util.PdfFooter;
+import rrhs.xc.ia.util.PdfUtils;
 import rrhs.xc.ia.util.PrettyPrinter;
 
 public class Athlete implements PDFExportable, SQLSerializable {
@@ -269,21 +263,8 @@ public class Athlete implements PDFExportable, SQLSerializable {
             dataset.addSeries(series);
         }
 
-        return GraphFactory.createTimeSeriesChart("", "Date", "Race Time", dataset);
+        return PdfUtils.createTimeSeriesChart("", "Date", "Race Time", dataset);
     }
-
-    private byte[] getGraphImageBytes(int height, int width) throws IOException {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ChartUtils.writeChartAsPNG(out, getGraph(), width, height);
-
-        return out.toByteArray();
-    }
-
-    private Paragraph setAlignment(Paragraph p, int align) {
-        p.setAlignment(align);
-        return p;
-    }
-    
 
     @Override
     public void loadFromSQL(SQLRow result) {
@@ -309,124 +290,93 @@ public class Athlete implements PDFExportable, SQLSerializable {
 
     @Override
     public void writeToPDF(File file) throws DocumentException, IOException{
-        final int DOCUMENT_HEIGHT = 1000;
-        final int DOCUMENT_WIDTH = 1000;
+        Document doc = PdfUtils.getDefaultDimensionsDocument();
 
-        final int DOCUMENT_HEIGHT_MARGIN = 50;
-        final int DOCUMENT_WIDTH_MARGIN = 100;
-
-        final int CHART_HEIGHT = 800 - DOCUMENT_HEIGHT_MARGIN;
-        final int CHART_WIDTH = DOCUMENT_WIDTH - DOCUMENT_WIDTH_MARGIN;
-
-
-        Document doc = new Document(new Rectangle(DOCUMENT_HEIGHT, DOCUMENT_WIDTH), DOCUMENT_WIDTH_MARGIN / 2, DOCUMENT_WIDTH_MARGIN / 2, DOCUMENT_HEIGHT_MARGIN / 2, DOCUMENT_HEIGHT_MARGIN / 2);
         PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(file));
-        PdfFooter footer = new PdfFooter(DOCUMENT_WIDTH / 2, (int)(DOCUMENT_HEIGHT_MARGIN * 0.5));
+        PdfFooter footer = new PdfFooter(PdfUtils.DEFAULT_DOCUMENT_WIDTH / 2, PdfUtils.DEFAULT_DOCUMENT_HEIGHT_MARGIN / 2);
         footer.setFooterText("Generated on " + LocalDate.now().toString() + " by JCrossCountry Tracker. Go Huskies!");
-        
         writer.setPageEvent(footer);
 
         doc.addSubject(getName() + " Cross Country Summary");
-        doc.addCreationDate();
 
         float spacing = 10;
-
-        Font titleFont = FontFactory.getFont(FontFactory.COURIER, 40, Font.NORMAL, BaseColor.BLUE);
-        Font subtitleFont = FontFactory.getFont(FontFactory.COURIER, 30, Font.ITALIC, BaseColor.GRAY);
-        Font sectionHeaderFont = FontFactory.getFont(FontFactory.COURIER, 30, Font.NORMAL, BaseColor.BLUE);
-        Font tableHeaderFont = FontFactory.getFont(FontFactory.COURIER, 15, Font.BOLD, new BaseColor(0, 102, 255));
-        Font statsTitleFont = FontFactory.getFont(FontFactory.COURIER, 35, Font.UNDERLINE, BaseColor.BLACK);
-        Font statsFont = FontFactory.getFont(FontFactory.COURIER, 15, Font.NORMAL, BaseColor.BLACK);
-
-        Paragraph title = new Paragraph(getName(), titleFont);
-        title.setAlignment(Element.ALIGN_CENTER);
-        title.setSpacingAfter(spacing);
-
-        Paragraph subtitle = new Paragraph("Class of " + getGradYear() + "\n", subtitleFont);
-        subtitle.setAlignment(Element.ALIGN_CENTER);
-        subtitle.setSpacingAfter(spacing);
-
-        Paragraph statsTitle = new Paragraph("Statistics", statsTitleFont);
-        statsTitle.setAlignment(Element.ALIGN_CENTER);
-        statsTitle.setSpacingAfter(spacing);
-
-        Image img = Image.getInstance(getGraphImageBytes(CHART_HEIGHT, CHART_WIDTH));
+        
+        //Page one: Title and graph
         doc.open();
-        doc.add(title);
-        doc.add(subtitle);
+        doc.add(PdfUtils.getParagraph(getName(), PdfUtils.TITLE_FONT, spacing));
+        doc.add(PdfUtils.getParagraph("Class of " + getGradYear(), PdfUtils.SUBTITLE_FONT, spacing));
         doc.add(new LineSeparator());
-        doc.add(img);
+        doc.add(Image.getInstance(PdfUtils.getChartImageBytes(this.getGraph(), 800 - PdfUtils.DEFAULT_DOCUMENT_HEIGHT_MARGIN, PdfUtils.DEFAULT_DOCUMENT_WIDTH - PdfUtils.DEFAULT_DOCUMENT_WIDTH_MARGIN)));
         doc.newPage();
         
+        //Page two: Performance tables for each season
         PdfPTable table;
-        Paragraph sectionHeader;
         for (Season season : getSeasons()) {
-            sectionHeader = new Paragraph(season.name(), sectionHeaderFont);
-            sectionHeader.setAlignment(Element.ALIGN_CENTER);
-            sectionHeader.setSpacingAfter(spacing);
-
             table = new PdfPTable(pdfColumnTitles.length);
             table.setHeaderRows(1);
             table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
             table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
             table.getDefaultCell().setPadding(spacing);
 
-            for (String s : pdfColumnTitles) {
-                PdfPCell cell = new PdfPCell(new Paragraph(s, tableHeaderFont));
+            //Header row
+            for (String title : pdfColumnTitles) {
+                PdfPCell cell = new PdfPCell(new Paragraph(title, PdfUtils.TABLE_HEADER_FONT));
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setPadding(spacing);
 
                 table.addCell(cell);
             }
-            
             table.completeRow();
 
             Collections.sort(raceMap.get(season));
 
-            for (Race r : raceMap.get(season)) {
-                table.addCell(r.getMeetName());
-                table.addCell(r.getMeetDate().toString());
-                table.addCell(PrettyPrinter.formatTime(r.getTimeSeconds()));
-                table.addCell(r.getPlace() + "");
-                table.addCell(PrettyPrinter.formatTime(r.getMileOneSplitSeconds()));
-                table.addCell(PrettyPrinter.formatTime(r.getMileTwoSplitSeconds()));
-                table.addCell(PrettyPrinter.formatTime(r.getMileThreeSplitSeconds()));
-                table.addCell(PrettyPrinter.formatTime(r.getAverageSplitSeconds()));
+            //Data rows
+            for (Race race : raceMap.get(season)) {
+                table.addCell(race.getMeetName());
+                table.addCell(race.getMeetDate().toString());
+                table.addCell(PrettyPrinter.formatTime(race.getTimeSeconds()));
+                table.addCell(race.getPlace() + "");
+                table.addCell(PrettyPrinter.formatTime(race.getMileOneSplitSeconds()));
+                table.addCell(PrettyPrinter.formatTime(race.getMileTwoSplitSeconds()));
+                table.addCell(PrettyPrinter.formatTime(race.getMileThreeSplitSeconds()));
+                table.addCell(PrettyPrinter.formatTime(race.getAverageSplitSeconds()));
 
                 table.completeRow();
             }
 
-            doc.add(sectionHeader);
+            doc.add(PdfUtils.getParagraph(season.name(), PdfUtils.SECTION_HEADER_FONT, spacing));
             doc.add(table);
         }
 
         doc.newPage();
-        doc.add(statsTitle);
 
-        for (Season s : getSeasons()) {
-            doc.add(setAlignment(new Paragraph(s.name(), sectionHeaderFont), Element.ALIGN_CENTER));
+        //Page three: Statistics
+        doc.add(PdfUtils.getParagraph("Statistics", PdfUtils.STATS_TITLE_FONT));
 
-            doc.add(setAlignment(new Paragraph("Time Drop: " + PrettyPrinter.formatTime(getSeasonTimeDropSeconds(s)), statsFont), Element.ALIGN_CENTER));
-            doc.add(setAlignment(new Paragraph("Average Time: " + PrettyPrinter.formatTime(getSeasonAverageTime(s)), statsFont), Element.ALIGN_CENTER));
-            doc.add(setAlignment(new Paragraph("Average Mile 1 Split: " + PrettyPrinter.formatTime(getAverageSeasonSplitSeconds(s, 1)), statsFont), Element.ALIGN_CENTER));
-            doc.add(setAlignment(new Paragraph("Average Mile 2 Split: " + PrettyPrinter.formatTime(getAverageSeasonSplitSeconds(s, 2)), statsFont), Element.ALIGN_CENTER));
-            doc.add(setAlignment(new Paragraph("Average Mile 3 Split: " + PrettyPrinter.formatTime(getAverageSeasonSplitSeconds(s, 3)), statsFont), Element.ALIGN_CENTER));
+        for (Season season : getSeasons()) {
+            doc.add(PdfUtils.getParagraph(season.name(), PdfUtils.SECTION_HEADER_FONT));
 
-            Race best = getBestSeasonRace(s);
-            doc.add(setAlignment(new Paragraph("Best Race: " + best.getMeetName() + " (" + PrettyPrinter.formatTime(best.getTimeSeconds()) + ")", statsFont), Element.ALIGN_CENTER));
+            doc.add(PdfUtils.getParagraph("Time Drop: " + PrettyPrinter.formatTime(getSeasonTimeDropSeconds(season)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Time: " + PrettyPrinter.formatTime(getSeasonAverageTime(season)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Mile 1 Split: " + PrettyPrinter.formatTime(getAverageSeasonSplitSeconds(season, 1)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Mile 2 Split: " + PrettyPrinter.formatTime(getAverageSeasonSplitSeconds(season, 2)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Mile 3 Split: " + PrettyPrinter.formatTime(getAverageSeasonSplitSeconds(season, 3)), PdfUtils.STATS_FONT));
+
+            Race best = getBestSeasonRace(season);
+            doc.add(PdfUtils.getParagraph("Best Race: " + best.getMeetName() + " (" + PrettyPrinter.formatTime(best.getTimeSeconds()) + ")", PdfUtils.STATS_FONT));
         }
 
-        doc.add(setAlignment(new Paragraph("CAREER", sectionHeaderFont), Element.ALIGN_CENTER));
+        doc.add(PdfUtils.getParagraph("CAREER", PdfUtils.SECTION_HEADER_FONT));
 
-        doc.add(setAlignment(new Paragraph("Time Drop: " + PrettyPrinter.formatTime(getCareerTimeDropSeconds()), statsFont), Element.ALIGN_CENTER));
-        doc.add(setAlignment(new Paragraph("Average Time: " + PrettyPrinter.formatTime(getCareerAverageTime()), statsFont), Element.ALIGN_CENTER));
-        doc.add(setAlignment(new Paragraph("Average Mile 1 Split: " + PrettyPrinter.formatTime(getAverageCareerSplitSeconds(1)), statsFont), Element.ALIGN_CENTER));
-        doc.add(setAlignment(new Paragraph("Average Mile 2 Split: " + PrettyPrinter.formatTime(getAverageCareerSplitSeconds(2)), statsFont), Element.ALIGN_CENTER));
-        doc.add(setAlignment(new Paragraph("Average Mile 3 Split: " + PrettyPrinter.formatTime(getAverageCareerSplitSeconds(3)), statsFont), Element.ALIGN_CENTER));
+        doc.add(PdfUtils.getParagraph("Time Drop: " + PrettyPrinter.formatTime(getCareerTimeDropSeconds()), PdfUtils.STATS_FONT));
+        doc.add(PdfUtils.getParagraph("Average Time: " + PrettyPrinter.formatTime(getCareerAverageTime()), PdfUtils.STATS_FONT));
+        doc.add(PdfUtils.getParagraph("Average Mile 1 Split: " + PrettyPrinter.formatTime(getAverageCareerSplitSeconds(1)), PdfUtils.STATS_FONT));
+        doc.add(PdfUtils.getParagraph("Average Mile 2 Split: " + PrettyPrinter.formatTime(getAverageCareerSplitSeconds(2)), PdfUtils.STATS_FONT));
+        doc.add(PdfUtils.getParagraph("Average Mile 3 Split: " + PrettyPrinter.formatTime(getAverageCareerSplitSeconds(3)), PdfUtils.STATS_FONT));
 
         Race best = getBestCareerRace();
-        doc.add(setAlignment(new Paragraph("Best Race: " + best.getMeetName() + " (" + PrettyPrinter.formatTime(best.getTimeSeconds()) + ")", statsFont), Element.ALIGN_CENTER));
+        doc.add(PdfUtils.getParagraph("Best Race: " + best.getMeetName() + " (" + PrettyPrinter.formatTime(best.getTimeSeconds()) + ")", PdfUtils.STATS_FONT));
 
         doc.close();
     }
