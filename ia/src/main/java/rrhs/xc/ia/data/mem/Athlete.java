@@ -25,7 +25,6 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -279,6 +278,11 @@ public class Athlete implements PDFExportable, SQLSerializable {
 
         return out.toByteArray();
     }
+
+    private Paragraph setAlignment(Paragraph p, int align) {
+        p.setAlignment(align);
+        return p;
+    }
     
 
     @Override
@@ -330,9 +334,9 @@ public class Athlete implements PDFExportable, SQLSerializable {
         Font titleFont = FontFactory.getFont(FontFactory.COURIER, 40, Font.NORMAL, BaseColor.BLUE);
         Font subtitleFont = FontFactory.getFont(FontFactory.COURIER, 30, Font.ITALIC, BaseColor.GRAY);
         Font sectionHeaderFont = FontFactory.getFont(FontFactory.COURIER, 30, Font.NORMAL, BaseColor.BLUE);
-        Font statsHeaderFont = FontFactory.getFont(FontFactory.COURIER, 35, Font.UNDERLINE, BaseColor.BLACK);
         Font tableHeaderFont = FontFactory.getFont(FontFactory.COURIER, 15, Font.BOLD, new BaseColor(0, 102, 255));
-        Font textFont = FontFactory.getFont(FontFactory.COURIER, 15, Font.NORMAL, BaseColor.BLACK);
+        Font statsTitleFont = FontFactory.getFont(FontFactory.COURIER, 35, Font.UNDERLINE, BaseColor.BLACK);
+        Font statsFont = FontFactory.getFont(FontFactory.COURIER, 15, Font.NORMAL, BaseColor.BLACK);
 
         Paragraph title = new Paragraph(getName(), titleFont);
         title.setAlignment(Element.ALIGN_CENTER);
@@ -342,12 +346,9 @@ public class Athlete implements PDFExportable, SQLSerializable {
         subtitle.setAlignment(Element.ALIGN_CENTER);
         subtitle.setSpacingAfter(spacing);
 
-        Paragraph statsTitle = new Paragraph("Statistics", statsHeaderFont);
+        Paragraph statsTitle = new Paragraph("Statistics", statsTitleFont);
         statsTitle.setAlignment(Element.ALIGN_CENTER);
         statsTitle.setSpacingAfter(spacing);
-
-        Paragraph generationInformation = new Paragraph("Generated on " + LocalDate.now().toString() + " by JCrossCountry Tracker. Go Huskies!", textFont);
-        generationInformation.setAlignment(Element.ALIGN_RIGHT);
 
         Image img = Image.getInstance(getGraphImageBytes(CHART_HEIGHT, CHART_WIDTH));
         doc.open();
@@ -371,7 +372,7 @@ public class Athlete implements PDFExportable, SQLSerializable {
             table.getDefaultCell().setPadding(spacing);
 
             for (String s : pdfColumnTitles) {
-                PdfPCell cell = new PdfPCell(new Phrase(s, tableHeaderFont));
+                PdfPCell cell = new PdfPCell(new Paragraph(s, tableHeaderFont));
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setPadding(spacing);
@@ -403,7 +404,30 @@ public class Athlete implements PDFExportable, SQLSerializable {
         doc.newPage();
         doc.add(statsTitle);
 
-        //TODO: statistics 
+        for (Season s : getSeasons()) {
+            doc.add(setAlignment(new Paragraph(s.name(), sectionHeaderFont), Element.ALIGN_CENTER));
+
+            doc.add(setAlignment(new Paragraph("Time Drop: " + PrettyPrinter.formatTime(getSeasonTimeDropSeconds(s)), statsFont), Element.ALIGN_CENTER));
+            doc.add(setAlignment(new Paragraph("Average Time: " + PrettyPrinter.formatTime(getSeasonAverageTime(s)), statsFont), Element.ALIGN_CENTER));
+            doc.add(setAlignment(new Paragraph("Average Mile 1 Split: " + PrettyPrinter.formatTime(getAverageSeasonSplitSeconds(s, 1)), statsFont), Element.ALIGN_CENTER));
+            doc.add(setAlignment(new Paragraph("Average Mile 2 Split: " + PrettyPrinter.formatTime(getAverageSeasonSplitSeconds(s, 2)), statsFont), Element.ALIGN_CENTER));
+            doc.add(setAlignment(new Paragraph("Average Mile 3 Split: " + PrettyPrinter.formatTime(getAverageSeasonSplitSeconds(s, 3)), statsFont), Element.ALIGN_CENTER));
+
+            Race best = getBestSeasonRace(s);
+            doc.add(setAlignment(new Paragraph("Best Race: " + best.getMeetName() + " (" + PrettyPrinter.formatTime(best.getTimeSeconds()) + ")", statsFont), Element.ALIGN_CENTER));
+        }
+
+        doc.add(setAlignment(new Paragraph("CAREER", sectionHeaderFont), Element.ALIGN_CENTER));
+
+        doc.add(setAlignment(new Paragraph("Time Drop: " + PrettyPrinter.formatTime(getCareerTimeDropSeconds()), statsFont), Element.ALIGN_CENTER));
+        doc.add(setAlignment(new Paragraph("Average Time: " + PrettyPrinter.formatTime(getCareerAverageTime()), statsFont), Element.ALIGN_CENTER));
+        doc.add(setAlignment(new Paragraph("Average Mile 1 Split: " + PrettyPrinter.formatTime(getAverageCareerSplitSeconds(1)), statsFont), Element.ALIGN_CENTER));
+        doc.add(setAlignment(new Paragraph("Average Mile 2 Split: " + PrettyPrinter.formatTime(getAverageCareerSplitSeconds(2)), statsFont), Element.ALIGN_CENTER));
+        doc.add(setAlignment(new Paragraph("Average Mile 3 Split: " + PrettyPrinter.formatTime(getAverageCareerSplitSeconds(3)), statsFont), Element.ALIGN_CENTER));
+
+        Race best = getBestCareerRace();
+        doc.add(setAlignment(new Paragraph("Best Race: " + best.getMeetName() + " (" + PrettyPrinter.formatTime(best.getTimeSeconds()) + ")", statsFont), Element.ALIGN_CENTER));
+
         doc.close();
     }
 

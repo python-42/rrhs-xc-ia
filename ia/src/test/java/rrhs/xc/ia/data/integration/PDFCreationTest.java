@@ -47,7 +47,7 @@ public class PDFCreationTest {
 
         a1.loadFromSQL(athleteRow);
 
-        File f = new File("TestPDF.pdf");
+        File f = new File("AthleteTestPDF.pdf");
         a1.writeToPDF(f);
 
         assertTrue(f.exists());
