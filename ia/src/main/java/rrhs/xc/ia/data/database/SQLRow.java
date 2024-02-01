@@ -5,8 +5,8 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import rrhs.xc.ia.data.Season;
 import rrhs.xc.ia.data.mem.Level;
+import rrhs.xc.ia.data.mem.Season;
 
 public class SQLRow {
     private final SortedMap<String, String> row = new TreeMap<String, String>();

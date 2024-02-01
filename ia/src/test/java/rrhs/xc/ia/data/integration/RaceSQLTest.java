@@ -8,12 +8,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import rrhs.xc.ia.data.Season;
 import rrhs.xc.ia.data.TestSQLRowUtil;
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.mem.Level;
 import rrhs.xc.ia.data.mem.Race;
+import rrhs.xc.ia.data.mem.Season;
 
 public class RaceSQLTest {
 

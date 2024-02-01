@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.mem.Level;
+import rrhs.xc.ia.data.mem.Season;
 
 /**
  * This class holds several SQLRow objects which can be used for testing purposes.

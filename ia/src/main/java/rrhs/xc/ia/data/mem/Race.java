@@ -2,7 +2,6 @@ package rrhs.xc.ia.data.mem;
 
 import java.time.LocalDate;
 
-import rrhs.xc.ia.data.Season;
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;

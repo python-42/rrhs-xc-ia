@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import rrhs.xc.ia.data.Season;
+import rrhs.xc.ia.data.mem.Season;
 
 public class SQLTypeConversionTest {
     

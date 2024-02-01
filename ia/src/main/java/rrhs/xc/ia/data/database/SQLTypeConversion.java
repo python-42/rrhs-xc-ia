@@ -2,8 +2,8 @@ package rrhs.xc.ia.data.database;
 
 import java.time.LocalDate;
 
-import rrhs.xc.ia.data.Season;
 import rrhs.xc.ia.data.mem.Level;
+import rrhs.xc.ia.data.mem.Season;
 
 public class SQLTypeConversion {
 

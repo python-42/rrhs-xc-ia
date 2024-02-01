@@ -1,4 +1,4 @@
-package rrhs.xc.ia.data;
+package rrhs.xc.ia.data.mem;
 
 public enum Season {
     FRESHMAN,

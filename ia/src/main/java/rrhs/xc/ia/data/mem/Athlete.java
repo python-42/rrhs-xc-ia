@@ -32,7 +32,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
-import rrhs.xc.ia.data.Season;
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
