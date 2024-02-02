@@ -71,4 +71,10 @@ public class MeetTest {
         assertEquals(-1, m1.getPlaceSpread(Level.JV_BOYS));
     }
 
+    @Test 
+    public void testGetLevel() {
+        assertEquals(Level.VARSITY_BOYS,  m1.getLevels()[0]);
+        assertEquals(Level.VARSITY_GIRLS,  m1.getLevels()[1]);
+    }
+
 }

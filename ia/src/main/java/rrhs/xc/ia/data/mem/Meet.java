@@ -1,20 +1,33 @@
 package rrhs.xc.ia.data.mem;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.i.PDFExportable;
 import rrhs.xc.ia.data.i.SQLSerializable;
+import rrhs.xc.ia.util.PdfFooter;
+import rrhs.xc.ia.util.PdfUtils;
+import rrhs.xc.ia.util.PrettyPrinter;
 
 public class Meet implements SQLSerializable, PDFExportable  {
 
@@ -24,6 +37,8 @@ public class Meet implements SQLSerializable, PDFExportable  {
     private HashMap<Level, List<Race>> raceMap = new HashMap<Level, List<Race>>();
 
     private boolean canSqlWrite = true;
+
+    private final String[] pdfColumnTitles = {"ATHLETE NAME", "TIME", "PLACE", "MILE ONE SPLIT", "MILE TWO SPLIT", "MILE THREE SPLIT", "AVERAGE SPLIT"};
 
     public Meet(List<Race> list) {
         if (list == null) {
@@ -117,6 +132,12 @@ public class Meet implements SQLSerializable, PDFExportable  {
         return athleteCounts;
     }
 
+    public Level[] getLevels() {
+        Level[] l = {};
+        l = raceMap.keySet().toArray(l);
+        Arrays.sort(l);
+        return l;
+    }
 
     @Override
     public void loadFromSQL(SQLRow result) {
@@ -148,8 +169,77 @@ public class Meet implements SQLSerializable, PDFExportable  {
 
     @Override
     public void writeToPDF(File file) throws IOException, DocumentException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'writeToPDF'");
+        Document doc = PdfUtils.getDefaultDimensionsDocument();
+        PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(file));
+
+        writer.setPageEvent(new PdfFooter(PdfUtils.DEFAULT_DOCUMENT_WIDTH / 2, PdfUtils.DEFAULT_DOCUMENT_HEIGHT_MARGIN / 2));
+
+        doc.addSubject(getName() + " Meet Summary");
+
+        float spacing = 10;
+        
+        doc.open();
+
+        //Page one: Title and stats
+        doc.add(PdfUtils.getParagraph(getName(), PdfUtils.TITLE_FONT, spacing));
+        doc.add(PdfUtils.getParagraph(getDate().toString(), PdfUtils.SUBTITLE_FONT, spacing));
+        doc.add(new LineSeparator());
+        
+        doc.add(PdfUtils.getParagraph("Statistics", PdfUtils.STATS_TITLE_FONT));
+        for (Level level : getLevels()) {
+            doc.add(PdfUtils.getParagraph(level.name().replace('_', ' '), PdfUtils.SECTION_HEADER_FONT));
+
+            doc.add(PdfUtils.getParagraph("Average Time: " + PrettyPrinter.formatTime(getAverageTimeSeconds(level)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Mile One Split: " + PrettyPrinter.formatTime(getAverageSplitSeconds(1, level)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Mile Two Split: " + PrettyPrinter.formatTime(getAverageSplitSeconds(2, level)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Mile Three Split: " + PrettyPrinter.formatTime(getAverageSplitSeconds(3, level)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Time Spread: " + PrettyPrinter.formatTime(getTimeSpreadSeconds(level)), PdfUtils.STATS_FONT));
+            
+
+            doc.add(PdfUtils.getParagraph(name, null));
+        }
+        doc.newPage();
+
+        //Page two: Performance tables
+        PdfPTable table;
+        for (Level level : getLevels()) {
+            table = new PdfPTable(pdfColumnTitles.length);
+            table.setHeaderRows(1);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.getDefaultCell().setPadding(spacing);
+
+            //Header row
+            for (String title : pdfColumnTitles) {
+                PdfPCell cell = new PdfPCell(new Paragraph(title, PdfUtils.TABLE_HEADER_FONT));
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setPadding(spacing);
+
+                table.addCell(cell);
+            }
+            table.completeRow();
+
+            Collections.sort(raceMap.get(level));
+
+            //Data rows
+            for (Race race : raceMap.get(level)) {
+                table.addCell(race.getAthleteName());
+                table.addCell(PrettyPrinter.formatTime(race.getTimeSeconds()));
+                table.addCell(race.getPlace() + "");
+                table.addCell(PrettyPrinter.formatTime(race.getMileOneSplitSeconds()));
+                table.addCell(PrettyPrinter.formatTime(race.getMileTwoSplitSeconds()));
+                table.addCell(PrettyPrinter.formatTime(race.getMileThreeSplitSeconds()));
+                table.addCell(PrettyPrinter.formatTime(race.getAverageSplitSeconds()));
+            }
+            table.completeRow();
+
+            doc.add(PdfUtils.getParagraph(level.name().replace('_', ' '), PdfUtils.SECTION_HEADER_FONT, spacing));
+            doc.add(table);
+
+        }
+
+        doc.close();
     }
     
 }
