@@ -7,8 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import rrhs.xc.ia.data.TestSQLRowUtil;
-import rrhs.xc.ia.data.database.SQLRow;
+import rrhs.xc.ia.data.TestRacesUtil;
 
 public class MeetTest {
     
@@ -17,22 +16,7 @@ public class MeetTest {
 
     @BeforeAll
     public static void setup() {
-        SQLRow row1 = TestSQLRowUtil.race1;
-        SQLRow row3 = TestSQLRowUtil.race3;
-        SQLRow row4 = TestSQLRowUtil.race4;
-
-        Race r1 = new Race(); // var boys
-        Race r3 = new Race(); // var girls
-        Race r4 = new Race(); // var boys, meet date and name dont match but we can safely ignore this for the test
-
-        TestSQLRowUtil.populateRaceRows();
-
-        r1.loadFromSQL(row1);
-        r3.loadFromSQL(row3);
-        r4.loadFromSQL(row4);
-
-        m1 = new Meet(List.of(r1, r3, r4));
-
+        m1 = new Meet(List.of(TestRacesUtil.race1, TestRacesUtil.race3, TestRacesUtil.race4), "Test", null, -1, -1, -1, -1);
     }
 
     @Test 

@@ -21,7 +21,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
 import rrhs.xc.ia.data.database.SQLRow;
-import rrhs.xc.ia.data.database.SQLTypeConversion;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.i.PDFExportable;
 import rrhs.xc.ia.data.i.SQLSerializable;
@@ -33,14 +32,17 @@ public class Meet implements SQLSerializable, PDFExportable  {
 
     private String name;
     private LocalDate date;
-    private int[] athleteCounts = {-1, -1, -1, -1}; //[varsityBoys, varsityGirls, JVBoys, JVGirls]
+    private int[] athleteCounts; //[varsityBoys, varsityGirls, JVBoys, JVGirls]
     private HashMap<Level, List<Race>> raceMap = new HashMap<Level, List<Race>>();
-
-    private boolean canSqlWrite = true;
 
     private final String[] pdfColumnTitles = {"ATHLETE NAME", "TIME", "PLACE", "MILE ONE SPLIT", "MILE TWO SPLIT", "MILE THREE SPLIT", "AVERAGE SPLIT"};
 
-    public Meet(List<Race> list) {
+    public Meet(List<Race> list, String name, LocalDate date, int varBoys, int varGirls, int jvBoys, int jvGirls) {
+        this.name = name;
+        this.date = date;
+        
+        this.athleteCounts = new int[]{varBoys, varGirls, jvBoys, jvGirls};
+
         if (list == null) {
             return;
         }
@@ -137,20 +139,6 @@ public class Meet implements SQLSerializable, PDFExportable  {
         l = raceMap.keySet().toArray(l);
         Arrays.sort(l);
         return l;
-    }
-
-    @Override
-    public void loadFromSQL(SQLRow result) {
-        if (canSqlWrite) {
-            name =             SQLTypeConversion.getString(result.get(SQLTableInformation.Meet.MEET_NAME_STR));
-            date =             SQLTypeConversion.getDate(result.get(SQLTableInformation.Meet.MEET_DATE_DATE));
-            athleteCounts[0] = SQLTypeConversion.getInt(result.get(SQLTableInformation.Meet.TOTAL_VAR_BOYS_INT));
-            athleteCounts[1] = SQLTypeConversion.getInt(result.get(SQLTableInformation.Meet.TOTAL_VAR_GIRLS_INT));
-            athleteCounts[2] = SQLTypeConversion.getInt(result.get(SQLTableInformation.Meet.TOTAL_JV_BOYS_INT));
-            athleteCounts[3] = SQLTypeConversion.getInt(result.get(SQLTableInformation.Meet.TOTAL_JV_GIRLS_INT));
-
-            canSqlWrite = false;
-        }
     }
 
     @Override

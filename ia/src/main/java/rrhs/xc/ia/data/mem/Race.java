@@ -3,7 +3,6 @@ package rrhs.xc.ia.data.mem;
 import java.time.LocalDate;
 
 import rrhs.xc.ia.data.database.SQLRow;
-import rrhs.xc.ia.data.database.SQLTypeConversion;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.i.SQLSerializable;
 
@@ -15,13 +14,22 @@ public class Race implements SQLSerializable, Comparable<Race>{
 
     private Level level;
     private Season season;
-    private boolean varsity;
     private double timeSeconds;
     private double splitOneSeconds;
     private double splitTwoSeconds;
     private int place;
 
-    private boolean cansqlWrite = true;
+    public Race(String athleteName, String meetName, LocalDate meetDate, Level level, Season season, double timeSeconds, double splitOneSeconds, double splitTwoSeconds, int place) {
+        this.athleteName = athleteName;
+        this.meetName = meetName;
+        this.meetDate = meetDate;
+        this.level = level;
+        this.season = season;
+        this.timeSeconds = timeSeconds;
+        this.splitOneSeconds = splitOneSeconds;
+        this.splitTwoSeconds = splitTwoSeconds;
+        this.place = place;
+    }
 
     public double getAverageSplitSeconds() {
         return (timeSeconds) / 3.1;
@@ -64,10 +72,6 @@ public class Race implements SQLSerializable, Comparable<Race>{
         return season;
     }
 
-    public boolean isVarsity() {
-        return varsity;
-    }
-
     public double getTimeSeconds() {
         return timeSeconds;
     }
@@ -85,25 +89,6 @@ public class Race implements SQLSerializable, Comparable<Race>{
     }
 
     @Override
-    public void loadFromSQL(SQLRow result) {
-        if(cansqlWrite) {
-            athleteName = SQLTypeConversion.getString(result.get(SQLTableInformation.Race.ATHLETE_NAME_STR));
-            meetName = SQLTypeConversion.getString(result.get(SQLTableInformation.Race.MEET_NAME_STR));
-            meetDate = SQLTypeConversion.getDate(result.get(SQLTableInformation.Race.MEET_DATE_STR));
-            level = SQLTypeConversion.getLevel(result.get(SQLTableInformation.Race.LEVEL_ENUM));
-            season = SQLTypeConversion.getSeason(result.get(SQLTableInformation.Race.SEASON_ENUM));
-            varsity = SQLTypeConversion.getBoolean(result.get(SQLTableInformation.Race.VARSITY_BOOL));
-            timeSeconds = SQLTypeConversion.getDouble(result.get(SQLTableInformation.Race.TOTAL_TIME_DBL));
-            splitOneSeconds = SQLTypeConversion.getDouble(result.get(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL));
-            splitTwoSeconds = SQLTypeConversion.getDouble(result.get(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL));
-            place = SQLTypeConversion.getInt(result.get(SQLTableInformation.Race.PLACE_INT));
-
-            cansqlWrite = false;
-        }
-        
-    }
-
-    @Override
     public SQLRow writeTOSQL() {
         SQLRow row = new SQLRow("Race", 0); //TODO ID
         row.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, athleteName);
@@ -111,7 +96,6 @@ public class Race implements SQLSerializable, Comparable<Race>{
         row.putPair(SQLTableInformation.Race.MEET_DATE_STR, meetDate);
         row.putPair(SQLTableInformation.Race.LEVEL_ENUM, level);
         row.putPair(SQLTableInformation.Race.SEASON_ENUM, season);
-        row.putPair(SQLTableInformation.Race.VARSITY_BOOL, varsity);
         row.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, timeSeconds);
         row.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, splitOneSeconds);
         row.putPair(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL, splitTwoSeconds);
@@ -146,8 +130,6 @@ public class Race implements SQLSerializable, Comparable<Race>{
         if (season != other.season)
             return false;
         if (level != other.level)
-            return false;
-        if (varsity != other.varsity)
             return false;
         if (Double.doubleToLongBits(timeSeconds) != Double.doubleToLongBits(other.timeSeconds))
             return false;

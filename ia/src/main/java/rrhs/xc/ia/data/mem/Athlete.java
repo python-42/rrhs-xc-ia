@@ -25,7 +25,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
 import rrhs.xc.ia.data.database.SQLRow;
-import rrhs.xc.ia.data.database.SQLTypeConversion;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.i.PDFExportable;
 import rrhs.xc.ia.data.i.SQLSerializable;
@@ -36,14 +35,15 @@ import rrhs.xc.ia.util.PrettyPrinter;
 public class Athlete implements PDFExportable, SQLSerializable {
 
     private String name;
-    private boolean isBoysTeam;
     private int gradYear;
     private HashMap<Season, List<Race>> raceMap = new HashMap<Season, List<Race>>();
 
-    private boolean canSqlWrite = true;
     private final String[] pdfColumnTitles = {"MEET NAME", "DATE", "TIME", "PLACE", "MILE ONE SPLIT", "MILE TWO SPLIT", "MILE THREE SPLIT","AVERAGE SPLIT"};
 
-    public Athlete(List<Race> list) {
+    public Athlete(List<Race> list, String name, int gradYear) {
+        this.name = name;
+        this.gradYear = gradYear;
+
         if (list == null) {
             return;
         }
@@ -120,10 +120,6 @@ public class Athlete implements PDFExportable, SQLSerializable {
 
     public String getName() {
         return name;
-    }
-
-    public boolean isBoysTeam() {
-        return isBoysTeam;
     }
 
     public int getGradYear() {
@@ -266,22 +262,10 @@ public class Athlete implements PDFExportable, SQLSerializable {
     }
 
     @Override
-    public void loadFromSQL(SQLRow result) {
-        if (canSqlWrite) {
-            name = SQLTypeConversion.getString(result.get(SQLTableInformation.Athlete.NAME_STR));
-            isBoysTeam = SQLTypeConversion.getBoolean(result.get(SQLTableInformation.Athlete.BOYS_TEAM_BOOL));
-            gradYear = SQLTypeConversion.getInt(result.get(SQLTableInformation.Athlete.GRADUATION_YEAR_INT));
-
-            canSqlWrite = false;
-        }
-    }
-
-    @Override
     public SQLRow writeTOSQL() {
         SQLRow rtn = new SQLRow("Athlete", 0);
 
         rtn.putPair(SQLTableInformation.Athlete.NAME_STR, name);
-        rtn.putPair(SQLTableInformation.Athlete.BOYS_TEAM_BOOL, isBoysTeam);
         rtn.putPair(SQLTableInformation.Athlete.GRADUATION_YEAR_INT, gradYear);
 
         return rtn;

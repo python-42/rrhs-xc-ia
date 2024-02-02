@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import rrhs.xc.ia.data.TestSQLRowUtil;
-import rrhs.xc.ia.data.database.SQLRow;
+import rrhs.xc.ia.data.TestRacesUtil;
+
 
 public class AthleteTest {
 
@@ -21,22 +21,13 @@ public class AthleteTest {
 
     @BeforeAll
     public static void setup() {
-        SQLRow row1 = TestSQLRowUtil.race1;
-        SQLRow row2 = TestSQLRowUtil.race2;
-        SQLRow row3 = TestSQLRowUtil.race3;
 
-        TestSQLRowUtil.populateRaceRows();
+        r1 = TestRacesUtil.race1;
+        r2 = TestRacesUtil.race2;
+        r3 = TestRacesUtil.race3;
 
-        r1 = new Race(); //SENIOR, fast
-        r2 = new Race(); //FRESHMAN
-        r3 = new Race(); //SENIOR, slower
-
-        r1.loadFromSQL(row1);
-        r2.loadFromSQL(row2);
-        r3.loadFromSQL(row3);
-
-        a1 = new Athlete(List.of(r1, r2, r3));
-        empty = new Athlete(List.of());
+        a1 = new Athlete(List.of(r1, r2, r3), "Test", 1970);
+        empty = new Athlete(List.of(), "Nobody", 1970);
     }
 
     @Test

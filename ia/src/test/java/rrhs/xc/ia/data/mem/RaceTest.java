@@ -5,8 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import rrhs.xc.ia.data.TestSQLRowUtil;
-import rrhs.xc.ia.data.database.SQLRow;
+import rrhs.xc.ia.data.TestRacesUtil;
 
 public class RaceTest {
     
@@ -14,29 +13,13 @@ public class RaceTest {
     private static Race race2;
     private static Race race3;
 
-    private static SQLRow row1;
-    private static SQLRow row2;
-    private static SQLRow row3;
-
     private static final double DELTA = 1e-2;
 
-    /**
-     * All tests in this class assume that setup via the SQLSerializable interface works.
-     */
     @BeforeAll
     public static void setup() {
-        race1 = new Race();
-        race2 = new Race();
-        race3 = new Race();
-
-        row1 = TestSQLRowUtil.race1;
-        row2 = TestSQLRowUtil.race2;
-        row3 = TestSQLRowUtil.race3;
-        TestSQLRowUtil.populateRaceRows();
-
-        race1.loadFromSQL(row1);
-        race2.loadFromSQL(row2);
-        race3.loadFromSQL(row3);
+        race1 = TestRacesUtil.race1;
+        race2 = TestRacesUtil.race2;
+        race3 = TestRacesUtil.race3;
     }
 
     @Test
