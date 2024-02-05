@@ -91,9 +91,9 @@ public class Race implements SQLSerializable, Comparable<Race>{
     @Override
     public SQLRow writeTOSQL() {
         SQLRow row = new SQLRow("Race", 0); //TODO ID
-        row.putPair(SQLTableInformation.Race.ATHLETE_NAME_STR, athleteName);
-        row.putPair(SQLTableInformation.Race.MEET_NAME_STR, meetName);
-        row.putPair(SQLTableInformation.Race.MEET_DATE_STR, meetDate);
+        row.putPair(SQLTableInformation.Athlete.NAME_STR, athleteName);
+        row.putPair(SQLTableInformation.Meet.MEET_NAME_STR, meetName);
+        row.putPair(SQLTableInformation.Meet.MEET_DATE_DATE, meetDate);
         row.putPair(SQLTableInformation.Race.LEVEL_ENUM, level);
         row.putPair(SQLTableInformation.Race.SEASON_ENUM, season);
         row.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, timeSeconds);

@@ -125,10 +125,6 @@ public class SQLTypeConversion {
         }
 
         public class Race {
-            public static final String ATHLETE_NAME_STR = "athleteName";
-            public static final String MEET_NAME_STR = "meetName";
-            public static final String MEET_DATE_STR = "meetDate";
-            public static final String VARSITY_BOOL = "varsity";
             public static final String TOTAL_TIME_DBL = "timeSeconds";
             public static final String MILE_SPLIT_ONE_DBL = "splitOneSeconds";
             public static final String MILE_SPLIT_TWO_DBL = "splitTwoSeconds";
@@ -139,7 +135,6 @@ public class SQLTypeConversion {
 
         public class Athlete {
             public static final String NAME_STR = "name";
-            public static final String BOYS_TEAM_BOOL = "isBoysTeam";
             public static final String GRADUATION_YEAR_INT = "gradYear";
         }
     }
