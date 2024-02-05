@@ -29,3 +29,6 @@ replay_pid*
 
 # Ignore PDFs that the program generates for testing
 *.pdf
+
+#Ignore any test SQLite databases
+*.db
