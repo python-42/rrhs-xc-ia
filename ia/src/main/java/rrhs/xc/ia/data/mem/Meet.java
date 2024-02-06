@@ -26,7 +26,7 @@ import rrhs.xc.ia.data.i.PDFExportable;
 import rrhs.xc.ia.data.i.SQLSerializable;
 import rrhs.xc.ia.util.PdfFooter;
 import rrhs.xc.ia.util.PdfUtils;
-import rrhs.xc.ia.util.PrettyPrinter;
+import rrhs.xc.ia.util.StringUtils;
 
 public class Meet implements SQLSerializable, PDFExportable  {
 
@@ -142,6 +142,11 @@ public class Meet implements SQLSerializable, PDFExportable  {
     }
 
     @Override
+    public String toString() {
+        return name + " (" + date.toString() + ")";
+    }
+
+    @Override
     public SQLRow writeTOSQL() {
         SQLRow rtn = new SQLRow("Meet", 0); //TODO id
         
@@ -177,11 +182,11 @@ public class Meet implements SQLSerializable, PDFExportable  {
         for (Level level : getLevels()) {
             doc.add(PdfUtils.getParagraph(level.name().replace('_', ' '), PdfUtils.SECTION_HEADER_FONT));
 
-            doc.add(PdfUtils.getParagraph("Average Time: " + PrettyPrinter.formatTime(getAverageTimeSeconds(level)), PdfUtils.STATS_FONT));
-            doc.add(PdfUtils.getParagraph("Average Mile One Split: " + PrettyPrinter.formatTime(getAverageSplitSeconds(1, level)), PdfUtils.STATS_FONT));
-            doc.add(PdfUtils.getParagraph("Average Mile Two Split: " + PrettyPrinter.formatTime(getAverageSplitSeconds(2, level)), PdfUtils.STATS_FONT));
-            doc.add(PdfUtils.getParagraph("Average Mile Three Split: " + PrettyPrinter.formatTime(getAverageSplitSeconds(3, level)), PdfUtils.STATS_FONT));
-            doc.add(PdfUtils.getParagraph("Time Spread: " + PrettyPrinter.formatTime(getTimeSpreadSeconds(level)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Time: " + StringUtils.formatTime(getAverageTimeSeconds(level)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Mile One Split: " + StringUtils.formatTime(getAverageSplitSeconds(1, level)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Mile Two Split: " + StringUtils.formatTime(getAverageSplitSeconds(2, level)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Mile Three Split: " + StringUtils.formatTime(getAverageSplitSeconds(3, level)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Time Spread: " + StringUtils.formatTime(getTimeSpreadSeconds(level)), PdfUtils.STATS_FONT));
             
 
             doc.add(PdfUtils.getParagraph(name, null));
@@ -213,12 +218,12 @@ public class Meet implements SQLSerializable, PDFExportable  {
             //Data rows
             for (Race race : raceMap.get(level)) {
                 table.addCell(race.getAthleteName());
-                table.addCell(PrettyPrinter.formatTime(race.getTimeSeconds()));
+                table.addCell(StringUtils.formatTime(race.getTimeSeconds()));
                 table.addCell(race.getPlace() + "");
-                table.addCell(PrettyPrinter.formatTime(race.getMileOneSplitSeconds()));
-                table.addCell(PrettyPrinter.formatTime(race.getMileTwoSplitSeconds()));
-                table.addCell(PrettyPrinter.formatTime(race.getMileThreeSplitSeconds()));
-                table.addCell(PrettyPrinter.formatTime(race.getAverageSplitSeconds()));
+                table.addCell(StringUtils.formatTime(race.getMileOneSplitSeconds()));
+                table.addCell(StringUtils.formatTime(race.getMileTwoSplitSeconds()));
+                table.addCell(StringUtils.formatTime(race.getMileThreeSplitSeconds()));
+                table.addCell(StringUtils.formatTime(race.getAverageSplitSeconds()));
             }
             table.completeRow();
 

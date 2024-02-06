@@ -30,7 +30,7 @@ import rrhs.xc.ia.data.i.PDFExportable;
 import rrhs.xc.ia.data.i.SQLSerializable;
 import rrhs.xc.ia.util.PdfFooter;
 import rrhs.xc.ia.util.PdfUtils;
-import rrhs.xc.ia.util.PrettyPrinter;
+import rrhs.xc.ia.util.StringUtils;
 
 public class Athlete implements PDFExportable, SQLSerializable {
 
@@ -262,6 +262,11 @@ public class Athlete implements PDFExportable, SQLSerializable {
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
     public SQLRow writeTOSQL() {
         SQLRow rtn = new SQLRow("Athlete", 0);
 
@@ -316,12 +321,12 @@ public class Athlete implements PDFExportable, SQLSerializable {
             for (Race race : raceMap.get(season)) {
                 table.addCell(race.getMeetName());
                 table.addCell(race.getMeetDate().toString());
-                table.addCell(PrettyPrinter.formatTime(race.getTimeSeconds()));
+                table.addCell(StringUtils.formatTime(race.getTimeSeconds()));
                 table.addCell(race.getPlace() + "");
-                table.addCell(PrettyPrinter.formatTime(race.getMileOneSplitSeconds()));
-                table.addCell(PrettyPrinter.formatTime(race.getMileTwoSplitSeconds()));
-                table.addCell(PrettyPrinter.formatTime(race.getMileThreeSplitSeconds()));
-                table.addCell(PrettyPrinter.formatTime(race.getAverageSplitSeconds()));
+                table.addCell(StringUtils.formatTime(race.getMileOneSplitSeconds()));
+                table.addCell(StringUtils.formatTime(race.getMileTwoSplitSeconds()));
+                table.addCell(StringUtils.formatTime(race.getMileThreeSplitSeconds()));
+                table.addCell(StringUtils.formatTime(race.getAverageSplitSeconds()));
 
                 table.completeRow();
             }
@@ -338,26 +343,26 @@ public class Athlete implements PDFExportable, SQLSerializable {
         for (Season season : getSeasons()) {
             doc.add(PdfUtils.getParagraph(season.name(), PdfUtils.SECTION_HEADER_FONT));
 
-            doc.add(PdfUtils.getParagraph("Time Drop: " + PrettyPrinter.formatTime(getSeasonTimeDropSeconds(season)), PdfUtils.STATS_FONT));
-            doc.add(PdfUtils.getParagraph("Average Time: " + PrettyPrinter.formatTime(getSeasonAverageTime(season)), PdfUtils.STATS_FONT));
-            doc.add(PdfUtils.getParagraph("Average Mile 1 Split: " + PrettyPrinter.formatTime(getAverageSeasonSplitSeconds(season, 1)), PdfUtils.STATS_FONT));
-            doc.add(PdfUtils.getParagraph("Average Mile 2 Split: " + PrettyPrinter.formatTime(getAverageSeasonSplitSeconds(season, 2)), PdfUtils.STATS_FONT));
-            doc.add(PdfUtils.getParagraph("Average Mile 3 Split: " + PrettyPrinter.formatTime(getAverageSeasonSplitSeconds(season, 3)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Time Drop: " + StringUtils.formatTime(getSeasonTimeDropSeconds(season)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Time: " + StringUtils.formatTime(getSeasonAverageTime(season)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Mile 1 Split: " + StringUtils.formatTime(getAverageSeasonSplitSeconds(season, 1)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Mile 2 Split: " + StringUtils.formatTime(getAverageSeasonSplitSeconds(season, 2)), PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Average Mile 3 Split: " + StringUtils.formatTime(getAverageSeasonSplitSeconds(season, 3)), PdfUtils.STATS_FONT));
 
             Race best = getBestSeasonRace(season);
-            doc.add(PdfUtils.getParagraph("Best Race: " + best.getMeetName() + " (" + PrettyPrinter.formatTime(best.getTimeSeconds()) + ")", PdfUtils.STATS_FONT));
+            doc.add(PdfUtils.getParagraph("Best Race: " + best.getMeetName() + " (" + StringUtils.formatTime(best.getTimeSeconds()) + ")", PdfUtils.STATS_FONT));
         }
 
         doc.add(PdfUtils.getParagraph("CAREER", PdfUtils.SECTION_HEADER_FONT));
 
-        doc.add(PdfUtils.getParagraph("Time Drop: " + PrettyPrinter.formatTime(getCareerTimeDropSeconds()), PdfUtils.STATS_FONT));
-        doc.add(PdfUtils.getParagraph("Average Time: " + PrettyPrinter.formatTime(getCareerAverageTime()), PdfUtils.STATS_FONT));
-        doc.add(PdfUtils.getParagraph("Average Mile 1 Split: " + PrettyPrinter.formatTime(getAverageCareerSplitSeconds(1)), PdfUtils.STATS_FONT));
-        doc.add(PdfUtils.getParagraph("Average Mile 2 Split: " + PrettyPrinter.formatTime(getAverageCareerSplitSeconds(2)), PdfUtils.STATS_FONT));
-        doc.add(PdfUtils.getParagraph("Average Mile 3 Split: " + PrettyPrinter.formatTime(getAverageCareerSplitSeconds(3)), PdfUtils.STATS_FONT));
+        doc.add(PdfUtils.getParagraph("Time Drop: " + StringUtils.formatTime(getCareerTimeDropSeconds()), PdfUtils.STATS_FONT));
+        doc.add(PdfUtils.getParagraph("Average Time: " + StringUtils.formatTime(getCareerAverageTime()), PdfUtils.STATS_FONT));
+        doc.add(PdfUtils.getParagraph("Average Mile 1 Split: " + StringUtils.formatTime(getAverageCareerSplitSeconds(1)), PdfUtils.STATS_FONT));
+        doc.add(PdfUtils.getParagraph("Average Mile 2 Split: " + StringUtils.formatTime(getAverageCareerSplitSeconds(2)), PdfUtils.STATS_FONT));
+        doc.add(PdfUtils.getParagraph("Average Mile 3 Split: " + StringUtils.formatTime(getAverageCareerSplitSeconds(3)), PdfUtils.STATS_FONT));
 
         Race best = getBestCareerRace();
-        doc.add(PdfUtils.getParagraph("Best Race: " + best.getMeetName() + " (" + PrettyPrinter.formatTime(best.getTimeSeconds()) + ")", PdfUtils.STATS_FONT));
+        doc.add(PdfUtils.getParagraph("Best Race: " + best.getMeetName() + " (" + StringUtils.formatTime(best.getTimeSeconds()) + ")", PdfUtils.STATS_FONT));
 
         doc.close();
     }

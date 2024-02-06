@@ -1,6 +1,6 @@
 package rrhs.xc.ia.util;
 
-public class PrettyPrinter {
+public class StringUtils {
     
     public static String formatTime(double timeSeconds) {
         String seconds = ((timeSeconds % 60) + 0.005) + "";
