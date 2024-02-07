@@ -1,5 +1,7 @@
 package rrhs.xc.ia.util;
 
+import java.util.regex.Pattern;
+
 public class StringUtils {
     
     public static String formatTime(double timeSeconds) {
@@ -14,5 +16,10 @@ public class StringUtils {
         }
 
         return ((int) timeSeconds / 60) + ":" + seconds;
+    }
+
+    public static boolean matchesRegex(String regex, String test) {
+        Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        return p.matcher(test).find();
     }
 }
