@@ -17,32 +17,32 @@
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>
-                        <Label layoutX="226.5" layoutY="5.0" text="ATHLETE">
+                        <Label layoutX="227.0" text="Athlete">
                            <font>
-                              <Font name="FreeMono" size="40.0" />
+                              <Font name="IBM Plex Mono Light" size="40.0" />
                            </font>
                         </Label>
-                        <TextField alignment="CENTER" layoutX="10.5" layoutY="45.0" prefHeight="24.0" prefWidth="600.0" promptText="Search..." />
-                        <ListView layoutX="10.5" layoutY="75.0" prefHeight="615.0" prefWidth="600.0" />
+                        <TextField fx:id="athleteSearch" alignment="CENTER" layoutX="10.5" layoutY="45.0" prefHeight="24.0" prefWidth="600.0" promptText="Search..." />
+                        <ListView fx:id="athleteView" fixedCellSize="40.0" layoutX="10.5" layoutY="75.0" prefHeight="615.0" prefWidth="600.0" />
                         <Button layoutX="165.5" layoutY="700.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="290.0" text="Edit Roster">
                            <font>
-                              <Font name="FreeMono" size="20.0" />
+                              <Font name="IBM Plex Mono Light" size="20.0" />
                            </font>
                         </Button>
                      </children>
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="189.0" prefWidth="253.0">
                      <children>
-                        <Label layoutX="262.5" layoutY="5.0" text="MEET">
+                        <Label layoutX="263.0" text="Meet">
                            <font>
-                              <Font name="FreeMono" size="40.0" />
+                              <Font name="IBM Plex Mono Light" size="40.0" />
                            </font>
                         </Label>
-                        <ListView layoutX="10.5" layoutY="75.0" prefHeight="615.0" prefWidth="600.0" />
-                        <TextField alignment="CENTER" layoutX="10.5" layoutY="45.0" prefHeight="24.0" prefWidth="600.0" promptText="Search..." />
+                        <ListView fx:id="meetView" fixedCellSize="40.0" layoutX="10.5" layoutY="75.0" prefHeight="615.0" prefWidth="600.0" />
+                        <TextField fx:id="meetSearch" alignment="CENTER" layoutX="10.5" layoutY="45.0" prefHeight="24.0" prefWidth="600.0" promptText="Search..." />
                         <Button layoutX="165.5" layoutY="700.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="290.0" text="New Meet">
                            <font>
-                              <Font name="FreeMono" size="20.0" />
+                              <Font name="IBM Plex Mono Light" size="20.0" />
                            </font>
                         </Button>
                      </children>
@@ -51,12 +51,12 @@
             </SplitPane>
             <Label layoutX="25.0" layoutY="5.0" text="Main Menu">
                <font>
-                  <Font name="FreeMono" size="40.0" />
+                  <Font name="IBM Plex Mono Light" size="40.0" />
                </font>
             </Label>
             <Label layoutX="1086.0" layoutY="13.0" text="Go Huskies!" textFill="#094be8">
                <font>
-                  <Font name="FreeMono" size="25.0" />
+                  <Font name="IBM Plex Mono Light" size="25.0" />
                </font>
             </Label>
       </children>

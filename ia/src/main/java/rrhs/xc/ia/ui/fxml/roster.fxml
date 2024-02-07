@@ -21,22 +21,22 @@
                </TableView>
             <Label layoutX="25.0" layoutY="5.0" text="Edit Roster">
                <font>
-                  <Font name="FreeMono" size="40.0" />
+                  <Font name="IBM Plex Mono Light" size="40.0" />
                </font>
             </Label>
             <Label layoutX="1086.0" layoutY="13.0" text="Go Huskies!" textFill="#094be8">
                <font>
-                  <Font name="FreeMono" size="25.0" />
+                  <Font name="IBM Plex Mono Light" size="25.0" />
                </font>
             </Label>
-            <Button layoutX="650.0" layoutY="760.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="260.0" text="Cancel">
+            <Button layoutX="648.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" text="Cancel">
                <font>
-                  <Font name="FreeMono" size="20.0" />
+                  <Font name="IBM Plex Mono Light" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="950.0" layoutY="760.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="260.0" text="Save">
+            <Button layoutX="950.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" text="Save">
                <font>
-                  <Font name="FreeMono" size="20.0" />
+                  <Font name="IBM Plex Mono Light" size="20.0" />
                </font>
             </Button>
       </children>
