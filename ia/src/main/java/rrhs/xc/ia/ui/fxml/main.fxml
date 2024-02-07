@@ -24,7 +24,7 @@
                         </Label>
                         <TextField fx:id="athleteSearch" alignment="CENTER" layoutX="10.5" layoutY="45.0" prefHeight="24.0" prefWidth="600.0" promptText="Search..." />
                         <ListView fx:id="athleteView" fixedCellSize="40.0" layoutX="10.5" layoutY="75.0" prefHeight="615.0" prefWidth="600.0" />
-                        <Button layoutX="165.5" layoutY="700.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="290.0" text="Edit Roster">
+                        <Button fx:id="editRosterBtn" layoutX="165.5" layoutY="700.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="290.0" text="Edit Roster">
                            <font>
                               <Font name="IBM Plex Mono Light" size="20.0" />
                            </font>
@@ -40,7 +40,7 @@
                         </Label>
                         <ListView fx:id="meetView" fixedCellSize="40.0" layoutX="10.5" layoutY="75.0" prefHeight="615.0" prefWidth="600.0" />
                         <TextField fx:id="meetSearch" alignment="CENTER" layoutX="10.5" layoutY="45.0" prefHeight="24.0" prefWidth="600.0" promptText="Search..." />
-                        <Button layoutX="165.5" layoutY="700.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="290.0" text="New Meet">
+                        <Button fx:id="newMeetBtn" layoutX="165.5" layoutY="700.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="290.0" text="New Meet">
                            <font>
                               <Font name="IBM Plex Mono Light" size="20.0" />
                            </font>
