@@ -36,7 +36,7 @@ public class DatabaseManagerTest {
     @Order(3)
     public void testInvalidRequests() throws SQLException {
         assertEquals(null, db.getAthlete("not real"));
-        assertEquals(null, db.getMeet("doesnt exist"));
+        assertEquals(null, db.getMeet("doesn't exist"));
     }
 
 }

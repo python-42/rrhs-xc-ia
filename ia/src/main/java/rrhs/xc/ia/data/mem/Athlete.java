@@ -81,7 +81,7 @@ public class Athlete implements PDFExportable, SQLSerializable {
 
     /**
      * Get the race with the worst time. If the list contains race with identical
-     * times, one of them will be returned. There is no guarnatee of which one.
+     * times, one of them will be returned. There is no guarantee of which one.
      * 
      * If the list is null or empty, return null.
      * 
@@ -267,7 +267,7 @@ public class Athlete implements PDFExportable, SQLSerializable {
     }
 
     @Override
-    public SQLRow writeTOSQL() {
+    public SQLRow writeToSQL() {
         SQLRow rtn = new SQLRow("Athlete", 0);
 
         rtn.putPair(SQLTableInformation.Athlete.NAME_STR, name);

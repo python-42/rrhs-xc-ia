@@ -74,19 +74,19 @@ public class DatabaseManager {
      * @throws SQLException
      */
     public void insert(SQLSerializable data) throws SQLException {
-        conn.createStatement().execute(data.writeTOSQL().getSQLInsertString());
+        conn.createStatement().execute(data.writeToSQL().getSQLInsertString());
     }
 
     /**
      * Update the given object in the database. After this method is called, the
      * database representation of this object will exactly match the in memory
-     * represetation of this object.
+     * representation of this object.
      * 
      * @param data
      * @throws SQLException
      */
     public void update(SQLSerializable data) throws SQLException {
-        conn.createStatement().execute(data.writeTOSQL().getSQLUpdateString());
+        conn.createStatement().execute(data.writeToSQL().getSQLUpdateString());
     }
 
     /**
@@ -96,7 +96,7 @@ public class DatabaseManager {
      * @throws SQLException
      */
     public void delete(SQLSerializable data) throws SQLException {
-        conn.createStatement().executeQuery(data.writeTOSQL().getSQLDeleteString());
+        conn.createStatement().executeQuery(data.writeToSQL().getSQLDeleteString());
     }
 
     /**

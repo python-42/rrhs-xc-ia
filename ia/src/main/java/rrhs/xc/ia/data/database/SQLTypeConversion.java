@@ -109,7 +109,7 @@ public class SQLTypeConversion {
 
     /**
      * Class which contains the names of the rows in the SQL table. This ensures
-     * that the table identifiers match for all implemntations and tests.
+     * that the table identifiers match for all implementation and tests.
      */
     public class SQLTableInformation {
         private SQLTableInformation() {

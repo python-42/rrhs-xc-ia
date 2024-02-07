@@ -41,7 +41,8 @@ public class GUIDriver extends Application {
         controller.setMeets(List.of(new Meet(null, "Conference 2023", LocalDate.of(2023, 10, 14), -1, -1, -1, -1)));
         //Remove above code
 
-
+        stage.setResizable(false);
+        stage.setTitle("JCrossCountry Tracker");
         stage.setScene(new Scene(root));
         stage.show();
     }

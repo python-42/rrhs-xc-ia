@@ -89,7 +89,7 @@ public class Race implements SQLSerializable, Comparable<Race>{
     }
 
     @Override
-    public SQLRow writeTOSQL() {
+    public SQLRow writeToSQL() {
         SQLRow row = new SQLRow("Race", 0); //TODO ID
         row.putPair(SQLTableInformation.Athlete.NAME_STR, athleteName);
         row.putPair(SQLTableInformation.Meet.MEET_NAME_STR, meetName);

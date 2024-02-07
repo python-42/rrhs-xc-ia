@@ -147,7 +147,7 @@ public class Meet implements SQLSerializable, PDFExportable  {
     }
 
     @Override
-    public SQLRow writeTOSQL() {
+    public SQLRow writeToSQL() {
         SQLRow rtn = new SQLRow("Meet", 0); //TODO id
         
         rtn.putPair(SQLTableInformation.Meet.MEET_NAME_STR      , name);
