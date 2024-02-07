@@ -1,0 +1,4 @@
+/* Apply to elements which are created programmatically rather than loaded from FXML as these elements cannot by styled as easily. */
+.root {
+    -fx-font-family: "IBM Plex Mono Light"; 
+}

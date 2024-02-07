@@ -1,5 +1,6 @@
 {
     "git.autorefresh": true,
     "java.configuration.updateBuildConfiguration": "interactive",
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "css.lint.vendorPrefix": "ignore"
 }
