@@ -6,4 +6,8 @@ public interface SQLSerializable {
 
     public SQLRow writeToSQL();
 
+    public boolean isModified();
+
+    public boolean isNew();
+
 }

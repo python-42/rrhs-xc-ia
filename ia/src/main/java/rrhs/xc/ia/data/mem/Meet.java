@@ -35,6 +35,9 @@ public class Meet implements SQLSerializable, PDFExportable  {
     private int[] athleteCounts; //[varsityBoys, varsityGirls, JVBoys, JVGirls]
     private HashMap<Level, List<Race>> raceMap = new HashMap<Level, List<Race>>();
 
+    private boolean modified = false;
+    private boolean isNew = false;
+
     private final String[] pdfColumnTitles = {"ATHLETE NAME", "TIME", "PLACE", "MILE ONE SPLIT", "MILE TWO SPLIT", "MILE THREE SPLIT", "AVERAGE SPLIT"};
 
     public Meet(List<Race> list, String name, LocalDate date, int varBoys, int varGirls, int jvBoys, int jvGirls) {
@@ -52,6 +55,60 @@ public class Meet implements SQLSerializable, PDFExportable  {
             }
             raceMap.get(r.getLevel()).add(r);
         }
+    }
+
+    public Meet(List<Race> list, String name, LocalDate date, int varBoys, int varGirls, int jvBoys, int jvGirls, boolean isNew) {
+        this(list, name, date, varBoys, varGirls, jvBoys, jvGirls);
+        this.isNew = isNew;
+    }
+
+    
+    //Getters
+    public String getName() {
+        return name;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    /**
+     * Gets the total athlete counts as an array.
+     * @return int array structured as follows: [varsityBoys, varsityGirls, JVBoys, JVGirls];
+     */
+    public int[] getTotalAthleteCounts() {
+        return athleteCounts;
+    }
+
+    //Setters
+    public void setName(String name) {
+        this.modified = true;
+        this.name = name;
+    }
+
+    public void setDate(LocalDate date) {
+        this.modified = true;
+        this.date = date;
+    }
+
+    public void setVarsityBoys(int count) {
+        this.modified = true;
+        athleteCounts[0] = count;
+    }
+
+    public void setVarsityGirls(int count) {
+        this.modified = true;
+        athleteCounts[1] = count;
+    }
+
+    public void setJVBoys(int count) {
+        this.modified = true;
+        athleteCounts[2] = count;
+    }
+
+    public void setJVGirls(int count) {
+        this.modified = true;
+        athleteCounts[3] = count;
     }
 
     public double getAverageTimeSeconds(Level l) {
@@ -117,23 +174,6 @@ public class Meet implements SQLSerializable, PDFExportable  {
         return max.doubleValue() - min.doubleValue();
     }
 
-    //Getters
-    public String getName() {
-        return name;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    /**
-     * Gets the total athlete counts as an array.
-     * @return int array structured as follows: [varsityBoys, varsityGirls, JVBoys, JVGirls];
-     */
-    public int[] getTotalAthleteCounts() {
-        return athleteCounts;
-    }
-
     public Level[] getLevels() {
         Level[] l = {};
         l = raceMap.keySet().toArray(l);
@@ -158,6 +198,16 @@ public class Meet implements SQLSerializable, PDFExportable  {
         rtn.putPair(SQLTableInformation.Meet.TOTAL_JV_GIRLS_INT , athleteCounts[3]);
 
         return rtn;
+    }
+
+    @Override
+    public boolean isModified() {
+        return modified;
+    }
+
+    @Override
+    public boolean isNew() {
+        return isNew;
     }
 
     @Override

@@ -19,6 +19,9 @@ public class Race implements SQLSerializable, Comparable<Race>{
     private double splitTwoSeconds;
     private int place;
 
+    private boolean modified = false;
+    private boolean isNew = false;
+
     public Race(String athleteName, String meetName, LocalDate meetDate, Level level, Season season, double timeSeconds, double splitOneSeconds, double splitTwoSeconds, int place) {
         this.athleteName = athleteName;
         this.meetName = meetName;
@@ -29,6 +32,11 @@ public class Race implements SQLSerializable, Comparable<Race>{
         this.splitOneSeconds = splitOneSeconds;
         this.splitTwoSeconds = splitTwoSeconds;
         this.place = place;
+    }
+
+    public Race(String athleteName, String meetName, LocalDate meetDate, Level level, Season season, double timeSeconds, double splitOneSeconds, double splitTwoSeconds, int place, boolean isNew) {
+        this(athleteName, meetName, meetDate, level, season, timeSeconds, splitOneSeconds, splitTwoSeconds, place);
+        this.isNew = isNew;   
     }
 
     public double getAverageSplitSeconds() {
@@ -88,6 +96,53 @@ public class Race implements SQLSerializable, Comparable<Race>{
         return place;
     }
 
+    //========Setters============
+
+    public void setAthleteName(String athleteName) {
+        this.modified = true;
+        this.athleteName = athleteName;
+    }
+
+    public void setMeetName(String meetName) {
+        this.modified = true;
+        this.meetName = meetName;
+    }
+
+    public void setMeetDate(LocalDate meetDate) {
+        this.modified = true;
+        this.meetDate = meetDate;
+    }
+
+    public void setLevel(Level level) {
+        this.modified = true;
+        this.level = level;
+    }
+
+    public void setSeason(Season season) {
+        this.modified = true;
+        this.season = season;
+    }
+
+    public void setTimeSeconds(double timeSeconds) {
+        this.modified = true;
+        this.timeSeconds = timeSeconds;
+    }
+
+    public void setSplitOneSeconds(double splitOneSeconds) {
+        this.modified = true;
+        this.splitOneSeconds = splitOneSeconds;
+    }
+
+    public void setSplitTwoSeconds(double splitTwoSeconds) {
+        this.modified = true;
+        this.splitTwoSeconds = splitTwoSeconds;
+    }
+
+    public void setPlace(int place) {
+        this.modified = true;
+        this.place = place;
+    }
+
     @Override
     public SQLRow writeToSQL() {
         SQLRow row = new SQLRow("Race", 0); //TODO ID
@@ -102,6 +157,17 @@ public class Race implements SQLSerializable, Comparable<Race>{
         row.putPair(SQLTableInformation.Race.PLACE_INT, place);
         return row;
     }
+
+    @Override
+    public boolean isModified() {
+        return modified;
+    }
+
+    @Override
+    public boolean isNew() {
+        return isNew;
+    }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -155,5 +221,4 @@ public class Race implements SQLSerializable, Comparable<Race>{
         }
 
     }
-
 }

@@ -38,6 +38,9 @@ public class Athlete implements PDFExportable, SQLSerializable {
     private int gradYear;
     private HashMap<Season, List<Race>> raceMap = new HashMap<Season, List<Race>>();
 
+    private boolean modified = false;
+    private boolean isNew = false;
+
     private final String[] pdfColumnTitles = {"MEET NAME", "DATE", "TIME", "PLACE", "MILE ONE SPLIT", "MILE TWO SPLIT", "MILE THREE SPLIT","AVERAGE SPLIT"};
 
     public Athlete(List<Race> list, String name, int gradYear) {
@@ -53,6 +56,31 @@ public class Athlete implements PDFExportable, SQLSerializable {
             }
             raceMap.get(r.getSeason()).add(r);
         }
+    }
+
+    public Athlete(List<Race> list, String name, int gradYear, boolean isNew) {
+        this(list, name, gradYear);
+        this.isNew = isNew;
+    }
+    
+    //Standard getters
+    public String getName() {
+        return name;
+    }
+
+    public int getGradYear() {
+        return gradYear;
+    }
+
+    //Setters
+    public void setName(String name) {
+        this.modified = true;
+        this.name = name;
+    }
+
+    public void setGradYear(int gradYear) {
+        this.modified = true;
+        this.gradYear = gradYear;
     }
 
     /**
@@ -116,14 +144,6 @@ public class Athlete implements PDFExportable, SQLSerializable {
             races.addAll(r);
         }
         return races;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getGradYear() {
-        return gradYear;
     }
 
     public Race getWorstCareerRace() {
@@ -274,6 +294,16 @@ public class Athlete implements PDFExportable, SQLSerializable {
         rtn.putPair(SQLTableInformation.Athlete.GRADUATION_YEAR_INT, gradYear);
 
         return rtn;
+    }
+
+    @Override
+    public boolean isModified() {
+        return modified;
+    }
+
+    @Override
+    public boolean isNew() {
+        return isNew;
     }
 
     @Override
