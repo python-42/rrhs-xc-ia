@@ -8,15 +8,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="800.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rrhs.xc.ia.ui.controller.RosterController" stylesheets="all.css">
+<VBox prefHeight="800.0" prefWidth="1250.0" stylesheets="@all.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rrhs.xc.ia.ui.controller.RosterController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <TableView layoutY="50.0" prefHeight="700.0" prefWidth="1250.0">
+            <TableView fx:id="table" editable="true" fixedCellSize="40.0" layoutY="50.0" prefHeight="700.0" prefWidth="1250.0">
                   <columns>
-                     <TableColumn prefWidth="608.0" text="Name" />
-                     <TableColumn prefWidth="297.0" text="Graduation Year" />
-                     <TableColumn prefWidth="344.0" text="Boys Team?" />
+                     <TableColumn fx:id="nameCol" prefWidth="608.0" text="Name" />
+                     <TableColumn fx:id="gradYearCol" prefWidth="641.0" text="Graduation Year" />
                   </columns>
                </TableView>
             <Label layoutX="25.0" layoutY="5.0" text="Edit Roster">
@@ -34,7 +33,7 @@
                   <Font name="IBM Plex Mono Light" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="950.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" text="Save">
+            <Button fx:id="saveBtn" layoutX="950.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" text="Save">
                <font>
                   <Font name="IBM Plex Mono Light" size="20.0" />
                </font>
