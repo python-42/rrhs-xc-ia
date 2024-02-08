@@ -85,7 +85,6 @@ public class DatabaseManager {
         ResultSet result = conn.createStatement().executeQuery(ALL_ATHLETES_QUERY);
 
         while(result.next()) {
-            System.out.println(result.getInt("id"));
             list.add(
                 new Athlete(
                     getRacesForAthlete(result.getInt("id")),
