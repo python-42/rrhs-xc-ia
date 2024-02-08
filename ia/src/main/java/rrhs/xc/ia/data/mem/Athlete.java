@@ -38,14 +38,18 @@ public class Athlete implements PDFExportable, SQLSerializable {
     private int gradYear;
     private HashMap<Season, List<Race>> raceMap = new HashMap<Season, List<Race>>();
 
+
+    private int id;
     private boolean modified = false;
     private boolean isNew = false;
 
     private final String[] pdfColumnTitles = {"MEET NAME", "DATE", "TIME", "PLACE", "MILE ONE SPLIT", "MILE TWO SPLIT", "MILE THREE SPLIT","AVERAGE SPLIT"};
 
-    public Athlete(List<Race> list, String name, int gradYear) {
+    public Athlete(List<Race> list, String name, int gradYear, int id) {
         this.name = name;
         this.gradYear = gradYear;
+
+        this.id = id;
 
         if (list == null) {
             return;
@@ -58,8 +62,8 @@ public class Athlete implements PDFExportable, SQLSerializable {
         }
     }
 
-    public Athlete(List<Race> list, String name, int gradYear, boolean isNew) {
-        this(list, name, gradYear);
+    public Athlete(List<Race> list, String name, int gradYear, int id, boolean isNew) {
+        this(list, name, gradYear, id);
         this.isNew = isNew;
     }
     
@@ -288,7 +292,7 @@ public class Athlete implements PDFExportable, SQLSerializable {
 
     @Override
     public SQLRow writeToSQL() {
-        SQLRow rtn = new SQLRow("Athlete", 0);
+        SQLRow rtn = new SQLRow("Athlete", id);
 
         rtn.putPair(SQLTableInformation.Athlete.NAME_STR, name);
         rtn.putPair(SQLTableInformation.Athlete.GRADUATION_YEAR_INT, gradYear);

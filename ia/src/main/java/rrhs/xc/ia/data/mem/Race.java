@@ -19,10 +19,11 @@ public class Race implements SQLSerializable, Comparable<Race>{
     private double splitTwoSeconds;
     private int place;
 
+    private int id;
     private boolean modified = false;
     private boolean isNew = false;
 
-    public Race(String athleteName, String meetName, LocalDate meetDate, Level level, Season season, double timeSeconds, double splitOneSeconds, double splitTwoSeconds, int place) {
+    public Race(String athleteName, String meetName, LocalDate meetDate, Level level, Season season, double timeSeconds, double splitOneSeconds, double splitTwoSeconds, int place, int id) {
         this.athleteName = athleteName;
         this.meetName = meetName;
         this.meetDate = meetDate;
@@ -32,10 +33,11 @@ public class Race implements SQLSerializable, Comparable<Race>{
         this.splitOneSeconds = splitOneSeconds;
         this.splitTwoSeconds = splitTwoSeconds;
         this.place = place;
+        this.id = id;
     }
 
-    public Race(String athleteName, String meetName, LocalDate meetDate, Level level, Season season, double timeSeconds, double splitOneSeconds, double splitTwoSeconds, int place, boolean isNew) {
-        this(athleteName, meetName, meetDate, level, season, timeSeconds, splitOneSeconds, splitTwoSeconds, place);
+    public Race(String athleteName, String meetName, LocalDate meetDate, Level level, Season season, double timeSeconds, double splitOneSeconds, double splitTwoSeconds, int place, int id, boolean isNew) {
+        this(athleteName, meetName, meetDate, level, season, timeSeconds, splitOneSeconds, splitTwoSeconds, place, id);
         this.isNew = isNew;   
     }
 
@@ -145,7 +147,7 @@ public class Race implements SQLSerializable, Comparable<Race>{
 
     @Override
     public SQLRow writeToSQL() {
-        SQLRow row = new SQLRow("Race", 0); //TODO ID
+        SQLRow row = new SQLRow("Race", id);
         row.putPair(SQLTableInformation.Athlete.NAME_STR, athleteName);
         row.putPair(SQLTableInformation.Meet.MEET_NAME_STR, meetName);
         row.putPair(SQLTableInformation.Meet.MEET_DATE_DATE, meetDate);

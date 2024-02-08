@@ -16,7 +16,7 @@ public class MeetTest {
 
     @BeforeAll
     public static void setup() {
-        m1 = new Meet(List.of(TestRacesUtil.race1, TestRacesUtil.race3, TestRacesUtil.race4), "Test", null, -1, -1, -1, -1);
+        m1 = new Meet(List.of(TestRacesUtil.race1, TestRacesUtil.race3, TestRacesUtil.race4), "Test", null, -1, -1, -1, -1, -1);
     }
 
     @Test 

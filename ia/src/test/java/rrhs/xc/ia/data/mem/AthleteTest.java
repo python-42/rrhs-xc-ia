@@ -26,8 +26,8 @@ public class AthleteTest {
         r2 = TestRacesUtil.race2;
         r3 = TestRacesUtil.race3;
 
-        a1 = new Athlete(List.of(r1, r2, r3), "Test", 1970);
-        empty = new Athlete(List.of(), "Nobody", 1970);
+        a1 = new Athlete(List.of(r1, r2, r3), "Test", 1970, -1);
+        empty = new Athlete(List.of(), "Nobody", 1970, -1);
     }
 
     @Test

@@ -35,16 +35,19 @@ public class Meet implements SQLSerializable, PDFExportable  {
     private int[] athleteCounts; //[varsityBoys, varsityGirls, JVBoys, JVGirls]
     private HashMap<Level, List<Race>> raceMap = new HashMap<Level, List<Race>>();
 
+    private int id;
     private boolean modified = false;
     private boolean isNew = false;
 
     private final String[] pdfColumnTitles = {"ATHLETE NAME", "TIME", "PLACE", "MILE ONE SPLIT", "MILE TWO SPLIT", "MILE THREE SPLIT", "AVERAGE SPLIT"};
 
-    public Meet(List<Race> list, String name, LocalDate date, int varBoys, int varGirls, int jvBoys, int jvGirls) {
+    public Meet(List<Race> list, String name, LocalDate date, int varBoys, int varGirls, int jvBoys, int jvGirls, int id) {
         this.name = name;
         this.date = date;
         
         this.athleteCounts = new int[]{varBoys, varGirls, jvBoys, jvGirls};
+
+        this.id = id;
 
         if (list == null) {
             return;
@@ -57,8 +60,8 @@ public class Meet implements SQLSerializable, PDFExportable  {
         }
     }
 
-    public Meet(List<Race> list, String name, LocalDate date, int varBoys, int varGirls, int jvBoys, int jvGirls, boolean isNew) {
-        this(list, name, date, varBoys, varGirls, jvBoys, jvGirls);
+    public Meet(List<Race> list, String name, LocalDate date, int varBoys, int varGirls, int jvBoys, int jvGirls, int id, boolean isNew) {
+        this(list, name, date, varBoys, varGirls, jvBoys, jvGirls, id);
         this.isNew = isNew;
     }
 
@@ -188,7 +191,7 @@ public class Meet implements SQLSerializable, PDFExportable  {
 
     @Override
     public SQLRow writeToSQL() {
-        SQLRow rtn = new SQLRow("Meet", 0); //TODO id
+        SQLRow rtn = new SQLRow("Meet", id);
         
         rtn.putPair(SQLTableInformation.Meet.MEET_NAME_STR      , name);
         rtn.putPair(SQLTableInformation.Meet.MEET_DATE_DATE     , date);
