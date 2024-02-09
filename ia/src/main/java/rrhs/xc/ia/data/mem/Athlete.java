@@ -27,25 +27,23 @@ import com.itextpdf.text.pdf.draw.LineSeparator;
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.i.PDFExportable;
-import rrhs.xc.ia.data.i.SQLSerializable;
+import rrhs.xc.ia.data.i.SQLDataObject;
 import rrhs.xc.ia.util.PdfFooter;
 import rrhs.xc.ia.util.PdfUtils;
 import rrhs.xc.ia.util.StringUtils;
 
-public class Athlete implements PDFExportable, SQLSerializable {
+public class Athlete extends SQLDataObject implements PDFExportable {
 
     private String name;
     private int gradYear;
     private HashMap<Season, List<Race>> raceMap = new HashMap<Season, List<Race>>();
 
-
     private int id;
-    private boolean modified = false;
-    private boolean isNew = false;
 
     private final String[] pdfColumnTitles = {"MEET NAME", "DATE", "TIME", "PLACE", "MILE ONE SPLIT", "MILE TWO SPLIT", "MILE THREE SPLIT","AVERAGE SPLIT"};
 
-    public Athlete(List<Race> list, String name, int gradYear, int id) {
+    public Athlete(List<Race> list, String name, int gradYear, int id, boolean isNew) {
+        super(isNew);
         this.name = name;
         this.gradYear = gradYear;
 
@@ -61,11 +59,6 @@ public class Athlete implements PDFExportable, SQLSerializable {
             raceMap.get(r.getSeason()).add(r);
         }
     }
-
-    public Athlete(List<Race> list, String name, int gradYear, int id, boolean isNew) {
-        this(list, name, gradYear, id);
-        this.isNew = isNew;
-    }
     
     //Standard getters
     public String getName() {
@@ -78,12 +71,12 @@ public class Athlete implements PDFExportable, SQLSerializable {
 
     //Setters
     public void setName(String name) {
-        this.modified = true;
+        this.setModified();
         this.name = name;
     }
 
     public void setGradYear(int gradYear) {
-        this.modified = true;
+        this.setModified();
         this.gradYear = gradYear;
     }
 
@@ -298,16 +291,6 @@ public class Athlete implements PDFExportable, SQLSerializable {
         rtn.putPair(SQLTableInformation.Athlete.GRADUATION_YEAR_INT, gradYear);
 
         return rtn;
-    }
-
-    @Override
-    public boolean isModified() {
-        return modified;
-    }
-
-    @Override
-    public boolean isNew() {
-        return isNew;
     }
 
     @Override

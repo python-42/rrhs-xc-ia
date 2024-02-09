@@ -18,7 +18,8 @@ public class TestRacesUtil {
             (5 * 60) + 31.0,
             (5 * 60) + 57.0,
             1,
-            -1
+            -1,
+            true
         );
 
     public static final Race race2 = new Race(
@@ -32,7 +33,8 @@ public class TestRacesUtil {
             (6 * 60) + 59,
             (6 * 60) + 57,
             6,
-            -1
+            -1,
+            true
         );
 
     public static final Race race3 = new Race(
@@ -45,7 +47,8 @@ public class TestRacesUtil {
             (8 * 60) + 15,
             (8 * 60) + 51,
             7,
-            -1
+            -1,
+            true
         );
 
     public static final Race race4 = new Race(
@@ -58,7 +61,8 @@ public class TestRacesUtil {
             (5 * 60) + 43,
             (6 * 60) + 1,
             18,
-            -1
+            -1,
+            true
         );
 
     public static final Race race5 = new Race(
@@ -71,7 +75,8 @@ public class TestRacesUtil {
             (5 * 60) + 31,
             (5 * 60) + 45,
             22,
-            -1
+            -1,
+            true
         );
 
     public static final Race race6 = new Race(
@@ -84,7 +89,8 @@ public class TestRacesUtil {
             (6 * 60) + 6,
             (6 * 60) + 28,
             57,
-            -1
+            -1,
+            true
         );
 
     public static final Race race7 = new Race(
@@ -97,7 +103,8 @@ public class TestRacesUtil {
             (5 * 60) + 59,
             (6 * 60) + 12,
             32,
-            -1
+            -1,
+            true
         );
 
 }

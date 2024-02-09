@@ -23,12 +23,12 @@ import com.itextpdf.text.pdf.draw.LineSeparator;
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.i.PDFExportable;
-import rrhs.xc.ia.data.i.SQLSerializable;
+import rrhs.xc.ia.data.i.SQLDataObject;
 import rrhs.xc.ia.util.PdfFooter;
 import rrhs.xc.ia.util.PdfUtils;
 import rrhs.xc.ia.util.StringUtils;
 
-public class Meet implements SQLSerializable, PDFExportable  {
+public class Meet extends SQLDataObject implements PDFExportable  {
 
     private String name;
     private LocalDate date;
@@ -36,12 +36,11 @@ public class Meet implements SQLSerializable, PDFExportable  {
     private HashMap<Level, List<Race>> raceMap = new HashMap<Level, List<Race>>();
 
     private int id;
-    private boolean modified = false;
-    private boolean isNew = false;
 
     private final String[] pdfColumnTitles = {"ATHLETE NAME", "TIME", "PLACE", "MILE ONE SPLIT", "MILE TWO SPLIT", "MILE THREE SPLIT", "AVERAGE SPLIT"};
 
-    public Meet(List<Race> list, String name, LocalDate date, int varBoys, int varGirls, int jvBoys, int jvGirls, int id) {
+    public Meet(List<Race> list, String name, LocalDate date, int varBoys, int varGirls, int jvBoys, int jvGirls, int id, boolean isNew) {
+        super(isNew);
         this.name = name;
         this.date = date;
         
@@ -59,12 +58,6 @@ public class Meet implements SQLSerializable, PDFExportable  {
             raceMap.get(r.getLevel()).add(r);
         }
     }
-
-    public Meet(List<Race> list, String name, LocalDate date, int varBoys, int varGirls, int jvBoys, int jvGirls, int id, boolean isNew) {
-        this(list, name, date, varBoys, varGirls, jvBoys, jvGirls, id);
-        this.isNew = isNew;
-    }
-
     
     //Getters
     public String getName() {
@@ -85,32 +78,32 @@ public class Meet implements SQLSerializable, PDFExportable  {
 
     //Setters
     public void setName(String name) {
-        this.modified = true;
+        this.setModified();
         this.name = name;
     }
 
     public void setDate(LocalDate date) {
-        this.modified = true;
+        this.setModified();
         this.date = date;
     }
 
     public void setVarsityBoys(int count) {
-        this.modified = true;
+        this.setModified();
         athleteCounts[0] = count;
     }
 
     public void setVarsityGirls(int count) {
-        this.modified = true;
+        this.setModified();
         athleteCounts[1] = count;
     }
 
     public void setJVBoys(int count) {
-        this.modified = true;
+        this.setModified();
         athleteCounts[2] = count;
     }
 
     public void setJVGirls(int count) {
-        this.modified = true;
+        this.setModified();
         athleteCounts[3] = count;
     }
 
@@ -201,16 +194,6 @@ public class Meet implements SQLSerializable, PDFExportable  {
         rtn.putPair(SQLTableInformation.Meet.TOTAL_JV_GIRLS_INT , athleteCounts[3]);
 
         return rtn;
-    }
-
-    @Override
-    public boolean isModified() {
-        return modified;
-    }
-
-    @Override
-    public boolean isNew() {
-        return isNew;
     }
 
     @Override

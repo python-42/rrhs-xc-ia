@@ -23,7 +23,8 @@ public class PDFCreationTest {
             List.of(TestRacesUtil.race1, TestRacesUtil.race4, TestRacesUtil.race5, TestRacesUtil.race6, TestRacesUtil.race7),
             "Jake Herrmann",
             2024,
-            -1
+            -1,
+            true
         );
 
         File f = new File("AthleteTestPDF.pdf");
@@ -44,7 +45,8 @@ public class PDFCreationTest {
             27,
             55,
             6,
-            -1
+            -1,
+            true
         );
 
         File f = new File("MeetTestPDF.pdf");

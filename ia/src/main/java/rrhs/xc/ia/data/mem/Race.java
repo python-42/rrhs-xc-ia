@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
-import rrhs.xc.ia.data.i.SQLSerializable;
+import rrhs.xc.ia.data.i.SQLDataObject;
 
-public class Race implements SQLSerializable, Comparable<Race>{
+public class Race extends SQLDataObject implements Comparable<Race>{
 
     private String athleteName;
     private String meetName;
@@ -20,10 +20,10 @@ public class Race implements SQLSerializable, Comparable<Race>{
     private int place;
 
     private int id;
-    private boolean modified = false;
-    private boolean isNew = false;
 
-    public Race(String athleteName, String meetName, LocalDate meetDate, Level level, Season season, double timeSeconds, double splitOneSeconds, double splitTwoSeconds, int place, int id) {
+    public Race(String athleteName, String meetName, LocalDate meetDate, Level level, Season season, double timeSeconds, double splitOneSeconds, double splitTwoSeconds, int place, int id, boolean isNew) {
+        super(isNew);
+
         this.athleteName = athleteName;
         this.meetName = meetName;
         this.meetDate = meetDate;
@@ -34,11 +34,6 @@ public class Race implements SQLSerializable, Comparable<Race>{
         this.splitTwoSeconds = splitTwoSeconds;
         this.place = place;
         this.id = id;
-    }
-
-    public Race(String athleteName, String meetName, LocalDate meetDate, Level level, Season season, double timeSeconds, double splitOneSeconds, double splitTwoSeconds, int place, int id, boolean isNew) {
-        this(athleteName, meetName, meetDate, level, season, timeSeconds, splitOneSeconds, splitTwoSeconds, place, id);
-        this.isNew = isNew;   
     }
 
     public double getAverageSplitSeconds() {
@@ -101,49 +96,50 @@ public class Race implements SQLSerializable, Comparable<Race>{
     //========Setters============
 
     public void setAthleteName(String athleteName) {
-        this.modified = true;
+        this.setModified();
         this.athleteName = athleteName;
     }
 
     public void setMeetName(String meetName) {
-        this.modified = true;
+        this.setModified();
         this.meetName = meetName;
     }
 
     public void setMeetDate(LocalDate meetDate) {
-        this.modified = true;
+        this.setModified();
         this.meetDate = meetDate;
     }
 
     public void setLevel(Level level) {
-        this.modified = true;
+        this.setModified();
         this.level = level;
     }
 
     public void setSeason(Season season) {
-        this.modified = true;
+        this.setModified();
         this.season = season;
     }
 
     public void setTimeSeconds(double timeSeconds) {
-        this.modified = true;
+        this.setModified();
         this.timeSeconds = timeSeconds;
     }
 
     public void setSplitOneSeconds(double splitOneSeconds) {
-        this.modified = true;
+        this.setModified();
         this.splitOneSeconds = splitOneSeconds;
     }
 
     public void setSplitTwoSeconds(double splitTwoSeconds) {
-        this.modified = true;
+        this.setModified();
         this.splitTwoSeconds = splitTwoSeconds;
     }
 
     public void setPlace(int place) {
-        this.modified = true;
+        this.setModified();
         this.place = place;
     }
+
 
     @Override
     public SQLRow writeToSQL() {
@@ -159,17 +155,6 @@ public class Race implements SQLSerializable, Comparable<Race>{
         row.putPair(SQLTableInformation.Race.PLACE_INT, place);
         return row;
     }
-
-    @Override
-    public boolean isModified() {
-        return modified;
-    }
-
-    @Override
-    public boolean isNew() {
-        return isNew;
-    }
-
 
     @Override
     public boolean equals(Object obj) {

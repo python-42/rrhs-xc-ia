@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
-import rrhs.xc.ia.data.i.SQLSerializable;
+import rrhs.xc.ia.data.i.SQLDataObject;
 import rrhs.xc.ia.data.mem.Athlete;
 import rrhs.xc.ia.data.mem.Meet;
 import rrhs.xc.ia.data.mem.Race;
@@ -90,7 +90,8 @@ public class DatabaseManager {
                     getRacesForAthlete(result.getInt("id")),
                     result.getString(SQLTableInformation.Athlete.NAME_STR),
                     result.getInt(SQLTableInformation.Athlete.GRADUATION_YEAR_INT),
-                    result.getInt("id")
+                    result.getInt("id"),
+                    false
                 )
             );
         }
@@ -117,7 +118,8 @@ public class DatabaseManager {
                     result.getInt(SQLTableInformation.Meet.TOTAL_VAR_GIRLS_INT),
                     result.getInt(SQLTableInformation.Meet.TOTAL_JV_BOYS_INT),
                     result.getInt(SQLTableInformation.Meet.TOTAL_JV_BOYS_INT),
-                    result.getInt("id")
+                    result.getInt("id"),
+                    false
                 )
             );
         }
@@ -142,7 +144,8 @@ public class DatabaseManager {
             getRacesForAthlete(result.getInt("id")),
             result.getString(SQLTableInformation.Athlete.NAME_STR),
             result.getInt(SQLTableInformation.Athlete.GRADUATION_YEAR_INT),
-            result.getInt("id")
+            result.getInt("id"),
+            false
         );
     }
 
@@ -167,7 +170,8 @@ public class DatabaseManager {
             result.getInt(SQLTableInformation.Meet.TOTAL_VAR_GIRLS_INT),
             result.getInt(SQLTableInformation.Meet.TOTAL_JV_BOYS_INT),
             result.getInt(SQLTableInformation.Meet.TOTAL_JV_GIRLS_INT),
-            result.getInt("id")
+            result.getInt("id"),
+            false
         );
     }
 
@@ -180,13 +184,17 @@ public class DatabaseManager {
      * @param list
      * @throws SQLException
      */
-    public void resolveAll(List<? extends SQLSerializable> list) throws SQLException {
-        for (SQLSerializable data : list) {
-            if (data.isNew()) {
+    public void resolveAll(List<? extends SQLDataObject> list) throws SQLException {
+        for (SQLDataObject data : list) {
+            if (data.needsDeletion() && data.isNew()) {
+                // do nothing. Assume that this object was created in error and should not be entered in to the database
+            } else if (data.needsDeletion()) {
+                delete(data);
+            } else if(data.isNew()) {
                 insert(data);
             } else if (data.isModified()) {
                 update(data);
-            }
+            } 
         }
     }
 
@@ -196,7 +204,7 @@ public class DatabaseManager {
      * @param data
      * @throws SQLException
      */
-    private void insert(SQLSerializable data) throws SQLException {
+    private void insert(SQLDataObject data) throws SQLException {
         conn.createStatement().execute(data.writeToSQL().getSQLInsertString());
     }
 
@@ -208,7 +216,7 @@ public class DatabaseManager {
      * @param data
      * @throws SQLException
      */
-    private void update(SQLSerializable data) throws SQLException {
+    private void update(SQLDataObject data) throws SQLException {
         conn.createStatement().execute(data.writeToSQL().getSQLUpdateString());
     }
 
@@ -218,7 +226,7 @@ public class DatabaseManager {
      * @param data
      * @throws SQLException
      */
-    public void delete(SQLSerializable data) throws SQLException {
+    private void delete(SQLDataObject data) throws SQLException {
         conn.createStatement().executeQuery(data.writeToSQL().getSQLDeleteString());
     }
 
@@ -247,7 +255,8 @@ public class DatabaseManager {
                 result.getDouble(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL),
                 result.getDouble(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL),
                 result.getInt(SQLTableInformation.Race.PLACE_INT),
-                result.getInt("id")
+                result.getInt("id"),
+                false
             ));
         }
 
@@ -272,7 +281,8 @@ public class DatabaseManager {
                 result.getDouble(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL),
                 result.getDouble(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL),
                 result.getInt(SQLTableInformation.Race.PLACE_INT),
-                result.getInt("id")
+                result.getInt("id"),
+                false
             ));
         }
 
