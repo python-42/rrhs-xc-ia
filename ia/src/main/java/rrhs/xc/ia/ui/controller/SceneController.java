@@ -13,7 +13,7 @@ import rrhs.xc.ia.data.mem.Meet;
  * which accesses the list that it needs, and should be aware that callers are
  * allowed to pass any length list or null for the argument of either list.
  */
-public interface ISceneController {
+public interface SceneController {
 
     public void setupAthletes(List<Athlete> list);
 

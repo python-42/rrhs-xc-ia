@@ -13,7 +13,7 @@ import rrhs.xc.ia.data.mem.Meet;
 import rrhs.xc.ia.ui.event.SceneEvent;
 import rrhs.xc.ia.util.SearchChangeListener;
 
-public class MainController implements ISceneController{
+public class MainController implements SceneController{
     
     private ObservableList<Athlete> viewableAthletes;
     private ObservableList<Meet> viewableMeets;

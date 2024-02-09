@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import rrhs.xc.ia.data.database.DatabaseManager;
-import rrhs.xc.ia.ui.controller.ISceneController;
+import rrhs.xc.ia.ui.controller.SceneController;
 import rrhs.xc.ia.ui.event.SceneEvent;
 import rrhs.xc.ia.util.FXMLFilter;
 import rrhs.xc.ia.util.StringUtils;
@@ -76,7 +76,7 @@ public class GUIDriver extends Application {
     }
 
     private void setup(String name) throws SQLException {
-        ISceneController controller = SceneCollection.getInstance().getController(name);
+        SceneController controller = SceneCollection.getInstance().getController(name);
 
         switch (name) {
             case "main":
