@@ -201,9 +201,9 @@ public class Race extends SQLDataObject implements Comparable<Race>{
             return 0;
         }
 
-        if (this.getMeetDate().equals(other.getMeetDate())) {
+        if (this.getMeetDate() == null || other.getMeetDate() == null || this.getMeetDate().equals(other.getMeetDate())) {
             return (int) ((this.getTimeSeconds() - other.getTimeSeconds()) + 0.5);
-        }else {
+        } else {
             return this.getMeetDate().compareTo(other.getMeetDate());
         }
 

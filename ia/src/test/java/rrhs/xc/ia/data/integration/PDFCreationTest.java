@@ -37,6 +37,12 @@ public class PDFCreationTest {
 
     @Test
     public void testMeetPDF() throws IOException, DocumentException{
+        TestRacesUtil.race1.setMeetDate(null); //In real execution the meet information will be null for races owned by a meet object.
+        TestRacesUtil.race2.setMeetDate(null);
+        TestRacesUtil.race3.setMeetDate(null);
+        TestRacesUtil.race4.setMeetDate(null);
+        TestRacesUtil.race5.setMeetDate(null);
+
         Meet m1 = new Meet(
             List.of(TestRacesUtil.race1, TestRacesUtil.race2, TestRacesUtil.race3, TestRacesUtil.race4, TestRacesUtil.race5),
             "Conference 2023", 
