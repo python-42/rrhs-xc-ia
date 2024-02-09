@@ -13,11 +13,15 @@
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <TableView fx:id="table" editable="true" fixedCellSize="40.0" layoutY="50.0" prefHeight="700.0" prefWidth="1250.0">
-                  <columns>
-                     <TableColumn fx:id="nameCol" prefWidth="608.0" text="Name" />
-                     <TableColumn fx:id="gradYearCol" prefWidth="641.0" text="Graduation Year" />
-                  </columns>
-               </TableView>
+               <placeholder>
+                  <Label text = "No athletes in the database." />
+               </placeholder>
+               <columns>
+                  <TableColumn fx:id="nameCol" editable="true" prefWidth="524.0" text="Name" />
+                  <TableColumn fx:id="gradYearCol" editable="true" prefWidth="368.0" text="Graduation Year" />
+                  <TableColumn fx:id="changedCol" editable="false" prefWidth="357.0" text="Unsaved Changes" />
+               </columns>
+            </TableView>
             <Label layoutX="25.0" layoutY="5.0" text="Edit Roster">
                <font>
                   <Font name="IBM Plex Mono Light" size="40.0" />
@@ -28,12 +32,22 @@
                   <Font name="IBM Plex Mono Light" size="25.0" />
                </font>
             </Label>
-            <Button fx:id="cancelBtn" layoutX="648.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" text="Cancel">
+            <Button fx:id="cancelBtn" layoutX="670.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" styleClass="cancel" text="Cancel">
                <font>
                   <Font name="IBM Plex Mono Light" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="saveBtn" layoutX="950.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" text="Save">
+            <Button fx:id="saveBtn" layoutX="950.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" styleClass="save" text="Save">
+               <font>
+                  <Font name="IBM Plex Mono Light" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="addBtn" layoutX="50.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" text="Add Athlete">
+               <font>
+                  <Font name="IBM Plex Mono Light" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="deleteBtn" layoutX="330.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" text="Delete Selected">
                <font>
                   <Font name="IBM Plex Mono Light" size="20.0" />
                </font>

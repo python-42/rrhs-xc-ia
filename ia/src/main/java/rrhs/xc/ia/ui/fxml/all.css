@@ -2,3 +2,11 @@
 .root {
     -fx-font-family: "IBM Plex Mono Light"; 
 }
+
+.cancel {
+    -fx-background-color: #FF474C;
+}
+
+.save {
+    -fx-background-color: lightgreen;
+}

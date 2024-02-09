@@ -227,7 +227,7 @@ public class DatabaseManager {
      * @throws SQLException
      */
     private void delete(SQLDataObject data) throws SQLException {
-        conn.createStatement().executeQuery(data.writeToSQL().getSQLDeleteString());
+        conn.createStatement().execute(data.writeToSQL().getSQLDeleteString());
     }
 
     /**
