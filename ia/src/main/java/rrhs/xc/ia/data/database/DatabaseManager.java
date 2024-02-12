@@ -53,7 +53,7 @@ public class DatabaseManager {
 
     private final String RACES_FOR_ATHLETE_QUERY =        
     """
-    SELECT meetid, athleteid, timeSeconds, splitOneSeconds, splitTwoSeconds, place, season, level, date, name 
+    SELECT Race.id, meetid, athleteid, timeSeconds, splitOneSeconds, splitTwoSeconds, place, season, level, date, name 
     FROM Race 
     JOIN Meet ON Race.meetid = Meet.id 
     AND Race.athleteid = ?;
@@ -61,7 +61,7 @@ public class DatabaseManager {
 
     private final String RACES_FOR_MEET_QUERY = 
     """
-    SELECT name, timeSeconds, splitOneSeconds, splitTwoSeconds, place, season, level
+    SELECT Race.id, name, timeSeconds, splitOneSeconds, splitTwoSeconds, place, season, level
     FROM Race
     JOIN Athlete ON Race.athleteid = Athlete.id
     AND Race.meetid = ?;
