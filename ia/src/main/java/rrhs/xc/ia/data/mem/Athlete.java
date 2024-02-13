@@ -69,6 +69,10 @@ public class Athlete extends SQLDataObject implements PDFExportable {
         return gradYear;
     }
 
+    public List<Race> getRaces() {
+        return Collections.unmodifiableList(condense());
+    }
+
     //Setters
     public void setName(String name) {
         this.setModified();

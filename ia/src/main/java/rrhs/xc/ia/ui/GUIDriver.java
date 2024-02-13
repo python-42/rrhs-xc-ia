@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -12,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import rrhs.xc.ia.data.database.DatabaseManager;
+import rrhs.xc.ia.data.mem.Athlete;
 import rrhs.xc.ia.ui.controller.SceneController;
 import rrhs.xc.ia.ui.event.SceneEvent;
 import rrhs.xc.ia.util.FXMLFilter;
@@ -45,7 +47,7 @@ public class GUIDriver extends Application {
                 s.addEventHandler(SceneEvent.SWITCH_SCENE, this);
 
                 try {
-                    setup(event.getDesiredSceneName());
+                    setup(event);
                     stage.setScene(s);
                 } catch (SQLException e) {
                     // TODO add GUI popup
@@ -55,7 +57,7 @@ public class GUIDriver extends Application {
             }
         });
 
-        setup("main");
+        setup(new SceneEvent("main"));
 
         stage.setResizable(false);
         stage.setTitle("JCrossCountry Tracker");
@@ -75,10 +77,10 @@ public class GUIDriver extends Application {
         }
     }
 
-    private void setup(String name) throws SQLException {
-        SceneController controller = SceneCollection.getInstance().getController(name);
+    private void setup(SceneEvent event) throws SQLException {
+        SceneController controller = SceneCollection.getInstance().getController(event.getDesiredSceneName());
 
-        switch (name) {
+        switch (event.getDesiredSceneName()) {
             case "main":
                 controller.setupAthletes(db.getAllAthletes());
                 controller.setupMeets(db.getAllMeets());
@@ -86,6 +88,8 @@ public class GUIDriver extends Application {
             case "roster":
                 controller.setupAthletes(db.getAllAthletes());
                 break;
+            case "athlete":
+                controller.setupAthletes(List.of((Athlete)event.getRelevantObject()));
             default:
                 break;
         }

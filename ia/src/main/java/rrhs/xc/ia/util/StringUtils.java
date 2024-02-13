@@ -6,6 +6,10 @@ import java.util.regex.Pattern;
 public class StringUtils {
     
     public static String formatTime(double timeSeconds) {
+        if (timeSeconds == -1) {
+            return "0";
+        }
+
         String seconds = ((timeSeconds % 60) + 0.005) + "";
 
         if(((timeSeconds % 60) + 0.005) < 10) {

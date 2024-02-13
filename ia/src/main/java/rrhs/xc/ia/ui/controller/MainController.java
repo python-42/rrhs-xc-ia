@@ -49,6 +49,12 @@ public class MainController implements SceneController{
         athleteSearch.textProperty().addListener(new SearchChangeListener<Athlete>(viewableAthletes, allAthletes));
 
         editRosterBtn.setOnAction(event -> editRosterBtn.fireEvent(new SceneEvent("roster")));
+
+        athleteView.setOnMouseClicked(event -> {
+            if (athleteView.getSelectionModel().getSelectedItem() != null) {
+                athleteView.fireEvent(new SceneEvent("athlete", athleteView.getSelectionModel().getSelectedItem())); 
+            }
+        });
     }
 
     @Override

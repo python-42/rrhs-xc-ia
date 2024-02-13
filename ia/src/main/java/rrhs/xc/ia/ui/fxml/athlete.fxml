@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="800.0" prefWidth="1250.0" stylesheets="@all.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rrhs.xc.ia.ui.controller.AthleteController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+            <Label layoutX="25.0" layoutY="5.0" text="Edit Roster">
+               <font>
+                  <Font name="IBM Plex Mono Light" size="40.0" />
+               </font>
+            </Label>
+            <Label layoutX="1086.0" layoutY="13.0" text="Go Huskies!" textFill="#094be8">
+               <font>
+                  <Font name="IBM Plex Mono Light" size="25.0" />
+               </font>
+            </Label>
+            <Button fx:id="homeBtn" layoutX="950.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" text="Return">
+               <font>
+                  <Font name="IBM Plex Mono Light" size="20.0" />
+               </font>
+            </Button>
+
+            <TabPane layoutY="50.0" prefHeight="700.0" prefWidth="1250.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="graphTab" closable="false" text="Graph">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                <Tab closable="false" text="List">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="table" layoutX="1.0" prefHeight="670.0" prefWidth="1251.0">
+                                <columns>
+                                    <TableColumn fx:id="meetName" prefWidth="150.0" text="Meet Name" />
+                                    <TableColumn fx:id="meetDate" prefWidth="150.0" text="Meet Date" />
+                                    <TableColumn fx:id="time" prefWidth="150.0" text="Time" />
+                                    <TableColumn fx:id="place" prefWidth="100.0" text="Place" />
+                                    <TableColumn fx:id="avgPace" prefWidth="150.0" text="Average Pace" />
+                                    <TableColumn fx:id="split1" prefWidth="150.0" text="Split 1" />
+                                    <TableColumn fx:id="split2" prefWidth="150.0" text="Split 2" />
+                                    <TableColumn fx:id="split3" prefWidth="150.0" text="Split 3" />
+                                    <TableColumn fx:id="varsity" prefWidth="100.0" text="Varsity?" />
+                                </columns>
+                              </TableView>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab closable="false" text="Stats">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TilePane fx:id="statsPane" layoutX="1.0" prefHeight="670.0" prefWidth="1251.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+            <Button fx:id="exportBtn" layoutX="50.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" text="Export">
+               <font>
+                  <Font name="IBM Plex Mono Light" size="20.0" />
+               </font>
+            </Button>
+
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
