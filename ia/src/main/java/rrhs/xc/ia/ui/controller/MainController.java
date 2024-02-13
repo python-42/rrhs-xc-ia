@@ -21,23 +21,13 @@ public class MainController implements SceneController{
     private List<Athlete> allAthletes = new ArrayList<>();
     private List<Meet> allMeets = new ArrayList<>();
 
-    @FXML
-    private ListView<Athlete> athleteView;
+    @FXML private ListView<Athlete> athleteView;
+    @FXML private TextField athleteSearch;
+    @FXML private Button editRosterBtn;
 
-    @FXML
-    private TextField athleteSearch;
-
-    @FXML
-    private ListView<Meet> meetView;
-
-    @FXML
-    private TextField meetSearch;
-
-    @FXML
-    private Button editRosterBtn;
-
-    @FXML
-    private Button newMeetBtn;
+    @FXML private ListView<Meet> meetView;
+    @FXML private TextField meetSearch;
+    @FXML private Button newMeetBtn;
 
     @FXML
     private void initialize() {

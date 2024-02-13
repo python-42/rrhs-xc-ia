@@ -20,29 +20,16 @@ import rrhs.xc.ia.ui.event.SceneEvent;
 
 public class RosterController implements SceneController {
 
-    @FXML
-    private Button cancelBtn;
+    @FXML private Button cancelBtn;
+    @FXML private Button saveBtn;
 
-    @FXML
-    private Button saveBtn;
+    @FXML private Button addBtn;
+    @FXML private Button deleteBtn;
 
-    @FXML
-    private Button addBtn;
-
-    @FXML
-    private Button deleteBtn;
-
-    @FXML
-    private TableView<Athlete> table;
-
-    @FXML
-    private TableColumn<Athlete, String> nameCol;
-
-    @FXML
-    private TableColumn<Athlete, Integer> gradYearCol;
-
-    @FXML
-    private TableColumn<Athlete, String> changedCol;
+    @FXML private TableView<Athlete> table;
+    @FXML private TableColumn<Athlete, String> nameCol;
+    @FXML private TableColumn<Athlete, Integer> gradYearCol;
+    @FXML private TableColumn<Athlete, String> changedCol;
 
     @FXML
     public void initialize() {

@@ -43,47 +43,23 @@ import rrhs.xc.ia.util.StringUtils;
 
 public class AthleteController implements SceneController {
 
-    @FXML
-    private Button homeBtn;
+    @FXML private Button homeBtn;
+    @FXML private Button exportBtn;
 
-    @FXML
-    private Button exportBtn;
+    @FXML private Tab graphTab;
 
-    @FXML
-    private Tab graphTab;
+    @FXML private TableView<Race> table;
+    @FXML private TableColumn<Race, String> meetName;
+    @FXML private TableColumn<Race, String> meetDate;
+    @FXML private TableColumn<Race, String> time;
+    @FXML private TableColumn<Race, String> avgPace;
+    @FXML private TableColumn<Race, String> split1;
+    @FXML private TableColumn<Race, String> split2;
+    @FXML private TableColumn<Race, String> split3;
+    @FXML private TableColumn<Race, Integer> place;
+    @FXML private TableColumn<Race, String> varsity;
 
-    @FXML
-    private TableView<Race> table;
-
-    @FXML
-    private TableColumn<Race, String> meetName;
-
-    @FXML
-    private TableColumn<Race, String> meetDate;
-
-    @FXML
-    private TableColumn<Race, String> time;
-
-    @FXML
-    private TableColumn<Race, String> avgPace;
-
-    @FXML
-    private TableColumn<Race, String> split1;
-
-    @FXML
-    private TableColumn<Race, String> split2;
-
-    @FXML
-    private TableColumn<Race, String> split3;
-
-    @FXML
-    private TableColumn<Race, Integer> place;
-
-    @FXML
-    private TableColumn<Race, String> varsity;
-
-    @FXML
-    private TilePane statsPane;
+    @FXML private TilePane statsPane;
 
     private Athlete athlete;
 
