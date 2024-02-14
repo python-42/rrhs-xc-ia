@@ -47,10 +47,6 @@ public class PDFCreationTest {
             List.of(TestRacesUtil.race1, TestRacesUtil.race2, TestRacesUtil.race3, TestRacesUtil.race4, TestRacesUtil.race5),
             "Conference 2023", 
             LocalDate.of(2023, 10, 14),
-            40,
-            27,
-            55,
-            6,
             -1,
             true
         );

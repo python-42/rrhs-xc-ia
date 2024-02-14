@@ -114,10 +114,6 @@ public class DatabaseManager {
                     getRacesForMeet(result.getInt("id")),
                     result.getString(SQLTableInformation.Meet.MEET_NAME_STR),
                     SQLTypeConversion.getDate(result.getString(SQLTableInformation.Meet.MEET_DATE_DATE)),
-                    result.getInt(SQLTableInformation.Meet.TOTAL_VAR_BOYS_INT),
-                    result.getInt(SQLTableInformation.Meet.TOTAL_VAR_GIRLS_INT),
-                    result.getInt(SQLTableInformation.Meet.TOTAL_JV_BOYS_INT),
-                    result.getInt(SQLTableInformation.Meet.TOTAL_JV_BOYS_INT),
                     result.getInt("id"),
                     false
                 )
@@ -166,10 +162,6 @@ public class DatabaseManager {
             getRacesForMeet(result.getInt("id")),
             result.getString(SQLTableInformation.Meet.MEET_NAME_STR),
             SQLTypeConversion.getDate(result.getString(SQLTableInformation.Meet.MEET_DATE_DATE)),
-            result.getInt(SQLTableInformation.Meet.TOTAL_VAR_BOYS_INT),
-            result.getInt(SQLTableInformation.Meet.TOTAL_VAR_GIRLS_INT),
-            result.getInt(SQLTableInformation.Meet.TOTAL_JV_BOYS_INT),
-            result.getInt(SQLTableInformation.Meet.TOTAL_JV_GIRLS_INT),
             result.getInt("id"),
             false
         );

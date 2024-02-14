@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import com.itextpdf.text.Document;
@@ -32,19 +33,16 @@ public class Meet extends SQLDataObject implements PDFExportable  {
 
     private String name;
     private LocalDate date;
-    private int[] athleteCounts; //[varsityBoys, varsityGirls, JVBoys, JVGirls]
     private HashMap<Level, List<Race>> raceMap = new HashMap<Level, List<Race>>();
 
     private int id;
 
     private final String[] pdfColumnTitles = {"ATHLETE NAME", "TIME", "PLACE", "MILE ONE SPLIT", "MILE TWO SPLIT", "MILE THREE SPLIT", "AVERAGE SPLIT"};
 
-    public Meet(List<Race> list, String name, LocalDate date, int varBoys, int varGirls, int jvBoys, int jvGirls, int id, boolean isNew) {
+    public Meet(List<Race> list, String name, LocalDate date, int id, boolean isNew) {
         super(isNew);
         this.name = name;
         this.date = date;
-        
-        this.athleteCounts = new int[]{varBoys, varGirls, jvBoys, jvGirls};
 
         this.id = id;
 
@@ -68,12 +66,8 @@ public class Meet extends SQLDataObject implements PDFExportable  {
         return date;
     }
 
-    /**
-     * Gets the total athlete counts as an array.
-     * @return int array structured as follows: [varsityBoys, varsityGirls, JVBoys, JVGirls];
-     */
-    public int[] getTotalAthleteCounts() {
-        return athleteCounts;
+    public Map<Level, List<Race>> getRaces() {
+        return raceMap;
     }
 
     //Setters
@@ -85,26 +79,6 @@ public class Meet extends SQLDataObject implements PDFExportable  {
     public void setDate(LocalDate date) {
         this.setModified();
         this.date = date;
-    }
-
-    public void setVarsityBoys(int count) {
-        this.setModified();
-        athleteCounts[0] = count;
-    }
-
-    public void setVarsityGirls(int count) {
-        this.setModified();
-        athleteCounts[1] = count;
-    }
-
-    public void setJVBoys(int count) {
-        this.setModified();
-        athleteCounts[2] = count;
-    }
-
-    public void setJVGirls(int count) {
-        this.setModified();
-        athleteCounts[3] = count;
     }
 
     public double getAverageTimeSeconds(Level l) {
@@ -186,13 +160,8 @@ public class Meet extends SQLDataObject implements PDFExportable  {
     public SQLRow writeToSQL() {
         SQLRow rtn = new SQLRow("Meet", id);
         
-        rtn.putPair(SQLTableInformation.Meet.MEET_NAME_STR      , name);
-        rtn.putPair(SQLTableInformation.Meet.MEET_DATE_DATE     , date);
-        rtn.putPair(SQLTableInformation.Meet.TOTAL_VAR_BOYS_INT , athleteCounts[0]);
-        rtn.putPair(SQLTableInformation.Meet.TOTAL_VAR_GIRLS_INT, athleteCounts[1]);
-        rtn.putPair(SQLTableInformation.Meet.TOTAL_JV_BOYS_INT  , athleteCounts[2]);
-        rtn.putPair(SQLTableInformation.Meet.TOTAL_JV_GIRLS_INT , athleteCounts[3]);
-
+        rtn.putPair(SQLTableInformation.Meet.MEET_NAME_STR, name);
+        rtn.putPair(SQLTableInformation.Meet.MEET_DATE_DATE, date);
         return rtn;
     }
 

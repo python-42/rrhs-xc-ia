@@ -118,10 +118,6 @@ public class SQLTypeConversion {
         public class Meet {
             public static final String MEET_NAME_STR = "name";
             public static final String MEET_DATE_DATE = "date";
-            public static final String TOTAL_VAR_BOYS_INT = "totalVarBoys";
-            public static final String TOTAL_VAR_GIRLS_INT = "totalVarGirls";
-            public static final String TOTAL_JV_BOYS_INT = "totalJVBoys";
-            public static final String TOTAL_JV_GIRLS_INT = "totalJVGirls";
         }
 
         public class Race {
