@@ -23,6 +23,12 @@ public class StringUtils {
         return ((int) timeSeconds / 60) + ":" + seconds;
     }
 
+    public static double deFormatTime(String timeStr) {
+        int minutesBoundary = timeStr.indexOf(':');
+        double minutes = Integer.parseInt(timeStr.substring(0, minutesBoundary)) * 60.0;
+        return minutes + Double.parseDouble(timeStr.substring(minutesBoundary + 1));
+    }
+
     public static boolean matchesRegex(String regex, String test) {
         Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         return p.matcher(test).find();
