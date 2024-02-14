@@ -70,6 +70,16 @@ public class Meet extends SQLDataObject implements PDFExportable  {
         return raceMap;
     }
 
+    public List<Race> getRaceList() {
+        List<Race> rtn = new ArrayList<Race>();
+        for (List<Race> r : raceMap.values()) {
+            if (r != null) {
+                rtn.addAll(r);
+            }
+        }
+        return Collections.unmodifiableList(rtn);
+    }
+
     //Setters
     public void setName(String name) {
         this.setModified();
