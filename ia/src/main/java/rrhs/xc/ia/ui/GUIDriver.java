@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import rrhs.xc.ia.data.database.DatabaseManager;
 import rrhs.xc.ia.data.mem.Athlete;
+import rrhs.xc.ia.data.mem.Meet;
 import rrhs.xc.ia.ui.controller.SceneController;
 import rrhs.xc.ia.ui.event.SceneEvent;
 import rrhs.xc.ia.util.FXMLFilter;
@@ -90,6 +91,10 @@ public class GUIDriver extends Application {
                 break;
             case "athlete":
                 controller.setupAthletes(List.of((Athlete)event.getRelevantObject()));
+                break;
+            case "meetEdit":
+                controller.setupMeets(List.of((Meet)event.getRelevantObject()));
+                break;
             default:
                 break;
         }

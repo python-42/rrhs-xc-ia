@@ -144,9 +144,6 @@ public class Race extends SQLDataObject implements Comparable<Race>{
     @Override
     public SQLRow writeToSQL() {
         SQLRow row = new SQLRow("Race", id);
-        row.putPair(SQLTableInformation.Athlete.NAME_STR, athleteName);
-        row.putPair(SQLTableInformation.Meet.MEET_NAME_STR, meetName);
-        row.putPair(SQLTableInformation.Meet.MEET_DATE_DATE, meetDate);
         row.putPair(SQLTableInformation.Race.LEVEL_ENUM, level);
         row.putPair(SQLTableInformation.Race.SEASON_ENUM, season);
         row.putPair(SQLTableInformation.Race.TOTAL_TIME_DBL, timeSeconds);

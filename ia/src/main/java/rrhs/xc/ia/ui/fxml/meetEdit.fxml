@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="800.0" prefWidth="1250.0" stylesheets="@all.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rrhs.xc.ia.ui.controller.MeetController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+            <Label layoutX="25.0" layoutY="5.0" text="Edit Meet">
+               <font>
+                  <Font name="IBM Plex Mono Light" size="40.0" />
+               </font>
+            </Label>
+            <Label layoutX="1086.0" layoutY="13.0" text="Go Huskies!" textFill="#094be8">
+               <font>
+                  <Font name="IBM Plex Mono Light" size="25.0" />
+               </font>
+            </Label>
+            <Button fx:id="cancelBtn" layoutX="670.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" styleClass="cancel" text="Cancel">
+               <font>
+                  <Font name="IBM Plex Mono Light" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="saveBtn" layoutX="950.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" styleClass="save" text="Save">
+               <font>
+                  <Font name="IBM Plex Mono Light" size="20.0" />
+               </font>
+            </Button>
+
+            <TabPane layoutY="50.0" prefHeight="700.0" prefWidth="1250.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="graphTab" closable="false" text="Meet Info">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="nameBox" layoutX="300.0" layoutY="36.5" prefWidth="200.0" />
+                              <DatePicker fx:id="dateBox" layoutX="750.0" layoutY="36.5" prefWidth="200.0" />
+                              <Separator layoutY="100.0" prefWidth="1250.0" />
+                              <Label layoutX="220.0" layoutY="42.0" prefWidth="80.0" text="Meet Name" />
+                              <Label layoutX="670.0" layoutY="42.0" prefWidth="80.0" text="Meet Date" />
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                <Tab closable="false" text="Performance List">
+                  <content>
+                     <AnchorPane>
+                           <children>
+                              <ScrollPane hbarPolicy="NEVER" layoutX="-1" layoutY="-1" prefHeight="670" prefWidth="1250">
+                                <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="3200.0" prefWidth="1250.0">
+                                       <children>
+                                    
+                                    <TableView fx:id="varsityBoys" editable="true" layoutX="50.0" layoutY="100.0" prefHeight="670.0" prefWidth="1150.0">
+                                    <columns>
+                                       <TableColumn fx:id="nameVB" prefWidth="200.0" text="Athlete Name" />
+                                       <TableColumn fx:id="timeVB" prefWidth="200.0" text="Time" />
+                                       <TableColumn fx:id="placeVB" prefWidth="150.0" text="Place" />
+                                       <TableColumn fx:id="avgPaceVB" editable="false" prefWidth="150.0" text="Average Pace" />
+                                       <TableColumn fx:id="split1VB" prefWidth="150.0" text="Split 1" />
+                                       <TableColumn fx:id="split2VB" prefWidth="150.0" text="Split 2" />
+                                       <TableColumn fx:id="split3VB" editable="false" prefWidth="150.0" text="Split 3" />
+                                    </columns>
+                                    </TableView>
+
+                                 <TableView fx:id="varsityGirls" editable="true" layoutX="50.0" layoutY="900.0" prefHeight="670.0" prefWidth="1150.0">
+                                    <columns>
+                                       <TableColumn fx:id="nameVG" prefWidth="150.0" text="Athlete Name" />
+                                       <TableColumn fx:id="timeVG" prefWidth="150.0" text="Time" />
+                                       <TableColumn fx:id="placeVG" prefWidth="100.0" text="Place" />
+                                       <TableColumn fx:id="avgPaceVG" prefWidth="150.0" text="Average Pace" />
+                                       <TableColumn fx:id="split1VG" prefWidth="150.0" text="Split 1" />
+                                       <TableColumn fx:id="split2VG" prefWidth="150.0" text="Split 2" />
+                                       <TableColumn fx:id="split3VG" prefWidth="150.0" text="Split 3" />
+                                    </columns>
+                                 </TableView>
+
+                                 <TableView fx:id="jvBoys" editable="true" layoutX="50.0" layoutY="1700.0" prefHeight="670.0" prefWidth="1150.0">
+                                    <columns>
+                                       <TableColumn fx:id="nameJVB" prefWidth="150.0" text="Athlete Name" />
+                                       <TableColumn fx:id="timeJVB" prefWidth="150.0" text="Time" />
+                                       <TableColumn fx:id="placeJVB" prefWidth="100.0" text="Place" />
+                                       <TableColumn fx:id="avgPaceJVB" prefWidth="150.0" text="Average Pace" />
+                                       <TableColumn fx:id="split1JVB" prefWidth="150.0" text="Split 1" />
+                                       <TableColumn fx:id="split2JVB" prefWidth="150.0" text="Split 2" />
+                                       <TableColumn fx:id="split3JVB" prefWidth="150.0" text="Split 3" />
+                                    </columns>
+                                 </TableView>
+
+                                 <TableView fx:id="jvGirls" editable="true" layoutX="50.0" layoutY="2500.0" prefHeight="670.0" prefWidth="1150.0">
+                                    <columns>
+                                       <TableColumn fx:id="nameJVG" prefWidth="150.0" text="Athlete Name" />
+                                       <TableColumn fx:id="timeJVG" prefWidth="150.0" text="Time" />
+                                       <TableColumn fx:id="placeJVG" prefWidth="100.0" text="Place" />
+                                       <TableColumn fx:id="avgPaceJVG" prefWidth="150.0" text="Average Pace" />
+                                       <TableColumn fx:id="split1JVG" prefWidth="150.0" text="Split 1" />
+                                       <TableColumn fx:id="split2JVG" prefWidth="150.0" text="Split 2" />
+                                       <TableColumn fx:id="split3JVG" prefWidth="150.0" text="Split 3" />
+                                    </columns>
+                                 </TableView>
+                                          <Label layoutX="517.0" layoutY="39.0" text="Varsity Boys">
+                                             <font>
+                                                <Font name="IBM Plex Mono Light" size="30.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="508.0" layoutY="839.0" text="Varsity Girls">
+                                             <font>
+                                                <Font name="IBM Plex Mono Light" size="30.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="553.0" layoutY="2439.0" text="JV Girls">
+                                             <font>
+                                                <Font name="IBM Plex Mono Light" size="30.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="562.0" layoutY="1639.0" text="JV Boys">
+                                             <font>
+                                                <Font name="IBM Plex Mono Light" size="30.0" />
+                                             </font>
+                                          </Label>
+
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+            <Button fx:id="exportBtn" layoutX="50.0" layoutY="755.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="260.0" text="Export">
+               <font>
+                  <Font name="IBM Plex Mono Light" size="20.0" />
+               </font>
+            </Button>
+
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
