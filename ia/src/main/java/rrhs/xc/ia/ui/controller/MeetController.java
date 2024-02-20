@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 import rrhs.xc.ia.data.database.DatabaseManager;
+import rrhs.xc.ia.data.i.PDFExportable;
 import rrhs.xc.ia.data.mem.Athlete;
 import rrhs.xc.ia.data.mem.Level;
 import rrhs.xc.ia.data.mem.Meet;
@@ -43,6 +44,8 @@ public class MeetController implements SceneController {
     @FXML private Button cancelBtn;
     @FXML private Button saveBtn;
 
+    @FXML private Button exportBtn;
+
     @FXML private TextField nameBox;
     @FXML private DatePicker dateBox;
 
@@ -60,6 +63,7 @@ public class MeetController implements SceneController {
     @SuppressWarnings("unchecked")
     @FXML
     private void initialize() {
+        exportBtn.setOnAction(event -> PDFExportable.export(meet.getName() + " Summary.pdf", "Export Meet", meet));
         cancelBtn.setOnAction(event -> cancelBtn.fireEvent(new SceneEvent("main")));
         saveBtn.setOnAction(event -> {
             try {

@@ -1,13 +1,8 @@
 package rrhs.xc.ia.ui.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import org.controlsfx.control.Notifications;
 import org.jfree.chart.ChartPanel;
-
-import com.itextpdf.text.DocumentException;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -31,8 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.Window;
+import rrhs.xc.ia.data.i.PDFExportable;
 import rrhs.xc.ia.data.mem.Athlete;
 import rrhs.xc.ia.data.mem.Level;
 import rrhs.xc.ia.data.mem.Meet;
@@ -66,7 +60,7 @@ public class AthleteController implements SceneController {
     @FXML
     public void initialize() {
         homeBtn.setOnAction(event -> homeBtn.fireEvent(new SceneEvent("main")));
-        exportBtn.setOnAction(event -> handleExport());
+        exportBtn.setOnAction(event -> PDFExportable.export(athlete.getName() + " Summary.pdf", "Export Athlete", athlete));
 
         meetName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMeetName()));
         meetDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMeetDate().toString()));
@@ -159,26 +153,5 @@ public class AthleteController implements SceneController {
 
     @Override
     public void setupMeets(List<Meet> list) {}
-
-    private void handleExport() {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Export Athlete PDF");
-        chooser.setInitialFileName(athlete.getName() + " Summary.pdf");
-        chooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        try {
-            File f = chooser.showSaveDialog(Window.getWindows().get(0));
-            if (f != null) {
-                athlete.writeToPDF(f);
-            }
-        } catch (DocumentException | IOException e) {
-            Notifications.create()
-            .title("Error Ocurred")
-            .text("An error occurred while trying to export the PDF: " + e.getMessage() + "\n Please try again.")
-            .position(Pos.TOP_RIGHT)
-            .showError();
-
-            e.printStackTrace();
-        }
-    }
     
 }
