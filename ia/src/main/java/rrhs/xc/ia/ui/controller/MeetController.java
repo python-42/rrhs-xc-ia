@@ -1,20 +1,27 @@
 package rrhs.xc.ia.ui.controller;
 
 import java.sql.SQLException;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.controlsfx.control.Notifications;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 import rrhs.xc.ia.data.database.DatabaseManager;
 import rrhs.xc.ia.data.mem.Athlete;
@@ -38,6 +45,17 @@ public class MeetController implements SceneController {
 
     @FXML private TextField nameBox;
     @FXML private DatePicker dateBox;
+
+    @FXML private VBox varsityBoysStats;
+    @FXML private VBox varsityGirlsStats;
+    @FXML private VBox jvBoysStats;
+    @FXML private VBox jvGirlsStats;
+
+    @FXML private TitledPane varsityBoysStatsContainer;
+    @FXML private TitledPane varsityGirlsStatsContainer;
+    @FXML private TitledPane jvBoysStatsContainer;
+    @FXML private TitledPane jvGirlsStatsContainer;
+    
 
     @SuppressWarnings("unchecked")
     @FXML
@@ -124,6 +142,30 @@ public class MeetController implements SceneController {
 
         nameBox.setText(meet.getName());
         dateBox.setValue(meet.getDate());
+        setupStatistics();
+    }
+
+    private void setupStatistics() {
+        for (Entry<Level, Entry<VBox, TitledPane>> entry : List.of(
+            new SimpleEntry<Level, Entry<VBox, TitledPane>>(Level.VARSITY_BOYS, new SimpleEntry<VBox, TitledPane>(varsityBoysStats, varsityBoysStatsContainer)),
+            new SimpleEntry<Level, Entry<VBox, TitledPane>>(Level.VARSITY_GIRLS, new SimpleEntry<VBox, TitledPane>(varsityGirlsStats, varsityGirlsStatsContainer)),
+            new SimpleEntry<Level, Entry<VBox, TitledPane>>(Level.JV_BOYS, new SimpleEntry<VBox, TitledPane>(jvBoysStats, jvBoysStatsContainer)),
+            new SimpleEntry<Level, Entry<VBox, TitledPane>>(Level.JV_GIRLS, new SimpleEntry<VBox, TitledPane>(jvGirlsStats, jvGirlsStatsContainer))
+        )) 
+        {
+            Level level = entry.getKey();
+            ObservableList<Node> children = entry.getValue().getKey().getChildren();
+            children.clear();
+
+            children.add(new Text("Average Time: " + StringUtils.formatTime(meet.getAverageTimeSeconds(level))));
+            children.add(new Text("Average Mile 1 Split: " + StringUtils.formatTime(meet.getAverageSplitSeconds(1, level))));
+            children.add(new Text("Average Mile 2 Split: " + StringUtils.formatTime(meet.getAverageSplitSeconds(2, level))));
+            children.add(new Text("Average Mile 3 Split: " + StringUtils.formatTime(meet.getAverageSplitSeconds(3, level))));
+            children.add(new Text("Time Spread: " + StringUtils.formatTime(meet.getTimeSpreadSeconds(level))));
+            children.add(new Text("Place Spread: " + meet.getPlaceSpread(level)));
+
+            entry.getValue().getValue().setExpanded(meet.getPlaceSpread(level) != -1);
+        }
     }
     
 }
