@@ -6,8 +6,8 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -62,7 +62,48 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TilePane fx:id="statsPane" layoutX="1.0" prefHeight="670.0" prefWidth="1251.0" />
+                              <TitledPane fx:id="freshmanStatsContainer" animated="true" expanded="false" layoutX="100.0" layoutY="25.0" prefWidth="300.0" styleClass="statTitle" text="Freshman">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="300.0">
+                                       <children>
+                                          <VBox fx:id="freshmanStats" prefHeight="200.0" prefWidth="250.0" styleClass="statText" />
+                                       </children></AnchorPane>
+                                </content>
+                              </TitledPane>
+                              <TitledPane fx:id="sophomoreStatsContainer" animated="true" expanded="false" layoutX="850.0" layoutY="25.0" prefWidth="300.0" styleClass="statTitle" text="Sophomore">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="300.0">
+                                       <children>
+                                          <VBox fx:id="sophomoreStats" prefHeight="200.0" prefWidth="300.0" styleClass="statText" />
+                                       </children></AnchorPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="juniorStatsContainer" animated="true" expanded="false" layoutX="100.0" layoutY="301.0" prefWidth="300.0" styleClass="statTitle" text="Junior">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="300.0">
+                                       <children>
+                                          <VBox fx:id="juniorStats" prefHeight="200.0" prefWidth="300.0" styleClass="statText" />
+                                       </children></AnchorPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane fx:id="seniorStatsContainer" animated="true" expanded="false" layoutX="850.0" layoutY="301.0" prefWidth="300.0" styleClass="statTitle" text="Senior">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="300.0">
+                                       <children>
+                                          <VBox fx:id="seniorStats" prefHeight="200.0" prefWidth="300.0" styleClass="statText" />
+                                       </children></AnchorPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="true" expanded="true" layoutX="475.0" layoutY="163.0" prefWidth="300.0" styleClass="statTitle" text="Career">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="300.0">
+                                       <children>
+                                          <VBox fx:id="careerStats" prefHeight="200.0" prefWidth="300.0" styleClass="statText" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+
                            </children>
                         </AnchorPane>
                      </content>
