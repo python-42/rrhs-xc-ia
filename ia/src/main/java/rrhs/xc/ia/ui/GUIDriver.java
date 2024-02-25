@@ -32,7 +32,6 @@ public class GUIDriver extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, URISyntaxException, SQLException {
-        Font.loadFont(GUIDriver.class.getResourceAsStream("./fxml/IBMPlexMono-Light.ttf"), 0);
         loadAllFXML();
 
         db = DatabaseManager.getInstance();
@@ -67,12 +66,15 @@ public class GUIDriver extends Application {
     }
 
     private void loadAllFXML() throws IOException, URISyntaxException{
-        File fxmlDir = new File(getClass().getResource("./fxml/").toURI());
+        ClassLoader resourceLoader = ClassLoader.getSystemClassLoader();
+        Font.loadFont(resourceLoader.getResourceAsStream("IBMPlexMono-Light.ttf"), 0);
+
+        File fxmlDir = new File(resourceLoader.getResource("./").toURI());
 
         FXMLLoader loader;
         
         for (File f : fxmlDir.listFiles(new FXMLFilter())) {
-            loader = new FXMLLoader(getClass().getResource("./fxml/" + f.getName()));
+            loader = new FXMLLoader(resourceLoader.getResource(f.getName()));
             SceneCollection.getInstance().put(StringUtils.removeFilExtension(f), new Scene(loader.load()), loader.getController());
 
         }
