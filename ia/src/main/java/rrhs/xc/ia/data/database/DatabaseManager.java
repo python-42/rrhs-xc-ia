@@ -29,7 +29,7 @@ public class DatabaseManager {
 
 
     private Connection conn;
-    private String DATABASE_PATH = "jdbc:sqlite:./ia/test.db"; //TODO replace
+    private String DATABASE_PATH = "jdbc:sqlite:./jCrossCountry.db";
 
     private final String MEET_QUERY = 
     """
