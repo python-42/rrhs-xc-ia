@@ -3,6 +3,7 @@ package rrhs.xc.ia.data.mem;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -145,6 +146,29 @@ public class Athlete extends SQLDataObject implements PDFExportable {
             races.addAll(r);
         }
         return races;
+    }
+
+    public Season determineSeason(LocalDate date) {
+        int year = date.getYear();
+        int distance = gradYear - year;
+
+        if (! (date.getMonthValue() < 11 && date.getMonthValue() > 6) ) {
+            distance++;
+        }
+
+        switch (distance) {
+            case 1:
+                return Season.SENIOR;
+            case 2:
+                return Season.JUNIOR;
+            case 3:
+                return Season.SOPHOMORE;
+            case 4:
+                return Season.FRESHMAN;
+            default:
+                return null;
+        }
+
     }
 
     public Race getWorstCareerRace() {

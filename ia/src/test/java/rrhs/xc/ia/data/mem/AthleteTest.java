@@ -2,6 +2,8 @@ package rrhs.xc.ia.data.mem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -26,8 +28,19 @@ public class AthleteTest {
         r2 = TestRacesUtil.race2;
         r3 = TestRacesUtil.race3;
 
-        a1 = new Athlete(List.of(r1, r2, r3), "Test", 1970, -1, true);
+        a1 = new Athlete(List.of(r1, r2, r3), "Test", 2024, -1, true);
         empty = new Athlete(List.of(), "Nobody", 1970, -1, true);
+    }
+
+    @Test
+    public void testDetermineSeason() {
+        assertEquals(Season.SENIOR, a1.determineSeason(LocalDate.of(2023, Month.OCTOBER, 14)));
+        assertEquals(Season.SENIOR, a1.determineSeason(LocalDate.of(2024, Month.MARCH, 3)));
+        assertEquals(Season.JUNIOR, a1.determineSeason(LocalDate.of(2022, Month.AUGUST, 2)));
+        assertEquals(Season.JUNIOR, a1.determineSeason(LocalDate.of(2022, Month.JULY, 2)));
+        assertEquals(Season.FRESHMAN, a1.determineSeason(LocalDate.of(2020, Month.OCTOBER, 17)));
+        assertEquals(null, a1.determineSeason(LocalDate.of(2024, Month.OCTOBER, 18)));
+        assertEquals(null, a1.determineSeason(LocalDate.of(2007, Month.MARCH, 29)));
     }
 
     @Test
