@@ -143,11 +143,11 @@ public class Race extends SQLDataObject implements Comparable<Race>{
     }
 
     public void setAthleteID(int id) {
-        meetid = id;
+        athleteid = id;
     }
 
     public void setMeetID(int id) {
-        athleteid = id;
+        meetid = id;
     }
 
 
