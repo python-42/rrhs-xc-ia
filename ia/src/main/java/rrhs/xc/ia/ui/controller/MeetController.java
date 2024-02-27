@@ -20,7 +20,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -60,10 +59,8 @@ public class MeetController implements SceneController {
     @FXML private Button exportBtn;
     @FXML private Button editBtn;
 
-    @FXML private TextField nameBox;
-    @FXML private DatePicker dateBox;
-    @FXML private Button deleteMeetBtn;
-
+    @FXML private Label meetName;
+    @FXML private Label meetDate;
     @FXML private Label statusLabel;
     private int currentPriority = 10;
 
@@ -99,19 +96,6 @@ public class MeetController implements SceneController {
         });
 
         editBtn.setOnAction(event -> setupModal());
-        deleteMeetBtn.setOnAction(event -> {
-            meet.requestDeletion();
-            setStatus("Pending Deletion", 1);
-        });
-
-        nameBox.textProperty().addListener((observable, oldVal, newVal) -> meet.setName(newVal));
-        dateBox.valueProperty().addListener((observable, oldVal, newVal) -> {
-            if (newVal == null) {
-                dateBox.setValue(oldVal);
-            } else {
-                meet.setDate(newVal);
-            }
-        });
 
         for (TableView<Race> table : List.of(varsityBoys, varsityGirls, jvBoys, jvGirls)) {
             var name = (TableColumn<Race, String>) table.getColumns().get(0);
@@ -121,15 +105,22 @@ public class MeetController implements SceneController {
             time.setCellValueFactory(cellData -> new SimpleStringProperty(StringUtils.formatTime(cellData.getValue().getTimeSeconds())));
             time.setCellFactory(TextFieldTableCell.forTableColumn());
             time.setOnEditCommit(event -> {
-                event.getRowValue().setTimeSeconds(StringUtils.deFormatTime(event.getNewValue()));
+                if (StringUtils.validTimeFormat(event.getNewValue())) {
+                    event.getRowValue().setTimeSeconds(StringUtils.deFormatTime(event.getNewValue()));
+                    setStatus("Race information edited", 4);
+                }
                 table.refresh();
-                setStatus("Race information edited", 4);
+                
             });
 
             var place = (TableColumn<Race, Integer>) table.getColumns().get(2);
             place.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPlace()).asObject());
             place.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-            place.setOnEditCommit(event -> event.getRowValue().setPlace(event.getNewValue()));
+            place.setOnEditCommit(event -> {
+                event.getRowValue().setPlace(event.getNewValue());
+                table.refresh();
+                setStatus("Race information edited", 4);
+            });
 
             var avgPace = (TableColumn<Race, String>) table.getColumns().get(3);
             avgPace.setCellValueFactory(cellData -> new SimpleStringProperty(StringUtils.formatTime(cellData.getValue().getAverageSplitSeconds())));
@@ -137,10 +128,26 @@ public class MeetController implements SceneController {
             var split1 = (TableColumn<Race, String>) table.getColumns().get(4);
             split1.setCellValueFactory(cellData -> new SimpleStringProperty(StringUtils.formatTime(cellData.getValue().getMileOneSplitSeconds())));
             split1.setCellFactory(TextFieldTableCell.forTableColumn());
+            split1.setOnEditCommit(event -> {
+                if (StringUtils.validTimeFormat(event.getNewValue())) {
+                    event.getRowValue().setSplitOneSeconds(StringUtils.deFormatTime(event.getNewValue()));
+                    setStatus("Race information edited", 4);
+                }
+                table.refresh();
+                
+            });
 
             var split2 = (TableColumn<Race, String>) table.getColumns().get(5);
             split2.setCellValueFactory(cellData -> new SimpleStringProperty(StringUtils.formatTime(cellData.getValue().getMileTwoSplitSeconds())));
             split2.setCellFactory(TextFieldTableCell.forTableColumn());
+            split2.setOnEditCommit(event -> {
+                if (StringUtils.validTimeFormat(event.getNewValue())) {
+                    event.getRowValue().setSplitTwoSeconds(StringUtils.deFormatTime(event.getNewValue()));
+                    setStatus("Race information edited", 4);
+                }
+                table.refresh();
+                
+            });
 
             var split3 = (TableColumn<Race, String>) table.getColumns().get(6);
             split3.setCellValueFactory(cellData -> new SimpleStringProperty(StringUtils.formatTime(cellData.getValue().getMileThreeSplitSeconds())));
@@ -159,12 +166,14 @@ public class MeetController implements SceneController {
 
         refreshTables();
 
-        nameBox.setText(meet.getName());
-        dateBox.setValue(meet.getDate());
+        meetName.setText("Meet name: " + meet.getName());
+        meetDate.setText("Meet date: " + meet.getDate().toString());
         setupStatistics();
 
         if (meet.isNew()) {
             setStatus("New", 2);
+        }else {
+            setStatus("OK", 10);
         }
 
     }
