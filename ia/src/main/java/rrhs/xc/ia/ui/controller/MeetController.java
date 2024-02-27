@@ -62,6 +62,10 @@ public class MeetController implements SceneController {
 
     @FXML private TextField nameBox;
     @FXML private DatePicker dateBox;
+    @FXML private Button deleteMeetBtn;
+
+    @FXML private Label statusLabel;
+    private int currentPriority = 10;
 
     @FXML private VBox varsityBoysStats;
     @FXML private VBox varsityGirlsStats;
@@ -95,6 +99,10 @@ public class MeetController implements SceneController {
         });
 
         editBtn.setOnAction(event -> setupModal());
+        deleteMeetBtn.setOnAction(event -> {
+            meet.requestDeletion();
+            setStatus("Pending Deletion", 1);
+        });
 
         nameBox.textProperty().addListener((observable, oldVal, newVal) -> meet.setName(newVal));
         dateBox.valueProperty().addListener((observable, oldVal, newVal) -> {
@@ -115,6 +123,7 @@ public class MeetController implements SceneController {
             time.setOnEditCommit(event -> {
                 event.getRowValue().setTimeSeconds(StringUtils.deFormatTime(event.getNewValue()));
                 table.refresh();
+                setStatus("Race information edited", 4);
             });
 
             var place = (TableColumn<Race, Integer>) table.getColumns().get(2);
@@ -148,15 +157,28 @@ public class MeetController implements SceneController {
         //expect only one
         meet = list.get(0);
 
-        for (TableView<Race> table : List.of(varsityBoys, varsityGirls, jvBoys, jvGirls)) {
-            table.getItems().clear();
-        }
-
         refreshTables();
 
         nameBox.setText(meet.getName());
         dateBox.setValue(meet.getDate());
         setupStatistics();
+
+        if (meet.isNew()) {
+            setStatus("New", 2);
+        }
+
+    }
+
+    /**
+     * Routing all status update calls through this method ensures that a more important message isn't overwritten by an unimportant one.
+     * @param status The status message to display to the user
+     * @param priority The priority this message should have. Closer to zero is more important. 
+     */
+    private void setStatus(String status, int priority) {
+        if (priority <= currentPriority) {
+            statusLabel.setText("Status: " + status);
+            currentPriority = priority;
+        }
     }
 
     private void setupStatistics() {
@@ -182,7 +204,21 @@ public class MeetController implements SceneController {
         }
     }
 
+    private boolean athleteHasRace(String name) {
+        for (Race r : meet.getRaceList()) {
+            if (r.getAthleteName().equals(name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void refreshTables() {
+        for (TableView<Race> table : List.of(varsityBoys, varsityGirls, jvBoys, jvGirls)) {
+            table.getItems().clear();
+        }
+
         Map<Level, List<Race>> map = meet.getRaces();
         varsityBoys.getItems().addAll(map.getOrDefault(Level.VARSITY_BOYS, List.of()));
         varsityGirls.getItems().addAll(map.getOrDefault(Level.VARSITY_GIRLS, List.of()));
@@ -239,7 +275,14 @@ public class MeetController implements SceneController {
     }
 
     private void removeDeselected(List<Athlete> athletes) {
-        
+        List<Race> races = meet.getRaceList();
+        for (Athlete a : athletes) {
+            for (Race r : races) {
+                if (r.getAthleteName().equals(a.getName())) {
+                    r.requestDeletion();
+                }
+            }
+        }
     }
 
     private void getInputForSelected(List<Athlete> athletes, Dialog<ButtonType> popup) {
@@ -322,6 +365,10 @@ public class MeetController implements SceneController {
         Optional<ButtonType> rtn;
         Race race;
         for (Athlete a : athletes) {
+            if (athleteHasRace(a.getName())) {
+                continue;
+            }
+            setStatus("Performance(s) added", 3);
             name.setText(a.getName());
             time.clear();
             mile1Split.clear();

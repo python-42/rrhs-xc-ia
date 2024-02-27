@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="800.0" prefWidth="1250.0" stylesheets="@all.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rrhs.xc.ia.ui.controller.MeetController">
+<VBox prefHeight="800.0" prefWidth="1250.0" stylesheets="@all.css" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rrhs.xc.ia.ui.controller.MeetController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
@@ -46,11 +46,11 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextField fx:id="nameBox" layoutX="300.0" layoutY="36.5" prefWidth="200.0" />
-                              <DatePicker fx:id="dateBox" layoutX="750.0" layoutY="36.5" prefWidth="200.0" />
+                              <TextField fx:id="nameBox" layoutX="300.0" layoutY="16.0" prefWidth="200.0" />
+                              <DatePicker fx:id="dateBox" layoutX="750.0" layoutY="16.0" prefWidth="200.0" />
                               <Separator layoutY="100.0" prefWidth="1250.0" />
-                              <Label layoutX="220.0" layoutY="42.0" prefWidth="80.0" text="Meet Name" />
-                              <Label layoutX="670.0" layoutY="42.0" prefWidth="80.0" text="Meet Date" />
+                              <Label layoutX="220.0" layoutY="20.0" prefWidth="80.0" text="Meet Name" />
+                              <Label layoutX="670.0" layoutY="20.0" prefWidth="80.0" text="Meet Date" />
 
                               <TitledPane fx:id="varsityBoysStatsContainer" animated="true" layoutX="200.0" layoutY="125.0" prefWidth="300.0" styleClass="statTitle" text="Varsity Boys">
                                 <content>
@@ -84,6 +84,8 @@
                                        </children></AnchorPane>
                                  </content>
                               </TitledPane>
+                              <Button fx:id="deleteMeetBtn" layoutX="300.0" layoutY="60.0" mnemonicParsing="false" text="Delete Meet" />
+                              <Label fx:id="statusLabel" layoutX="750.0" layoutY="64.0" text="Status: No Changes" />
 
                            </children></AnchorPane>
                   </content>
