@@ -6,6 +6,8 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.controlsfx.control.Notifications;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -50,7 +52,10 @@ public class GUIDriver extends Application {
                     setup(event);
                     stage.setScene(s);
                 } catch (SQLException e) {
-                    // TODO add GUI popup
+                    Notifications.create()
+                    .title("SQL Error Occurred")
+                    .text("The following SQL exception occurred while trying to switch scene: " + e.getMessage())
+                    .showError();
                     System.out.println("SQLException occurred while trying to switch to scene " + event.getDesiredSceneName());
                     e.printStackTrace();
                 }
