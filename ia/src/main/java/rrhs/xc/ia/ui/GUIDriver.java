@@ -106,6 +106,9 @@ public class GUIDriver extends Application {
                 controller.setupAthletes(athletes);
                 controller.setupMeets(List.of(meet));
                 break;
+            case "schedule":
+                controller.setupMeets(db.getAllMeets());
+                break;
             default:
                 break;
         }

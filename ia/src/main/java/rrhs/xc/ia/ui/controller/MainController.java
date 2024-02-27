@@ -1,6 +1,5 @@
 package rrhs.xc.ia.ui.controller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import rrhs.xc.ia.data.mem.Athlete;
 import rrhs.xc.ia.data.mem.Meet;
-import rrhs.xc.ia.data.mem.Race;
 import rrhs.xc.ia.ui.event.SceneEvent;
 import rrhs.xc.ia.util.SearchChangeListener;
 
@@ -42,13 +40,7 @@ public class MainController implements SceneController{
 
         editRosterBtn.setOnAction(event -> editRosterBtn.fireEvent(new SceneEvent("roster")));
 
-        newMeetBtn.setOnAction(event -> newMeetBtn.fireEvent(new SceneEvent("meetEdit", new Meet(
-            new ArrayList<Race>(),
-            "NEW MEET",
-            LocalDate.now(),
-            -1,
-            true
-        ))));
+        newMeetBtn.setOnAction(event -> newMeetBtn.fireEvent(new SceneEvent("schedule")));
 
         athleteView.setOnMouseClicked(event -> {
             if (athleteView.getSelectionModel().getSelectedItem() != null) {
