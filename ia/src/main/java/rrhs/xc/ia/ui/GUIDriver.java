@@ -95,6 +95,7 @@ public class GUIDriver extends Application {
                 controller.setupAthletes(List.of((Athlete)event.getRelevantObject()));
                 break;
             case "meetEdit":
+                controller.setupAthletes(db.getAllAthletes()); //TODO switch this too athletes in the correct year
                 controller.setupMeets(List.of((Meet)event.getRelevantObject()));
                 break;
             default:

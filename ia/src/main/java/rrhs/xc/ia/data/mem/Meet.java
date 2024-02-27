@@ -50,10 +50,7 @@ public class Meet extends SQLDataObject implements PDFExportable  {
             return;
         }
         for (Race r : list) {
-            if (raceMap.get(r.getLevel()) == null) {
-                raceMap.put(r.getLevel(), new ArrayList<Race>());
-            }
-            raceMap.get(r.getLevel()).add(r);
+            addRace(r);
         }
     }
     
@@ -68,6 +65,10 @@ public class Meet extends SQLDataObject implements PDFExportable  {
 
     public Map<Level, List<Race>> getRaces() {
         return raceMap;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public List<Race> getRaceList() {
@@ -89,6 +90,13 @@ public class Meet extends SQLDataObject implements PDFExportable  {
     public void setDate(LocalDate date) {
         this.setModified();
         this.date = date;
+    }
+
+    public void addRace(Race race) {
+        if (raceMap.get(race.getLevel()) == null) {
+            raceMap.put(race.getLevel(), new ArrayList<Race>());
+        }
+        raceMap.get(race.getLevel()).add(race);
     }
 
     public double getAverageTimeSeconds(Level l) {

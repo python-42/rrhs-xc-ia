@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
 import rrhs.xc.ia.data.mem.Level;
 import rrhs.xc.ia.data.mem.Season;
 
@@ -28,6 +29,9 @@ public class SQLRow {
     }
 
     public void putPair(String key, int value) {
+        if ((key.equals(SQLTableInformation.Race.ATHLETE_ID) || key.equals(SQLTableInformation.Race.MEET_ID)) && value == -1) {
+            return;
+        }
         row.put(key, SQLTypeConversion.convert(value));
     }
 

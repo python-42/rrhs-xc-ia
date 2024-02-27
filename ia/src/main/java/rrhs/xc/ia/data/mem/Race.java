@@ -20,6 +20,8 @@ public class Race extends SQLDataObject implements Comparable<Race>{
     private int place;
 
     private int id;
+    private int meetid = -1;
+    private int athleteid = -1;
 
     public Race(String athleteName, String meetName, LocalDate meetDate, Level level, Season season, double timeSeconds, double splitOneSeconds, double splitTwoSeconds, int place, int id, boolean isNew) {
         super(isNew);
@@ -140,6 +142,14 @@ public class Race extends SQLDataObject implements Comparable<Race>{
         this.place = place;
     }
 
+    public void setAthleteID(int id) {
+        meetid = id;
+    }
+
+    public void setMeetID(int id) {
+        athleteid = id;
+    }
+
 
     @Override
     public SQLRow writeToSQL() {
@@ -150,6 +160,10 @@ public class Race extends SQLDataObject implements Comparable<Race>{
         row.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, splitOneSeconds);
         row.putPair(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL, splitTwoSeconds);
         row.putPair(SQLTableInformation.Race.PLACE_INT, place);
+        System.out.println("a id: " + athleteid);
+        System.out.println("m id: " + meetid); 
+        row.putPair(SQLTableInformation.Race.ATHLETE_ID, athleteid);
+        row.putPair(SQLTableInformation.Race.MEET_ID, meetid);
         return row;
     }
 

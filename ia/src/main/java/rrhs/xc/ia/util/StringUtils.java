@@ -29,6 +29,21 @@ public class StringUtils {
         return minutes + Double.parseDouble(timeStr.substring(minutesBoundary + 1));
     }
 
+    public static boolean validTimeFormat(String timeStr) {
+        if (!timeStr.contains(":")) {
+            return false;
+        }
+
+        try {
+            Integer.parseInt(timeStr.substring(0, timeStr.indexOf(':')));
+            Double.parseDouble(timeStr.substring(timeStr.indexOf(':') + 1));
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return true;
+    }
+
     public static boolean matchesRegex(String regex, String test) {
         Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         return p.matcher(test).find();

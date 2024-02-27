@@ -291,11 +291,7 @@ public class DatabaseManager {
             CREATE TABLE IF NOT EXISTS Meet (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
-                date DATE NOT NULL,
-                totalVarBoys INTEGER NOT NULL,
-                totalVarGirls INTEGER NOT NULL,
-                totalJVBoys INTEGER NOT NULL,
-                totalJVGirls INTEGER NOT NULL
+                date DATE NOT NULL
             );
         """;
 

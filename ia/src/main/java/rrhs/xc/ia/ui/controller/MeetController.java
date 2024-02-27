@@ -5,16 +5,24 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
+import org.controlsfx.control.ListSelectionView;
 import org.controlsfx.control.Notifications;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -22,6 +30,8 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Window;
 import javafx.util.converter.IntegerStringConverter;
 import rrhs.xc.ia.data.database.DatabaseManager;
 import rrhs.xc.ia.data.i.PDFExportable;
@@ -31,10 +41,13 @@ import rrhs.xc.ia.data.mem.Meet;
 import rrhs.xc.ia.data.mem.Race;
 import rrhs.xc.ia.ui.event.SceneEvent;
 import rrhs.xc.ia.util.StringUtils;
+import tornadofx.control.Fieldset;
+import tornadofx.control.Form;
 
 public class MeetController implements SceneController {
 
     private Meet meet;
+    private List<Athlete> athletes;
 
     @FXML private TableView<Race> varsityBoys;
     @FXML private TableView<Race> varsityGirls;
@@ -45,6 +58,7 @@ public class MeetController implements SceneController {
     @FXML private Button saveBtn;
 
     @FXML private Button exportBtn;
+    @FXML private Button editBtn;
 
     @FXML private TextField nameBox;
     @FXML private DatePicker dateBox;
@@ -79,6 +93,8 @@ public class MeetController implements SceneController {
                 e.printStackTrace();
             }
         });
+
+        editBtn.setOnAction(event -> setupModal());
 
         nameBox.textProperty().addListener((observable, oldVal, newVal) -> meet.setName(newVal));
         dateBox.valueProperty().addListener((observable, oldVal, newVal) -> {
@@ -123,7 +139,9 @@ public class MeetController implements SceneController {
     }
 
     @Override
-    public void setupAthletes(List<Athlete> list) {}
+    public void setupAthletes(List<Athlete> list) {
+        this.athletes = list;
+    }
 
     @Override
     public void setupMeets(List<Meet> list) {
@@ -134,15 +152,7 @@ public class MeetController implements SceneController {
             table.getItems().clear();
         }
 
-        Map<Level, List<Race>> map = meet.getRaces();
-        varsityBoys.getItems().addAll(map.getOrDefault(Level.VARSITY_BOYS, List.of()));
-        varsityGirls.getItems().addAll(map.getOrDefault(Level.VARSITY_GIRLS, List.of()));
-        jvBoys.getItems().addAll(map.getOrDefault(Level.JV_BOYS, List.of()));
-        jvGirls.getItems().addAll(map.getOrDefault(Level.JV_GIRLS, List.of()));
-
-        for (TableView<Race> table : List.of(varsityBoys, varsityGirls, jvBoys, jvGirls)) {
-            table.refresh();
-        }
+        refreshTables();
 
         nameBox.setText(meet.getName());
         dateBox.setValue(meet.getDate());
@@ -169,6 +179,186 @@ public class MeetController implements SceneController {
             children.add(new Text("Place Spread: " + meet.getPlaceSpread(level)));
 
             entry.getValue().getValue().setExpanded(meet.getPlaceSpread(level) != -1);
+        }
+    }
+
+    private void refreshTables() {
+        Map<Level, List<Race>> map = meet.getRaces();
+        varsityBoys.getItems().addAll(map.getOrDefault(Level.VARSITY_BOYS, List.of()));
+        varsityGirls.getItems().addAll(map.getOrDefault(Level.VARSITY_GIRLS, List.of()));
+        jvBoys.getItems().addAll(map.getOrDefault(Level.JV_BOYS, List.of()));
+        jvGirls.getItems().addAll(map.getOrDefault(Level.JV_GIRLS, List.of()));
+
+        for (TableView<Race> table : List.of(varsityBoys, varsityGirls, jvBoys, jvGirls)) {
+            table.refresh();
+        }
+    }
+
+    private void setupModal() {
+        ListSelectionView<Athlete> athleteSelector = new ListSelectionView<Athlete>();
+        athleteSelector.setTargetItems(FXCollections.observableArrayList(athletes));
+        athleteSelector.setTargetHeader(new Label("Participants"));
+        athleteSelector.setSourceHeader(new Label("Skipped"));
+
+        Dialog<ButtonType> popup = new Dialog<ButtonType>();
+
+        popup.getDialogPane().getButtonTypes().addAll(ButtonType.NEXT, ButtonType.CANCEL);
+        popup.getDialogPane().setContent(athleteSelector);
+
+        final Button next = (Button) popup.getDialogPane().lookupButton(ButtonType.NEXT);
+        next.addEventFilter(ActionEvent.ACTION, (event) -> {
+            if (athleteSelector.getTargetItems().size() == 0) {
+                event.consume();
+                Notifications.create()
+                .title("Not enough athletes")
+                .text("There must be at least 1 athlete participating in the meet")
+                .showWarning();
+            }
+        });
+
+        popup.initOwner(Window.getWindows().get(0));
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.setHeight(500);
+        popup.setWidth(500);
+        popup.setResizable(false);
+
+        Optional<ButtonType> rtn = popup.showAndWait();
+
+        if (rtn.isPresent() && rtn.get() == ButtonType.NEXT) {
+            removeDeselected(athleteSelector.getSourceItems());
+            getInputForSelected(athleteSelector.getTargetItems(), popup);
+        } else {
+            Notifications.create()
+            .title("Cancelled")
+            .text("Meet race adding cancelled.")
+            .showWarning();
+        }
+
+        refreshTables();
+        setupStatistics();
+    }
+
+    private void removeDeselected(List<Athlete> athletes) {
+        
+    }
+
+    private void getInputForSelected(List<Athlete> athletes, Dialog<ButtonType> popup) {
+        Form form = new Form();
+
+        Text name = new Text();
+        TextField time = new TextField();
+        TextField mile1Split = new TextField();
+        TextField mile2Split = new TextField();
+        TextField place = new TextField();
+        ComboBox<Level> level = new ComboBox<Level>();
+
+        level.setItems(FXCollections.observableArrayList(Level.values()));
+
+        Fieldset nameField = form.fieldset();
+        nameField.field("Name", name);
+
+        Fieldset timeField = form.fieldset();
+        timeField.field("Time", time);
+
+        Fieldset split1Field = form.fieldset();
+        split1Field.field("Mile Split 1", mile1Split);
+
+        Fieldset split2Field = form.fieldset();
+        split2Field.field("Mile Split 2", mile2Split);
+        
+        Fieldset placeField = form.fieldset();
+        placeField.field("Place", place);
+
+        Fieldset levelField = form.fieldset();
+        levelField.field("Level", level);
+        level.setValue(Level.VARSITY_BOYS);
+
+        popup.getDialogPane().setContent(form);
+        final Button next = (Button) popup.getDialogPane().lookupButton(ButtonType.NEXT);
+
+        next.addEventFilter(ActionEvent.ACTION, event -> {
+            try {
+                int i = Integer.parseInt(place.getText());
+                if (i < 1) {
+                    Notifications.create()
+                    .title("Invalid input")
+                    .text("Input for place was invalid. Place must be at least 1")
+                    .showError();
+                    event.consume();
+                    
+                } else if (!StringUtils.validTimeFormat(time.getText())) {
+                    Notifications.create()
+                    .title("Malformed input")
+                    .text("Input for time was invalid. Please try again.")
+                    .showError();
+
+                    event.consume();
+                } else if (!StringUtils.validTimeFormat(mile1Split.getText())) {
+                    Notifications.create()
+                    .title("Malformed input")
+                    .text("Input for mile one split was invalid. Please try again.")
+                    .showError();
+
+                    event.consume();
+                } else if(!StringUtils.validTimeFormat(mile2Split.getText())) {
+                    Notifications.create()
+                    .title("Malformed input")
+                    .text("Input for mile two split was invalid. Please try again.")
+                    .showError();
+
+                    event.consume();
+                }
+
+            } catch(NumberFormatException e) {
+                Notifications.create()
+                .title("Malformed input")
+                .text("Input for place was invalid. Please try again.")
+                .showError();
+
+                event.consume();
+            }
+        });
+        
+        Optional<ButtonType> rtn;
+        Race race;
+        for (Athlete a : athletes) {
+            name.setText(a.getName());
+            time.clear();
+            mile1Split.clear();
+            mile2Split.clear();
+            place.clear();
+
+            popup.setWidth(500);
+            rtn = popup.showAndWait();
+
+            if (rtn.isPresent() && rtn.get() == ButtonType.NEXT) {
+                race = new Race(
+                    a.getName(),
+                    null,
+                    null,
+                    level.getValue(),
+                    a.determineSeason(meet.getDate()), 
+                    StringUtils.deFormatTime(time.getText()),
+                    StringUtils.deFormatTime(mile1Split.getText()),
+                    StringUtils.deFormatTime(mile2Split.getText()),
+                    Integer.parseInt(place.getText()), 
+                    -1,
+                    true
+                );
+
+                race.setAthleteID(a.getId());
+                race.setMeetID(meet.getId());
+
+                meet.addRace(race);
+            }else {
+                Notifications.create()
+                .title("Cancelled")
+                .text("Meet race adding cancelled. Any races entered previous to cancel will be entered.")
+                .showWarning();
+
+                break;
+            }
+
         }
     }
     

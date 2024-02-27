@@ -22,3 +22,7 @@
     -fx-alignment: center;
     -fx-padding: 10px;
 }
+
+TextField {
+    -fx-margin: 10px;
+}

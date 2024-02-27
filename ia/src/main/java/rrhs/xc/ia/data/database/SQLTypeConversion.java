@@ -127,6 +127,8 @@ public class SQLTypeConversion {
             public static final String PLACE_INT = "place";
             public static final String SEASON_ENUM = "season";
             public static final String LEVEL_ENUM = "level";
+            public static final String MEET_ID = "meetid";
+            public static final String ATHLETE_ID = "athleteid";
         }
 
         public class Athlete {
