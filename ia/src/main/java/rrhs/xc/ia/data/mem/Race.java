@@ -160,8 +160,6 @@ public class Race extends SQLDataObject implements Comparable<Race>{
         row.putPair(SQLTableInformation.Race.MILE_SPLIT_ONE_DBL, splitOneSeconds);
         row.putPair(SQLTableInformation.Race.MILE_SPLIT_TWO_DBL, splitTwoSeconds);
         row.putPair(SQLTableInformation.Race.PLACE_INT, place);
-        System.out.println("a id: " + athleteid);
-        System.out.println("m id: " + meetid); 
         row.putPair(SQLTableInformation.Race.ATHLETE_ID, athleteid);
         row.putPair(SQLTableInformation.Race.MEET_ID, meetid);
         return row;
