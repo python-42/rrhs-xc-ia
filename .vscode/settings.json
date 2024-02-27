@@ -4,8 +4,14 @@
     "java.compile.nullAnalysis.mode": "automatic",
     "css.lint.vendorPrefix": "ignore",
     "cSpell.words": [
+        "athleteid",
+        "AUTOINCREMENT",
         "controlsfx",
+        "Fieldset",
+        "jdbc",
         "jfree",
-        "jfreechart"
+        "jfreechart",
+        "meetid",
+        "rrhs"
     ]
 }
