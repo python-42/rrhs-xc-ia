@@ -1,6 +1,5 @@
 package rrhs.xc.ia.ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
@@ -19,8 +18,6 @@ import rrhs.xc.ia.data.mem.Athlete;
 import rrhs.xc.ia.data.mem.Meet;
 import rrhs.xc.ia.ui.controller.SceneController;
 import rrhs.xc.ia.ui.event.SceneEvent;
-import rrhs.xc.ia.util.FXMLFilter;
-import rrhs.xc.ia.util.StringUtils;
 
 public class GUIDriver extends Application {
     
@@ -74,15 +71,14 @@ public class GUIDriver extends Application {
         ClassLoader resourceLoader = ClassLoader.getSystemClassLoader();
         Font.loadFont(resourceLoader.getResourceAsStream("IBMPlexMono-Light.ttf"), 0);
 
-        File fxmlDir = new File(resourceLoader.getResource("./").toURI());
+        String[] fxml = new String[]{"athlete.fxml", "main.fxml", "meetEdit.fxml", "roster.fxml", "schedule.fxml"};
 
         FXMLLoader loader;
-        
-        for (File f : fxmlDir.listFiles(new FXMLFilter())) {
-            loader = new FXMLLoader(resourceLoader.getResource(f.getName()));
-            SceneCollection.getInstance().put(StringUtils.removeFilExtension(f), new Scene(loader.load()), loader.getController());
-
+        for (String s : fxml) {
+            loader = new FXMLLoader(resourceLoader.getResource(s));
+            SceneCollection.getInstance().put(s.replace(".fxml", ""), new Scene(loader.load()), loader.getController());
         }
+        
     }
 
     private void setup(SceneEvent event) throws SQLException {
