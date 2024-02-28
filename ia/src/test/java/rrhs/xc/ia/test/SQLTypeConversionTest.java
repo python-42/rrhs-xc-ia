@@ -1,4 +1,4 @@
-package rrhs.xc.ia.data.database;
+package rrhs.xc.ia.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
+import rrhs.xc.ia.data.database.SQLTypeConversion;
 import rrhs.xc.ia.data.mem.Season;
 
 public class SQLTypeConversionTest {

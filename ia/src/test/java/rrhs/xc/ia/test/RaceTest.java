@@ -1,11 +1,11 @@
-package rrhs.xc.ia.data.mem;
+package rrhs.xc.ia.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import rrhs.xc.ia.data.TestRacesUtil;
+import rrhs.xc.ia.data.mem.Race;
 
 public class RaceTest {
     

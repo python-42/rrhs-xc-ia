@@ -1,4 +1,4 @@
-package rrhs.xc.ia.data.integration;
+package rrhs.xc.ia.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

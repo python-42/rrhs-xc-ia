@@ -1,4 +1,4 @@
-package rrhs.xc.ia.data.integration;
+package rrhs.xc.ia.test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import com.itextpdf.text.DocumentException;
 
-import rrhs.xc.ia.data.TestRacesUtil;
 import rrhs.xc.ia.data.mem.Athlete;
 import rrhs.xc.ia.data.mem.Meet;
 

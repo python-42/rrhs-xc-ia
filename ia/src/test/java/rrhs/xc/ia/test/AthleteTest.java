@@ -1,4 +1,4 @@
-package rrhs.xc.ia.data.mem;
+package rrhs.xc.ia.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,7 +9,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import rrhs.xc.ia.data.TestRacesUtil;
+import rrhs.xc.ia.data.mem.Athlete;
+import rrhs.xc.ia.data.mem.Race;
+import rrhs.xc.ia.data.mem.Season;
 
 
 public class AthleteTest {
