@@ -12,14 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.draw.LineSeparator;
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.pdf.draw.LineSeparator;
 
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
@@ -184,7 +183,7 @@ public class Meet extends SQLDataObject implements PDFExportable  {
     }
 
     @Override
-    public void writeToPDF(File file) throws IOException, DocumentException {
+    public void writeToPDF(File file) throws IOException {
         Document doc = PdfUtils.getDefaultDimensionsDocument();
         PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(file));
 
@@ -210,9 +209,6 @@ public class Meet extends SQLDataObject implements PDFExportable  {
             doc.add(PdfUtils.getParagraph("Average Mile Two Split: " + StringUtils.formatTime(getAverageSplitSeconds(2, level)), PdfUtils.STATS_FONT));
             doc.add(PdfUtils.getParagraph("Average Mile Three Split: " + StringUtils.formatTime(getAverageSplitSeconds(3, level)), PdfUtils.STATS_FONT));
             doc.add(PdfUtils.getParagraph("Time Spread: " + StringUtils.formatTime(getTimeSpreadSeconds(level)), PdfUtils.STATS_FONT));
-            
-
-            doc.add(PdfUtils.getParagraph(name, null));
         }
         doc.newPage();
 

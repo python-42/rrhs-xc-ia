@@ -5,14 +5,12 @@ import java.io.IOException;
 
 import org.controlsfx.control.Notifications;
 
-import com.itextpdf.text.DocumentException;
-
 import javafx.geometry.Pos;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 public interface PDFExportable {
-    public void writeToPDF (File file) throws IOException, DocumentException;
+    public void writeToPDF (File file) throws IOException;
 
         public static void export(String filename, String popupTitle, PDFExportable export) {
         FileChooser chooser = new FileChooser();
@@ -24,7 +22,7 @@ public interface PDFExportable {
             if (f != null) {
                 export.writeToPDF(f);
             }
-        } catch (DocumentException | IOException e) {
+        } catch (IOException e) {
             Notifications.create()
             .title("Error Ocurred")
             .text("An error occurred while trying to export the PDF: " + e.getMessage() + "\n Please try again.")

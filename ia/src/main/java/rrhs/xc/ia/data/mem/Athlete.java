@@ -15,15 +15,14 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.draw.LineSeparator;
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Image;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.pdf.draw.LineSeparator;
 
 import rrhs.xc.ia.data.database.SQLRow;
 import rrhs.xc.ia.data.database.SQLTypeConversion.SQLTableInformation;
@@ -326,7 +325,7 @@ public class Athlete extends SQLDataObject implements PDFExportable {
     }
 
     @Override
-    public void writeToPDF(File file) throws DocumentException, IOException{
+    public void writeToPDF(File file) throws IOException{
         Document doc = PdfUtils.getDefaultDimensionsDocument();
 
         PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(file));

@@ -1,5 +1,6 @@
 package rrhs.xc.ia.util;
 
+import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -14,13 +15,12 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Rectangle;
 
 public class PdfUtils {
     
@@ -29,12 +29,12 @@ public class PdfUtils {
     public static final int DEFAULT_DOCUMENT_HEIGHT_MARGIN = 50;
     public static final int DEFAULT_DOCUMENT_WIDTH_MARGIN = 100;
 
-    public static final Font TITLE_FONT = FontFactory.getFont(FontFactory.COURIER, 40, Font.NORMAL, BaseColor.BLUE);
-    public static final Font SUBTITLE_FONT = FontFactory.getFont(FontFactory.COURIER, 30, Font.ITALIC, BaseColor.GRAY);
-    public static final Font SECTION_HEADER_FONT = FontFactory.getFont(FontFactory.COURIER, 30, Font.NORMAL, BaseColor.BLUE);
-    public static final Font TABLE_HEADER_FONT = FontFactory.getFont(FontFactory.COURIER, 15, Font.BOLD, new BaseColor(0, 102, 255));
-    public static final Font STATS_TITLE_FONT = FontFactory.getFont(FontFactory.COURIER, 35, Font.UNDERLINE, BaseColor.BLACK);
-    public static final Font STATS_FONT = FontFactory.getFont(FontFactory.COURIER, 15, Font.NORMAL, BaseColor.BLACK);
+    public static final Font TITLE_FONT = FontFactory.getFont(FontFactory.COURIER, 40, Font.NORMAL, Color.BLUE);
+    public static final Font SUBTITLE_FONT = FontFactory.getFont(FontFactory.COURIER, 30, Font.ITALIC, Color.GRAY);
+    public static final Font SECTION_HEADER_FONT = FontFactory.getFont(FontFactory.COURIER, 30, Font.NORMAL, Color.BLUE);
+    public static final Font TABLE_HEADER_FONT = FontFactory.getFont(FontFactory.COURIER, 15, Font.BOLD, new Color(0, 102, 255));
+    public static final Font STATS_TITLE_FONT = FontFactory.getFont(FontFactory.COURIER, 35, Font.UNDERLINE, Color.BLACK);
+    public static final Font STATS_FONT = FontFactory.getFont(FontFactory.COURIER, 15, Font.NORMAL, Color.BLACK);
 
     private static ChartTheme defaultTheme = StandardChartTheme.createJFreeTheme();
 
