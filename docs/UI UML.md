@@ -2,47 +2,58 @@
 
 classDiagram
 
-    AthleteViewScene ..|> RaceListTab
-    AthleteViewScene ..|> RaceGraphTab
-    AthleteViewScene ..|> StatTab    
+    GUIDriver ..o SceneCollection
+    SceneCollection ..o SceneController
 
-    MeetViewScene ..|> RaceListTab
-    MeetViewScene ..|> StatTab
 
-    class UIController {
-        
+    SceneController ..|> AthleteController 
+    SceneController ..|> MainController 
+    SceneController ..|> MeetController 
+    SceneController ..|> RosterController 
+    SceneController ..|> ScheduleController
+
+    class SceneCollection {
+        - Map < String, SceneController> map 
+
+        + getController(String) SceneController
+        + putController(String, SceneController) void
     }
 
-    class AthleteViewScene {
+    class SceneController {
+        <<abstract>>
 
+        + setupAthletes(List<athlete>) void
+        + setupMeets(List<meet>) void
     }
 
-    class MeetViewScene {
-
+    class AthleteController {
+        - List races
+        + @FXML initialize() void
     }
 
-    class RaceListTab {
-
+    class MainController {
+        - List athletes
+        - List meets
+        + @FXML initialize() void
     }
 
-    class RaceGraphTab {
-        
+    class MeetController {
+        - List races
+        + @FXML initialize() void
     }
 
-    class StatTab {
-
+    class RosterController {
+        - List athletes
+        + @FXML initialize() void
     }
 
-    class AthleteEntryScene {
-
+    class ScheduleController {
+        - List meets
+        + @FXML initialize() void
     }
 
-    class MeetEntryScene {
-
-    }
-
-    class DefaultScene {
-
+    class GUIDriver {
+        + @FXML start() void
     }
 
 ```

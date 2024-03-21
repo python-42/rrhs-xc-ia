@@ -2,12 +2,12 @@
 
 classDiagram
 
-    Race..|>SQLSerializable
-    Athlete..|>SQLSerializable
-    Meet..|>SQLSerializable
+    SQLDataObject ..|> Race
+    SQLDataObject ..|> Athlete
+    SQLDataObject ..|> Meet
 
-    Athlete..|>PDFExportable
-    Meet..|>PDFExportable
+    PDFExportable ..|> Athlete
+    PDFExportable ..|> Meet
 
     Athlete..o Race
     Meet..o Race    
@@ -31,10 +31,11 @@ classDiagram
         +writeToPDF(File file) void
     }
 
-    class SQLSerializable {
-        <<interface>>
+    class SQLDataObject {
+        <<abstract>>
+        - isModified boolean
 
-        +loadFromSQL(SQLRow result) void
+        + isModified() boolean
         +writeToSQL() SQLRow
     }
 

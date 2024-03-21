@@ -7,6 +7,7 @@ erDiagram
     RACE {
         int meetID
         int athleteID
+        int level
         double time
         double mileOneSplit
         double mileTwoSplit
@@ -16,16 +17,11 @@ erDiagram
     MEET {
         Date date
         String name
-        int numVarBoys
-        int numVarGirls
-        int numJVBoys
-        int numJVGirls
         int ID
     }
 
     ATHLETE {
         String fullName
-        boolean isBoysTeam
         int gradYear
         int ID
     }
