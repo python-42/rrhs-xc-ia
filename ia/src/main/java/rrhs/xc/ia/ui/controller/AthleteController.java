@@ -93,7 +93,21 @@ public class AthleteController implements SceneController {
         table.getItems().clear();
         table.getItems().addAll(athlete.getRaces());
 
+        clearStats();
         setupStats();
+    }
+
+    private void clearStats() {
+        freshmanStats.getChildren().clear();
+        sophomoreStats.getChildren().clear();
+        juniorStats.getChildren().clear();
+        seniorStats.getChildren().clear();
+        careerStats.getChildren().clear();
+
+        freshmanStatsContainer.setExpanded(false);
+        sophomoreStatsContainer.setExpanded(false);
+        juniorStatsContainer.setExpanded(false);
+        seniorStatsContainer.setExpanded(false);
     }
 
     private void setupStats() {

@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="800.0" prefWidth="1250.0" stylesheets="@all.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rrhs.xc.ia.ui.controller.AthleteController">
+<VBox prefHeight="800.0" prefWidth="1250.0" stylesheets="@all.css" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rrhs.xc.ia.ui.controller.AthleteController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
@@ -66,7 +67,15 @@
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="300.0">
                                        <children>
-                                          <VBox fx:id="freshmanStats" prefHeight="200.0" prefWidth="250.0" styleClass="statText" />
+                                          <ScrollPane prefHeight="200.0" prefWidth="300.0" vbarPolicy="NEVER">
+                                             <content>
+                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="400.0">
+                                                    <children>
+                                                      <VBox fx:id="freshmanStats" prefHeight="200.0" prefWidth="250.0" styleClass="statText" />
+                                                    </children>
+                                                 </AnchorPane>
+                                             </content>
+                                           </ScrollPane>
                                        </children></AnchorPane>
                                 </content>
                               </TitledPane>
@@ -74,7 +83,15 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="300.0">
                                        <children>
-                                          <VBox fx:id="sophomoreStats" prefHeight="200.0" prefWidth="300.0" styleClass="statText" />
+                                          <ScrollPane prefHeight="200.0" prefWidth="300.0" vbarPolicy="NEVER">
+                                             <content>
+                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="400.0">
+                                                    <children>
+                                                      <VBox fx:id="sophomoreStats" prefHeight="200.0" prefWidth="300.0" styleClass="statText" />
+                                                    </children>
+                                                 </AnchorPane>
+                                             </content>
+                                           </ScrollPane>
                                        </children></AnchorPane>
                                  </content>
                               </TitledPane>
@@ -82,7 +99,15 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="300.0">
                                        <children>
-                                          <VBox fx:id="juniorStats" prefHeight="200.0" prefWidth="300.0" styleClass="statText" />
+                                          <ScrollPane prefHeight="200.0" prefWidth="300.0" vbarPolicy="NEVER">
+                                             <content>
+                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="400.0">
+                                                    <children>
+                                                      <VBox fx:id="juniorStats" prefHeight="200.0" prefWidth="300.0" styleClass="statText" />
+                                                    </children>
+                                                 </AnchorPane>
+                                             </content>
+                                           </ScrollPane>
                                        </children></AnchorPane>
                                  </content>
                               </TitledPane>
@@ -90,7 +115,15 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="300.0">
                                        <children>
-                                          <VBox fx:id="seniorStats" prefHeight="200.0" prefWidth="300.0" styleClass="statText" />
+                                          <ScrollPane prefHeight="200.0" prefWidth="300.0" vbarPolicy="NEVER">
+                                             <content>
+                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="400.0">
+                                                    <children>
+                                                      <VBox fx:id="seniorStats" prefHeight="200.0" prefWidth="300.0" styleClass="statText" />
+                                                    </children>
+                                                 </AnchorPane>
+                                             </content>
+                                           </ScrollPane>
                                        </children></AnchorPane>
                                  </content>
                               </TitledPane>
@@ -98,7 +131,15 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="300.0">
                                        <children>
-                                          <VBox fx:id="careerStats" prefHeight="200.0" prefWidth="300.0" styleClass="statText" />
+                                          <ScrollPane prefHeight="200.0" prefWidth="300.0" vbarPolicy="NEVER">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="400.0">
+                                                   <children>
+                                                      <VBox fx:id="careerStats" prefHeight="200.0" prefWidth="400.0" styleClass="statText" />
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </ScrollPane>
                                        </children>
                                     </AnchorPane>
                                  </content>
