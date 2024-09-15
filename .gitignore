@@ -32,3 +32,6 @@ replay_pid*
 
 #Ignore any test SQLite databases
 *.db
+
+#File created by shade plugin
+dependency-reduced-pom.xml
